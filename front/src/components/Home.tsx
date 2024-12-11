@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import NavBar from "./Header";
-import Link from "next/link";
+
 const Home: React.FC = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -16,8 +15,6 @@ const Home: React.FC = () => {
 
     return (
         <div className="relative">
-            {/* Barra de navegación */}
-            <NavBar />
 
             {/* Contenido principal */}
             <section
