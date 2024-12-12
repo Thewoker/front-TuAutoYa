@@ -1,5 +1,5 @@
 import NavBar from "@/components/Navbar/Navbar";
-import Image from "next/image";
+import HomeView from "@/Views/HomeView";
 
 
 
@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <div>
       <NavBar/>
+      <HomeView/>
     </div>
   );
 }
