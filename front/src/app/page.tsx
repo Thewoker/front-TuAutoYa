@@ -1,5 +1,5 @@
 import NavBar from "@/components/Navbar/Navbar";
-import HomeView from "@/Views/HomeView";
+import HomeView from "@/Views/HomeViews/HomeView";
 
 
 
