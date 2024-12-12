@@ -10,10 +10,10 @@ export default {
 	],
 	theme: {
 		extend: {
+			backgroundImage: {
+				'custom-pattern': "url('/images/appBackground.jpg')",
+			},
 			colors: {
-				backgroundImage: {
-					'custom-pattern': "url('/images/appBackground.jpg')",
-				},
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

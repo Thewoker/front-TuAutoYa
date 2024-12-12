@@ -1,5 +1,5 @@
 import React from 'react'
-import ProveedorDashBoard from '@/View/ProveedorDashBoard'
+import ProveedorDashBoard from '@/Views/Dashboard/Proveedor/ProveedorDashBoard'
 
 function page() {
   return (
