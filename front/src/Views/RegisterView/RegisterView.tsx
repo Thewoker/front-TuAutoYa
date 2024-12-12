@@ -1,18 +1,14 @@
-"use client"; // Asegúrate de agregar esta línea al principio
+"use client"; // Agrega esta línea al inicio del archivo
 
 import { useState } from 'react';
 
-const Register = () => {
+const RegisterView = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
-  });
-
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
+    dni: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,98 +16,105 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const validateForm = () => {
-    const newErrors = { email: '', password: '', confirmPassword: '' };
-
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.values(newErrors).every((error) => error === '');
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      // Lógica de registro aquí, como una llamada a la API
-      console.log('Form submitted:', formData);
-    }
+    // Aquí iría la lógica para el registro
+    console.log(formData);
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+    <div className="pl-20 ml-15 min-h-screen flex items-center justify-center">
+      <div className="bg-zinc-200 p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">Registro</h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-green-900">
+              Nombre completo
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="dni" className="block text-sm font-medium text-green-900">
+              DNI
+            </label>
+            <input
+              type="text"
+              id="dni"
+              name="dni"
+              value={formData.dni}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-green-900">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-green-900">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-green-900">
+              Confirmar contraseña
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-sky-500 text-white rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Registrarse
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600">
+            ¿Ya tienes una cuenta?{' '}
+            <a href="/login" className="text-green-900 hover:text-blue-700">
+              Inicia sesión
+            </a>
+          </p>
         </div>
-
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Register
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
 
-export default Register;
+export default RegisterView;
