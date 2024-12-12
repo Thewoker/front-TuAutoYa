@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,9 +10,11 @@ body {
 .embla {
   overflow: hidden;
 }
+
 .embla__container {
   display: flex;
 }
+
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
@@ -45,6 +48,7 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -77,7 +81,20 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+
+    html,
+    body {
+      @apply bg-custom-pattern bg-cover bg-center;
+
+      html::before {
+        content: "";
+        @apply absolute inset-0 bg-black/30;
+        /* Ajusta la opacidad */
+        z-index: -1;
+      }
+    }
   }
 }

@@ -8,7 +8,7 @@ const NavBar: React.FC = () => {
         <nav
             className="bg-cover bg-center shadow-md"
             style={{
-                backgroundImage: 'url("https://i.pinimg.com/236x/77/30/4d/77304da07fcc3127d0835aea9138cca2.jpg")',
+                backgroundImage: 'url("")',
                 backgroundAttachment: 'fixed',
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
             <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
                 <Link href="/">
                     <img
-                        src="/Images/Logo (2).png"
+                        src="/images/logo (2).png"
                         alt="Logo"
                         className="h-12"
                         style={{ height: '200px' }}
@@ -98,5 +98,4 @@ const NavBar: React.FC = () => {
         </nav>
     );
 };
-
-export default NavBar
+export default NavBar;

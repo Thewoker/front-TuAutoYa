@@ -1,10 +1,13 @@
-import React from 'react'
-import LandingView from '@/View/LandingView'
+import NavBar from "@/components/Navbar/Navbar";
+import HomeView from "@/Views/HomeViews/HomeView";
+
+
 
 function page() {
   return (
     <div>
-      <LandingView/>
+      <NavBar/>
+      <HomeView/>
     </div>
   )
 }
