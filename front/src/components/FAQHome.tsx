@@ -41,7 +41,7 @@ const faqItems = [
 
 export function FaqSection() {
     return (
-        <div className="w-full max-w-3xl mx-auto p-4">
+        <div className="w-full max-w-3xl mx-auto p-4" id="FAQ">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">
                     Preguntas frecuentes sobre el alquiler de coches
