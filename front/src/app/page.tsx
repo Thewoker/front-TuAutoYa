@@ -3,11 +3,13 @@ import HomeView from "@/Views/HomeViews/HomeView";
 
 
 
-export default function Home() {
+function page() {
   return (
     <div>
       <NavBar/>
       <HomeView/>
     </div>
-  );
+  )
 }
+
+export default page

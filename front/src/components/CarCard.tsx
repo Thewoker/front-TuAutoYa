@@ -45,7 +45,7 @@ export function CarCard({
                 <div className="flex justify-between items-start mb-4">
                     <h3 className="font-semibold text-lg">{name}</h3>
                     <div className="text-right">
-                        <span className="text-xl font-bold text-orange-500">${pricePerHour}</span>
+                        <span className="text-xl font-bold text-amber-600">${pricePerHour}</span>
                         <span className="text-sm text-muted-foreground">/Hr</span>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ export function CarCard({
                 <div className="flex justify-between items-center pt-2 border-t">
                     <div className="flex items-center gap-1">
                         <span className="font-semibold">Reviews: {rating}</span>
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <Star className="h-4 w-4 fill-amber-500  text-amber-500" />
                     </div>
                     <Link
                         href={`/cars/${id}`}
