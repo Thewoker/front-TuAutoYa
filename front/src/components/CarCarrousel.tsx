@@ -6,47 +6,10 @@ import { Button } from '@/components/ui/button'
 import { CarCard } from './CarCard'
 import { useCallback } from 'react'
 import Link from 'next/link'
-
-const cars = [
-    {
-        id: "1",
-        name: "2024 Tesla Model 3",
-        category: "Sedan",
-        pricePerHour: 25,
-        imageUrl: "/placeholder.svg?height=200&width=300",
-        transmission: "Automatic",
-        mileage: "45000 Kms",
-        brakes: "ABS Brakes",
-        fuelType: "Electric",
-        rating: 4.7
-    },
-    {
-        id: "2",
-        name: "2024 BMW 5 Series",
-        category: "Sedan",
-        pricePerHour: 35,
-        imageUrl: "/placeholder.svg?height=200&width=300",
-        transmission: "Automatic",
-        mileage: "30000 Kms",
-        brakes: "ABS Brakes",
-        fuelType: "Petrol",
-        rating: 4.8
-    },
-    {
-        id: "3",
-        name: "2024 Mercedes GLC",
-        category: "SUV",
-        pricePerHour: 40,
-        imageUrl: "/placeholder.svg?height=200&width=300",
-        transmission: "Automatic",
-        mileage: "25000 Kms",
-        brakes: "ABS Brakes",
-        fuelType: "Diesel",
-        rating: 4.9
-    }
-]
+import data from '@/helpers/data'
 
 export function CarCarousel() {
+    const cars = data.find(item => item.cars)?.cars || []
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,
