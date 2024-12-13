@@ -73,7 +73,7 @@ const NavBar: React.FC = () => {
                         </svg>
                     </button>
 
-                    <button
+                    <Link href='/login'
                         className="flex items-center space-x-2 p-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 transition"
                         title="Iniciar sesión"
                     >
@@ -92,7 +92,7 @@ const NavBar: React.FC = () => {
                             />
                         </svg>
                         <span className="hidden md:block">Iniciar sesión</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </nav>
