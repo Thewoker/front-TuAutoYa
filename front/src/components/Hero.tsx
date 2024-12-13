@@ -29,8 +29,8 @@ export function Hero() {
             setIsTransitioning(true)
             setTimeout(() => {
                 setCurrentMessage((prev) => (prev + 1) % messages.length)
-            }, 500) // Espera a que la transición de salida termine
-        }, 5000) // Cambia el mensaje cada 5 segundos
+            }, 600) // Espera a que la transición de salida termine
+        }, 10000) // Cambia el mensaje cada 10 segundos
 
         return () => clearInterval(intervalId)
     }, [])
@@ -67,7 +67,7 @@ export function Hero() {
                     <div className="mt-5 sm:mt-8 sm:flex sm:justify-center">
                         <div className="rounded-md shadow">
                             <Link
-                                href="/catalog"
+                                href="/catalogo"
                                 className="flex w-full items-center justify-center rounded-md border border-transparent bg-orange-600 px-8 py-3 text-base font-medium text-white hover:bg-orange-700 md:py-4 md:px-10 md:text-lg"
                             >
                                 Reserva ahora

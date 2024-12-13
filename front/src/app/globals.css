@@ -96,4 +96,10 @@ body {
       }
     }
   }
+
+  /* Body con la imagen */
+  /* body {
+    @apply bg-custom-pattern bg-cover bg-center bg-fixed text-foreground;
+    position: relative;
+  } */
 }

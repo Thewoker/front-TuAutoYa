@@ -1,13 +1,9 @@
 import LoginView from "@/Views/LoginView/LoginView";
 
-
-
-
-
- function Login() {
+function Login() {
   return (
     <div>
-      <LoginView/>
+      <LoginView />
     </div>
   );
 }

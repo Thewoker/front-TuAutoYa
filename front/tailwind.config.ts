@@ -11,7 +11,7 @@ export default {
 	theme: {
 		extend: {
 			backgroundImage: {
-				'custom-pattern': "url('/images/appBackground.jpg')",
+				'custom-pattern': "url('/Images/appBackground.jpg')",
 			},
 			colors: {
 				background: 'hsl(var(--background))',

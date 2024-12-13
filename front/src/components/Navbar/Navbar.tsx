@@ -6,9 +6,9 @@ import Link from "next/link";
 const NavBar: React.FC = () => {
     return (
         <nav
-            className="bg-cover bg-center shadow-md"
+            className="bg-cover bg-center shadow-md bg-fixed text-foreground"
             style={{
-                backgroundImage: 'url("")',
+                backgroundImage: 'url("/Images/appBackground.jpg")',
                 backgroundAttachment: 'fixed',
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
