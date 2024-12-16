@@ -6,7 +6,7 @@ import HomeView from "@/Views/HomeViews/HomeView";
 export default function Home() {
   return (
     <div>
-      <NavBar/>
+      
       <HomeView/>
     </div>
   );
