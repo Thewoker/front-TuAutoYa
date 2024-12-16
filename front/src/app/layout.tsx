@@ -29,9 +29,8 @@ export default function RootLayout({
       data-lt-installed="true"
     >
       <body
-       
       >
-        <NavBar/>
+        <NavBar />
         {children}
       </body>
     </html>

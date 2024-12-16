@@ -1,14 +1,17 @@
+"use client";
 
+import { useState } from "react";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../../src/firebase.config";
+import { useRouter } from "next/navigation"; // Importa useRouter
 
-"use client"; // Agrega esta línea al inicio del archivo
-
-import { useState } from 'react';
-
-const Login = () => {
+const LoginView = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
+
+  const router = useRouter(); // Inicializa useRouter
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,16 +20,30 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica para el login
     console.log(formData);
+    // Aquí puedes implementar tu lógica para autenticación con email y contraseña
+    // Si el login con email y password es exitoso:
+    // router.push("/dashboard");
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log("Usuario autenticado:", user);
+
+      // Redirige al dashboard después de un login exitoso
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error al iniciar sesión con Google:", error);
+    }
   };
 
   return (
-    <div className=" pl-20 ml-15 min-h-screen flex items-center justify-center "
-   >
-      <div className="bg-zinc-200  p-8 rounded-lg shadow-lg w-full max-w-sm">
+    <div className="pl-20 ml-15 min-h-screen flex items-center justify-center">
+      <div className="bg-zinc-200 p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-6 ">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-green-900">
               Email
@@ -62,9 +79,15 @@ const Login = () => {
             Login
           </button>
         </form>
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full mt-4 py-2 bg-amber-400 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          Login with Google
+        </button>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
-            Dont have an account?{' '}
+            Don't have an account?{" "}
             <a href="/register" className="text-green-900 hover:text-blue-700">
               Sign up
             </a>
@@ -75,4 +98,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginView;
