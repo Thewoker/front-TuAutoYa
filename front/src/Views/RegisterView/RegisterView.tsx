@@ -1,118 +1,101 @@
-"use client"; // Agrega esta línea al inicio del archivo
+'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithPopup, 
+  GoogleAuthProvider 
+} from 'firebase/auth';
+import { auth } from '../../firebase.config';
 
 const RegisterView = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    dni: '',
-  });
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const provider = new GoogleAuthProvider();
+
+  // Maneja el registro con email y contraseña
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.push('/login'); // Redirigir al login después de registro exitoso
+    } catch (err: any) {
+      console.error('Error al registrar usuario:', err.message);
+      setError('Error al registrar. Verifica tus datos e intenta nuevamente.');
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí iría la lógica para el registro
-    console.log(formData);
+  // Maneja el inicio de sesión con Google
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      router.push('/dashboard'); // Redirige al dashboard si el inicio de sesión es exitoso
+    } catch (err: any) {
+      console.error('Error al iniciar sesión con Google:', err.message);
+      setError('No se pudo autenticar con Google. Intenta de nuevo.');
+    }
   };
 
   return (
-    <div className="pl-20 ml-15 min-h-screen flex items-center justify-center">
-      <div className="bg-zinc-200 p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">Registro</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-green-900">
-              Nombre completo
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="dni" className="block text-sm font-medium text-green-900">
-              DNI
-            </label>
-            <input
-              type="text"
-              id="dni"
-              name="dni"
-              value={formData.dni}
-              onChange={handleChange}
-              required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-green-900">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-green-900">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-green-900">
-              Confirmar contraseña
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full py-2 bg-sky-500 text-white rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Registrarse
-          </button>
-        </form>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            ¿Ya tienes una cuenta?{' '}
-            <a href="/login" className="text-green-900 hover:text-blue-700">
-              Inicia sesión
-            </a>
-          </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold mb-4">Crea tu cuenta</h1>
+      <form onSubmit={handleRegister} className="w-full max-w-sm bg-white p-6 rounded shadow-md">
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full px-4 py-2 border rounded-md"
+            required
+          />
         </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Contraseña
+          </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 block w-full px-4 py-2 border rounded-md"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <div className="mt-6">
+        <p className="mb-4">O regístrate con:</p>
+        <button
+          onClick={handleGoogleSignIn}
+          className="w-full px-4 py-2 bg-red-500 text-white font-medium rounded-md hover:bg-red-600"
+        >
+          Continuar con Google
+        </button>
       </div>
+      <p className="mt-4">
+        ¿Ya tienes cuenta?{' '}
+        <a href="/login" className="text-blue-500 hover:underline">
+          Inicia sesión
+        </a>
+      </p>
     </div>
   );
 };

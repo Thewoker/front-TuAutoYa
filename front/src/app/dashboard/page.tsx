@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect } from 'react';
@@ -12,7 +11,7 @@ const Dashboard = () => {
   // Esta función se encarga de cerrar la sesión
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Cierra la sesión del usuario
+      await signOut(auth); // Cierra la sesión del usuario en Firebase
       router.push('/login'); // Redirige a la página de login
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
@@ -20,14 +19,18 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) {
-      router.push('/login'); // Redirige si no hay usuario autenticado
-    }
+    // Verifica si hay un usuario autenticado
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        router.push('/login'); // Redirige si no hay usuario autenticado
+      }
+    });
+
+    return () => unsubscribe(); // Limpia el listener al desmontar el componente
   }, [router]);
 
   return (
-    <div className='mt-4 text-center'>
+    <div className="mt-4 text-center">
       <h1>Welcome to the Dashboard</h1>
       <button
         onClick={handleLogout}
@@ -40,4 +43,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
