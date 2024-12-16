@@ -75,7 +75,7 @@ const RegisterView = () => {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600"
+          className="w-full px-4 py-2 bg-sky-400 text-white font-medium rounded-md hover:bg-blue-600"
         >
           Registrarse
         </button>
@@ -85,7 +85,7 @@ const RegisterView = () => {
         <p className="mb-4">O regístrate con:</p>
         <button
           onClick={handleGoogleSignIn}
-          className="w-full px-4 py-2 bg-red-500 text-white font-medium rounded-md hover:bg-red-600"
+          className="w-full px-4 py-2 bg-amber-400 text-white font-medium rounded-md hover:bg-red-600"
         >
           Continuar con Google
         </button>
