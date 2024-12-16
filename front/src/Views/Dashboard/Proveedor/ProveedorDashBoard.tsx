@@ -22,7 +22,7 @@ export default function Dashboard() {
             brand: 'Tesla',
             price: 150,
             description: 'Vehículo eléctrico de alta gama',
-            image: '/placeholder.svg?height=300&width=400',
+            image: '/model3.jpg',
         },
         // Puedes agregar más autos aquí
     ])

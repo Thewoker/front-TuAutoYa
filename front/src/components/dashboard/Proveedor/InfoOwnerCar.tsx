@@ -27,7 +27,7 @@ interface CarCardProps {
 export function CarCard({ id, model, brand, price, description, image, onEdit, onDelete }: CarCardProps) {
     return (
         <Card className="w-full max-w-sm">
-            <img src={image} alt={`${brand} ${model}`} className="w-full h-48 object-cover" />
+            <img src={`/Images/${image}`} alt={`${brand} ${model}`} className="w-full h-48 object-cover" />
             <CardContent className="p-4">
                 <h3 className="text-lg font-bold">{brand} {model}</h3>
                 <p className="text-sm text-gray-500 mt-1">{description}</p>
