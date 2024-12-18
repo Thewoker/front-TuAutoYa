@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+
 import "./globals.css";
 import NavBar from "@/components/Navbar/Navbar";
+import { Bebas_Neue } from 'next/font/google';
+import './globals.css'; // Archivo donde Tailwind está configurado
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  weight: '400', // Bebas Neue tiene un solo peso
+  variable: '--font-bebas-neue', // Variable CSS para usar con Tailwind
 });
 
 export const metadata: Metadata = {
@@ -25,8 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"
-      data-lt-installed="true"
+    <html lang="es" className={bebasNeue.variable}
     >
       <body
       >
