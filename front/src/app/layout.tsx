@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import Footer from "@/components/Footer/Footer";
 import "./globals.css";
 import NavBar from "@/components/Navbar/Navbar";
 import { Bebas_Neue } from 'next/font/google';
@@ -28,6 +28,7 @@ export default function RootLayout({
       >
         <NavBar />
         {children}
+        <Footer/>
       </body>
     </html>
   );
