@@ -1,10 +1,10 @@
 import React from 'react'
-import ProveedorDashBoard from '@/Views/Dashboard/Proveedor/ProveedorDashBoard'
+import Dashboard from '@/Views/Dashboard/Dashboard'
 
 function page() {
   return (
     <div>
-        <ProveedorDashBoard />
+        <Dashboard />
     </div>
   )
 }
