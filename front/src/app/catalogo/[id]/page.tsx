@@ -3,12 +3,13 @@ import Image from "next/image";
 import data from "@/helpers/data";
 import ICars from "@/Interfaces/ICars";
 import { Star } from "lucide-react";
+import { useParams } from "next/navigation"; 
 import { CarCarousel } from "@/components/CarCarrousel";
 import { CarCarousel2 } from "@/components/CarCarrousel2";
 
 
-function CarDetail({ params }: { params: { id: string } }) {
-    const { id } = params;
+function CarDetail() {
+    const { id } = useParams();
     const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
     const car = cars.find((car) => car.id === Number(id));
     const filtro = car?.model || '';
