@@ -1,8 +1,8 @@
 import { Card } from "@/components/ui/card"
-import ICars from "@/Interfaces/ICars"
 import { Star, Gauge, Car, Disc, Fuel } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
+import CarProps from "@/Interfaces/ICarProps"
 
 
 export function CarCard({
@@ -10,18 +10,18 @@ export function CarCard({
     brand,
     model,
     pricePerDay,
-    img,
+    image,
     transmission,
     mileage,
     brakes,
     fuelType,
     rating,
-}: ICars) {
+}: CarProps) {
     return (
         <Card className="w-[300px] overflow-hidden bg-white">
             <div className="relative h-[200px] w-full">
                 <Image
-                    src={img}
+                    src={image || `/placeholder.svg?height=200&width=300`}
                     alt={model}
                     fill
                     className="object-cover"
@@ -35,7 +35,7 @@ export function CarCard({
                     <h3 className="font-semibold text-lg">{model}</h3>
                     <div className="text-right">
                         <span className="text-xl font-bold text-amber-600">${pricePerDay}</span>
-                        <span className="text-sm text-muted-foreground">/Hr</span>
+                        <span className="text-sm text-muted-foreground">/día</span>
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@ export function CarCard({
                 <div className="flex justify-between items-center pt-2 border-t">
                     <div className="flex items-center gap-1">
                         <span className="font-semibold">Reviews: {rating}</span>
-                        <Star className="h-4 w-4 fill-amber-500  text-amber-500" />
+                        <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
                     </div>
                     <Link
                         href={`/cars/${id}`}

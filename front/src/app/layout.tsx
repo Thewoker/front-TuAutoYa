@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/Navbar/Navbar";
 import { Bebas_Neue } from 'next/font/google';
 import './globals.css'; // Archivo donde Tailwind está configurado
+import { ConditionalHeader } from "@/components/ConditionalHeader";
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
@@ -23,10 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={bebasNeue.variable}
+    data-lt-installed="true"
     >
       <body
       >
-        <NavBar />
+        <ConditionalHeader />
         {children}
         <Footer/>
       </body>
