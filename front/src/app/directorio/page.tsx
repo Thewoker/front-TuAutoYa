@@ -1,6 +1,28 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+
+const agencies = [
+  {
+    nombre: "Alamo",
+    direccion: "Av. El Dorado #103-09, Bogotá",
+    Telefono : " 317 3892518",
+    logo: "/images/alamo_logo_lrg.gif",
+  },
+  {
+    nombre: "Avis",
+    direccion: "Av. El Dorado #103-09, Bogotá",
+    telefono : "316 6913528",
+    logo: "/images/avis_logo_lrg.gif",
+  },
+  {
+    nombre: "Foco Rent a Car",
+    direccion: "Cra. 67 #100 20, Suba, Bogotá, Cundinamarca",
+    telefono: "31023555589",
+    logo: "/images/foco_rent_a_car_logo_lrg.gif",
+  },
+];
 
 const DirectorioDeAgencias: React.FC = () => {
   return (
@@ -12,38 +34,29 @@ const DirectorioDeAgencias: React.FC = () => {
         Encuentra las mejores agencias cerca de ti para alquilar un vehículo.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Tarjeta de agencia 1 */}
-        <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Agencia 1
-          </h2>
-          <p className="text-gray-600 mt-2">
-            Dirección: Calle 123, Ciudad.
-          </p>
-          <p className="text-gray-600">Teléfono: (123) 456-7890</p>
-        </div>
-
-        {/* Tarjeta de agencia 2 */}
-        <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Agencia 2
-          </h2>
-          <p className="text-gray-600 mt-2">
-            Dirección: Avenida 456, Ciudad.
-          </p>
-          <p className="text-gray-600">Teléfono: (987) 654-3210</p>
-        </div>
-
-        {/* Tarjeta de agencia 3 */}
-        <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Agencia 3
-          </h2>
-          <p className="text-gray-600 mt-2">
-            Dirección: Plaza Central, Ciudad.
-          </p>
-          <p className="text-gray-600">Teléfono: (555) 123-4567</p>
-        </div>
+        {agencies.map((agency, index) => (
+          <div
+            key={index}
+            className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition"
+          >
+            <div className="flex justify-center">
+              <Image
+                src={agency.logo}
+                alt={`${agency.nombre} logo`}
+                width={150}
+                height={100}
+                className="object-contain mb-4"
+              />
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-800 text-center">
+              {agency.nombre}
+            </h2>
+            <p className="text-gray-600 mt-2 text-center">
+              Dirección: {agency.direccion}
+            </p>
+            <p className="text-gray-600 text-center">Teléfono: {agency.telefono}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -64,7 +64,7 @@ export function CarCard({
                         <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
                     </div>
                     <Link
-                        href={`/cars/${id}`}
+                        href={`/catalogo/${id}`}
                         className="text-sm font-medium text-blue-600 hover:underline"
                     >
                         View Details
