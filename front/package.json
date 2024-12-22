@@ -20,8 +20,7 @@
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.0",
     "@react-google-maps/api": "^2.20.3",  
-    "@radix-ui/react-switch": "^1.1.2",    git add package.json
-
+    "@radix-ui/react-switch": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
