@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reservas } from '@/components/Reservas'
+import { Reservas } from '@/components/Admin/Reservas'
 
 function ReservasView() {
   return (
