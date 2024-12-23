@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
 import "./globals.css";
-import NavBar from "@/components/Navbar/Navbar";
 import { Bebas_Neue } from 'next/font/google';
 import './globals.css'; // Archivo donde Tailwind está configurado
-import { ConditionalHeader } from "@/components/ConditionalHeader";
+import { ConditionalHeader } from "@/components/Layout/ConditionalHeader";
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
