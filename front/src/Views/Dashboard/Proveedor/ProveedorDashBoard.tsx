@@ -4,6 +4,12 @@ import { useState } from 'react'
 import { CarCard } from '@/components/dashboard/Proveedor/InfoOwnerCar'
 import { AddCarForm } from '@/components/dashboard/Proveedor/CreateCarForm'
 import { Button } from "@/components/ui/button"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import { ChevronDown, ChevronUp } from 'lucide-react'
 
 interface Car {
     id: string
@@ -12,25 +18,17 @@ interface Car {
     price: number
     description: string
     image: string
+    year: number
+    stock: number
 }
 
-export default function Dashboard() {
+export default function CarManagement() {
     const [cars, setCars] = useState<Car[]>([
-        {
-            id: '1',
-            model: 'Model 3',
-            brand: 'Tesla',
-            price: 150,
-            description: 'Vehículo eléctrico de alta gama',
-            image: '/model3.jpg',
-        },
-        // Puedes agregar más autos aquí
     ])
 
-    const [showAddForm, setShowAddForm] = useState(false)
+    const [isFormOpen, setIsFormOpen] = useState(false)
 
     const handleEdit = (id: string) => {
-        // Implementar lógica de edición
         console.log('Editar auto con id:', id)
     }
 
@@ -42,26 +40,31 @@ export default function Dashboard() {
         const newCar = {
             ...data,
             id: Date.now().toString(),
-            price: Number(data.price),
         }
-        setCars([...cars, newCar])
-        setShowAddForm(false)
+        setCars(prevCars => [...prevCars, newCar])
+        setIsFormOpen(false)
     }
 
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Dashboard del Propietario</h1>
-            <div className="mb-4">
-                <Button onClick={() => setShowAddForm(!showAddForm)}>
-                    {showAddForm ? 'Cancelar' : 'Agregar Nuevo Auto'}
-                </Button>
-            </div>
-            {showAddForm && (
-                <div className="mb-8">
-                    <h2 className="text-xl font-semibold mb-4">Agregar Nuevo Auto</h2>
-                    <AddCarForm onSubmit={handleAddCar} />
-                </div>
-            )}
+            <Collapsible
+                open={isFormOpen}
+                onOpenChange={setIsFormOpen}
+                className="mb-4 border rounded-md p-4"
+            >
+                <CollapsibleTrigger asChild>
+                    <Button className="w-full flex justify-between items-center">
+                        {isFormOpen ? 'Cerrar formulario' : 'Agregar Nuevo Auto'}
+                        {isFormOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-4 overflow-hidden transition-all duration-300 ease-in-out">
+                    <div className="animate-slideDown">
+                        <AddCarForm onSubmit={handleAddCar} />
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {cars.map(car => (
                     <CarCard
