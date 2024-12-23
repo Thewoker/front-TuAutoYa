@@ -3,7 +3,7 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { CarCard } from './HomeMain/CarCard'
+import { CarCard } from '@/components/HomeMain/CarCard'
 import { useCallback } from 'react'
 import Link from 'next/link'
 import data from '@/helpers/data'
