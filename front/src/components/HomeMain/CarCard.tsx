@@ -34,13 +34,8 @@ export function CarCard({
                 <div className="flex justify-between items-start mb-4">
                     <h3 className="font-semibold text-lg text-emerald-900 ">{model}</h3>
                     <div className="text-right">
-<<<<<<< HEAD:front/src/components/CarCard.tsx
-                        <span className="text-xl font-bold text-zinc-200">${pricePerDay}</span>
-                        <span className="text-sm text-muted-foreground text-zinc-200">/Hr</span>
-=======
                         <span className="text-xl font-bold text-amber-600">${pricePerDay}</span>
                         <span className="text-sm text-muted-foreground">/día</span>
->>>>>>> 2ae97e6a8e6022ce6d1b94b1aa2d3bbcdcce19d1:front/src/components/HomeMain/CarCard.tsx
                     </div>
                 </div>
 
@@ -65,13 +60,8 @@ export function CarCard({
 
                 <div className="flex justify-between items-center pt-2 border-t">
                     <div className="flex items-center gap-1">
-<<<<<<< HEAD:front/src/components/CarCard.tsx
-                        <span className="font-semibold  text-zinc-200">Reviews: {rating}</span>
-                        <Star className="h-4 w-4 fill-amber-500  text-amber-500" />
-=======
                         <span className="font-semibold">Reviews: {rating}</span>
                         <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
->>>>>>> 2ae97e6a8e6022ce6d1b94b1aa2d3bbcdcce19d1:front/src/components/HomeMain/CarCard.tsx
                     </div>
                     <Link
                         href={`/catalogo/${id}`}

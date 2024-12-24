@@ -43,17 +43,10 @@ export function CarCarousel() {
     return (
         <div className="relative w-full">
             <div className='flex justify-between'>
-<<<<<<< HEAD:front/src/components/CarCarrousel.tsx
-            <h2 className='text-xl text-emerald-900'><b>Todos nuestros proveedores</b></h2>
-            <Link href="/catalogo">
-                <p className='text-emerald-900 hover:underline text-sm'>Ve nuestro catalogo</p>
-            </Link>
-=======
                 <h2 className='text-xl'><b>Todos nuestros proveedores</b></h2>
                 <Link href="/catalogo">
                     <p className='text-blue-600 hover:underline text-sm'>Ve nuestro catalogo</p>
                 </Link>
->>>>>>> 2ae97e6a8e6022ce6d1b94b1aa2d3bbcdcce19d1:front/src/components/HomeMain/CarCarrousel.tsx
             </div>
             <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex gap-4 p-4">
