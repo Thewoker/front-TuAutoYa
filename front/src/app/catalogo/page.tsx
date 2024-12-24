@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -14,10 +14,9 @@ import {
   MenuItems,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import data from '@/helpers/data'
-import { CarList } from '@/components/CarList'
-import ICars from '@/Interfaces/ICars'
+import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
+import { CarList } from '@/components/HomeMain/CarList'
+import Car from '@/Interfaces/ICar'
 
 const sortOptions = [
     { name: 'Most Popular', value: 'popular', current: true },
@@ -29,10 +28,11 @@ const sortOptions = [
 
 function classNames(...classes: (string | undefined | null)[]): string {
     return classes.filter(Boolean).join(" ");
-  }
+}
 
-export default function Example() {
-    const cars:ICars[] = data.find(item => item.cars)?.cars || [];
+export default function CatalogPage() {
+    const [cars, setCars] = useState<Car[]>([]);
+    const [loading, setLoading] = useState(true);
     
     // Estado para filtros seleccionados
     const [selectedFilters, setSelectedFilters] = useState({
@@ -45,6 +45,22 @@ export default function Example() {
     // Estado para el orden seleccionado
     const [selectedSort, setSelectedSort] = useState<string>('popular');
     
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/cars');
+                const data = await response.json();
+                setCars(data);
+            } catch (error) {
+                console.error('Error fetching cars:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCars();
+    }, []);
+
     const filters = [
         {
             id: 'brand',
@@ -59,7 +75,7 @@ export default function Example() {
         {
             id: 'year',
             name: 'Year',
-            options: Array.from(new Set(cars.map(car => car.year.toString()))),
+            options: Array.from(new Set(cars.map(car => car.year))),
         },
         {
             id: 'transmission',
@@ -88,24 +104,24 @@ export default function Example() {
         return (
             (!selectedFilters.brand.size || selectedFilters.brand.has(car.brand)) &&
             (!selectedFilters.model.size || selectedFilters.model.has(car.model)) &&
-            (!selectedFilters.year.size || selectedFilters.year.has(car.year.toString())) &&
+            (!selectedFilters.year.size || selectedFilters.year.has(car.year)) &&
             (!selectedFilters.transmission.size || selectedFilters.transmission.has(car.transmission))
         );
     });
 
     // Función para ordenar los autos
-    const sortCars = (cars: ICars[]) => {
+    const sortCars = (cars: Car[]) => {
         switch (selectedSort) {
             case 'rating':
                 return [...cars].sort((a, b) => b.rating - a.rating);
             case 'newest':
-                return [...cars].sort((a, b) => b.year - a.year); 
+                return [...cars].sort((a, b) => parseInt(b.year) - parseInt(a.year));
             case 'priceLowToHigh':
-                return [...cars].sort((a, b) => a.pricePerDay - b.pricePerDay); 
+                return [...cars].sort((a, b) => parseFloat(a.pricePerDay) - parseFloat(b.pricePerDay));
             case 'priceHighToLow':
-                return [...cars].sort((a, b) => b.pricePerDay - a.pricePerDay); 
+                return [...cars].sort((a, b) => parseFloat(b.pricePerDay) - parseFloat(a.pricePerDay));
             default:
-                return cars; 
+                return cars;
         }
     };
 
@@ -113,7 +129,6 @@ export default function Example() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    // Calcular los autos visibles según la página actual
     const paginatedCars = sortedCars.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
@@ -121,10 +136,14 @@ export default function Example() {
     const totalPages = Math.ceil(filteredCars.length / itemsPerPage);
 
     const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-        setCurrentPage(page);
-    }
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
     };
+
+    if (loading) {
+        return <div className="flex items-center justify-center min-h-screen">Cargando...</div>;
+    }
 
     return (
         <div className="bg-white">
@@ -136,44 +155,34 @@ export default function Example() {
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
-                                <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                                    Sort
-                                    <ChevronDownIcon
-                                    aria-hidden="true"
-                                    className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
-                                    />
-                                </MenuButton>
+                                    <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        Sort
+                                        <ChevronDownIcon
+                                            className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true"
+                                        />
+                                    </MenuButton>
                                 </div>
 
-                                <MenuItems
-                                transition
-                                className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                                >
+                                <MenuItems className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-none">
                                     <div className="py-1">
                                         {sortOptions.map((option) => (
-                                        <MenuItem key={option.name}>
-                                            <button
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                setSelectedSort(option.value); // Cambiar el orden seleccionado
-                                            }}
-                                            className={classNames(
-                                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                                'block px-4 py-2 text-sm data-[focus]:bg-gray-100 data-[focus]:outline-none',
-                                            )}
-                                            >
-                                            {option.name}
-                                            </button>
-                                        </MenuItem>
+                                            <MenuItem key={option.name}>
+                                                <button
+                                                    onClick={() => setSelectedSort(option.value)}
+                                                    className={classNames(
+                                                        option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                                        'block px-4 py-2 text-sm'
+                                                    )}
+                                                >
+                                                    {option.name}
+                                                </button>
+                                            </MenuItem>
                                         ))}
                                     </div>
                                 </MenuItems>
                             </Menu>
 
-                            {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                                <span className="sr-only">View grid</span>
-                                <Squares2X2Icon aria-hidden="true" className="size-5" />
-                            </button> */}
                             <div className="-m-2 ml-5 p-2 text-gray-500 sm:ml-7">
                                 Total de carros: {filteredCars.length}
                             </div>
@@ -183,82 +192,59 @@ export default function Example() {
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                             >
                                 <span className="sr-only">Filtros</span>
-                                <FunnelIcon aria-hidden="true" className="size-5" />
+                                <FunnelIcon className="size-5" aria-hidden="true" />
                             </button>
                         </div>
                     </div>
 
                     <section aria-labelledby="products-heading" className="pb-24 pt-6">
                         <h2 id="products-heading" className="sr-only">
-                        Cars
+                            Cars
                         </h2>
 
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-                        {/* Filters */}
+                            {/* Filters */}
                             <form className="hidden lg:block">
                                 {filters.map(filter => (
-                                <Disclosure key={filter.id} as="div" className="border-b border-gray-200 py-6">
-                                    <h3 className="-my-3 flow-root">
-                                    <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                                        <span className="font-medium text-gray-900">{filter.name}</span>
-                                        <span className="ml-6 flex items-center">
-                                        <PlusIcon aria-hidden="true" className="size-5 group-data-[open]:hidden" />
-                                        <MinusIcon aria-hidden="true" className="size-5 group-[&:not([data-open])]:hidden" />
-                                        </span>
-                                    </DisclosureButton>
-                                    </h3>
-                                    <DisclosurePanel className="pt-6">
-                                        <div className="space-y-4">
-                                            {filter.options.map((option) => (
-                                                <div key={option} className="flex gap-3">
-                                                    <div className="flex h-5 shrink-0 items-center">
-                                                    <div className="group grid size-4 grid-cols-1">
+                                    <Disclosure key={filter.id} as="div" className="border-b border-gray-200 py-6">
+                                        <h3 className="-my-3 flow-root">
+                                            <DisclosureButton className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                <span className="font-medium text-gray-900">{filter.name}</span>
+                                                <span className="ml-6 flex items-center">
+                                                    <PlusIcon className="size-5" aria-hidden="true" />
+                                                    <MinusIcon className="size-5 hidden" aria-hidden="true" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </h3>
+                                        <DisclosurePanel className="pt-6">
+                                            <div className="space-y-4">
+                                                {filter.options.map((option) => (
+                                                    <div key={option} className="flex items-center">
                                                         <input
-                                                        // defaultValue={option.value}
-                                                        // defaultChecked={option.checked}
-                                                        id={`${filter.id}-${option}`}
-                                                        name={`${filter.id}[]`}
-                                                        type="checkbox"
-                                                        checked={selectedFilters[filter.id as keyof typeof selectedFilters].has(option)}
-                                                        onChange={() => handleFilterChange(filter.id, option)}
-                                                        className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                                            id={`${filter.id}-${option}`}
+                                                            name={`${filter.id}[]`}
+                                                            type="checkbox"
+                                                            checked={selectedFilters[filter.id as keyof typeof selectedFilters].has(option)}
+                                                            onChange={() => handleFilterChange(filter.id, option)}
+                                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                         />
-                                                        <svg
-                                                        fill="none"
-                                                        viewBox="0 0 14 14"
-                                                        className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
+                                                        <label
+                                                            htmlFor={`${filter.id}-${option}`}
+                                                            className="ml-3 text-sm text-gray-600"
                                                         >
-                                                        <path
-                                                            d="M3 8L6 11L11 3.5"
-                                                            strokeWidth={2}
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            className="opacity-0 group-has-[:checked]:opacity-100"
-                                                        />
-                                                        <path
-                                                            d="M3 7H11"
-                                                            strokeWidth={2}
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            className="opacity-0 group-has-[:indeterminate]:opacity-100"
-                                                        />
-                                                        </svg>
+                                                            {option}
+                                                        </label>
                                                     </div>
-                                                    </div>
-                                                    <label htmlFor={`${filter.id}-${option}`} className="text-sm text-gray-600">
-                                                    {option}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </DisclosurePanel>
-                                </Disclosure>
+                                                ))}
+                                            </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
                                 ))}
                             </form>
 
-                        {/* Product grid */}
+                            {/* Product grid */}
                             <div className="lg:col-span-3">
-                                <CarList cars={paginatedCars}/>
+                                <CarList cars={paginatedCars} />
                                 <div className="flex justify-between items-center mt-6">
                                     <button
                                         onClick={() => handlePageChange(currentPage - 1)}
@@ -268,7 +254,7 @@ export default function Example() {
                                         Anterior
                                     </button>
                                     <span className="text-sm text-gray-600">
-                                        Página {currentPage} a {totalPages}
+                                        Página {currentPage} de {totalPages}
                                     </span>
                                     <button
                                         onClick={() => handlePageChange(currentPage + 1)}
@@ -286,3 +272,4 @@ export default function Example() {
         </div>
     )
 }
+

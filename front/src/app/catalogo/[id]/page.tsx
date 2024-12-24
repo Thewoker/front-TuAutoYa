@@ -4,7 +4,7 @@ import data from "@/helpers/data";
 import ICars from "@/Interfaces/ICars";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
-import { CarCarousel } from "@/components/CarCarrousel";
+import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
 import { CarCarousel2 } from "@/components/CarCarrousel2";
 
 

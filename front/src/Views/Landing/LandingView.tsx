@@ -1,8 +1,8 @@
-import { Hero } from '@/components/Hero'
-import { CarCarousel } from "@/components/CarCarrousel";
-import { FaqSection } from "@/components/FAQHome";
-import { BenefitsSection } from '@/components/BenefitsHome';
-import { BrandShowcase } from '@/components/BrandShowcase';
+import { Hero } from '@/components/HomeMain/Hero'
+import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
+import { FaqSection } from "@/components/HomeMain/FAQHome";
+import { BenefitsSection } from '@/components/HomeMain/BenefitsHome';
+import { BrandShowcase } from '@/components/HomeMain/BrandShowcase';
 
 export default function Home() {
     return (
