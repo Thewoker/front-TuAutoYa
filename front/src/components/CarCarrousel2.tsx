@@ -37,7 +37,7 @@ export function CarCarousel2({ filtro, title }: CarCarouselProps) {
             <div className='flex justify-between'>
             <h2 className='text-xl'><b>{title}</b></h2>
             <Link href="/catalogo">
-                <p className='text-blue-600 hover:underline text-sm'>Ve nuestro catalogo</p>
+                <p className='text-emerald-900 hover:underline text-sm'>Ve nuestro catalogo</p>
             </Link>
             </div>
             <div className="overflow-hidden" ref={emblaRef}>

@@ -28,9 +28,9 @@ export function CarCarousel() {
     return (
         <div className="relative w-full">
             <div className='flex justify-between'>
-            <h2 className='text-xl'><b>Todos nuestros proveedores</b></h2>
+            <h2 className='text-xl text-emerald-900'><b>Todos nuestros proveedores</b></h2>
             <Link href="/catalogo">
-                <p className='text-blue-600 hover:underline text-sm'>Ve nuestro catalogo</p>
+                <p className='text-emerald-900 hover:underline text-sm'>Ve nuestro catalogo</p>
             </Link>
             </div>
             <div className="overflow-hidden" ref={emblaRef}>
