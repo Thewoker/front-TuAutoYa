@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-// Importar el mapa dinámicamente para evitar renderización en el servidor
+// Importamos el mapa dinámicamente para evitar la renderización en el servidor
 const MapWithNoSSR = dynamic(() => import("@/components/MapaDeAgencias/MapaDeAgencias"), {
   ssr: false, // Evitar renderizado en el servidor
 });
 
 const agencies = [
   {
+    id: 1,
     nombre: "Alamo",
     direccion: "Av. El Dorado #103-09, Bogotá",
     telefono: "317 3892518",
@@ -19,6 +20,7 @@ const agencies = [
     lng: -74.08175,
   },
   {
+    id: 2,
     nombre: "Avis",
     direccion: "Av. El Dorado #103-09, Bogotá",
     telefono: "316 6913528",
@@ -27,6 +29,7 @@ const agencies = [
     lng: -74.08176,
   },
   {
+    id: 3,
     nombre: "Foco Rent a Car",
     direccion: "Cra. 67 #100 20, Suba, Bogotá, Cundinamarca",
     telefono: "31023555589",
@@ -36,11 +39,21 @@ const agencies = [
   },
 ];
 
+// Definimos los marcadores basados en las agencias
+const markers = agencies.map((agency) => ({
+  id: agency.id,
+  position: { lat: agency.lat, lng: agency.lng },
+  nombre: agency.nombre,
+  direccion: agency.direccion,
+  telefono: agency.telefono,
+  logo: agency.logo,
+}));
+
 const DirectorioDeAgencias: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // Asegúrate de que estamos en el cliente
+    setIsClient(true); // Aseguramos que estamos en el cliente
   }, []);
 
   if (!isClient) {
@@ -84,9 +97,10 @@ const DirectorioDeAgencias: React.FC = () => {
       {/* Aquí cargamos el mapa de las agencias */}
       <div className="mt-8 w-full h-32 md:h-48">
         <h2 className="text-3xl font-bold text-center mb-6">Mapa de Agencias</h2>
-        {/* Ajustar tamaño del mapa con Tailwind CSS */}
-        <div className="w-full h-32 md:h-48"> 
-          <MapWithNoSSR agencies={[]}/>
+        {/* Ajustamos el tamaño del mapa con Tailwind CSS */}
+        <div className="w-full h-32 md:h-48">
+          {/* Pasamos el array de marcadores al componente del mapa */}
+          <MapWithNoSSR markers={markers} />
         </div>
       </div>
     </div>

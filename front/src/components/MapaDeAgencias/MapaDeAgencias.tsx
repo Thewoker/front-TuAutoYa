@@ -1,54 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React from "react";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
-// Definir la interfaz para los datos de las agencias
-interface Agency {
+interface MarkerProps {
+  id: number;
+  position: { lat: number; lng: number };
   nombre: string;
   direccion: string;
   telefono: string;
   logo: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
 }
 
-interface MapaDeAgenciasProps {
-  agencies: Agency[]; // Usar la interfaz para tipar 'agencies'
+interface MapProps {
+  markers: MarkerProps[];
 }
 
-const MapaDeAgencias: React.FC<MapaDeAgenciasProps> = ({ agencies }) => {
-  // Establecer el estado con el tipo adecuado
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-
-  const center = { lat: 4.60971, lng: -74.08175 }; // Coordenadas de Bogotá, por ejemplo
-
-  useEffect(() => {
-    if (map) {
-      // Si la instancia del mapa existe, puedes usarla aquí
-      console.log(map); // Puedes realizar acciones con el mapa aquí
-    }
-  }, [map]);
-
+const MapaDeAgencias: React.FC<MapProps> = ({ markers }) => {
   return (
-    <div className="w-full h-[500px] mt-6 ">
-      <LoadScript googleMapsApiKey="AIzaSyAjJQcg0hWUmGQl5zuszGbsxMXfr027j5E">
-        <GoogleMap
-          mapContainerStyle={{ width: "100%", height: "100%" }}
-          center={center}
-          zoom={12}
-          onLoad={(mapInstance) => setMap(mapInstance)}
-        >
-          {agencies.map((agency, index) => (
-            <Marker
-              key={index}
-              position={agency.location}
-              title={agency.nombre}
-            />
-          ))}
-        </GoogleMap>
-      </LoadScript>
-    </div>
+    <GoogleMap
+      mapContainerStyle={{ width: "100%", height: "100%" }}
+      center={{ lat: 4.60971, lng: -74.08175 }} // Centro de Bogotá (puedes ajustarlo si lo prefieres)
+      zoom={12}
+    >
+      {/* Colocamos un marcador por cada agencia */}
+      {markers.map((marker) => (
+        <Marker
+          key={marker.id}
+          position={marker.position}
+          title={marker.nombre}
+          icon={{
+            url: marker.logo, // Usamos el logo como icono del marcador
+            scaledSize: new window.google.maps.Size(40, 40), // Ajustamos el tamaño del icono
+          }}
+        />
+      ))}
+    </GoogleMap>
   );
 };
 

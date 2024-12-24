@@ -2,17 +2,18 @@
 "use client"; // Si estás usando React 18 y Server Components
 
 import React, { useState } from "react";
-import data from "@/helpers/data"; // Importa los datos
+import data from "@/helpers/data";
+import Car from '@/Interfaces/Car'; // Importa los datos
 
 const UltimasOfertas: React.FC = () => {
   const [favorites, setFavorites] = useState<any[]>([]);
 
-  const addFavorite = (car: any) => {
+  const addFavorite = (car: Car) => {
     setFavorites([...favorites, car]);
   };
 
   // Obtener los autos y seleccionar solo los tres últimos
-  const cars = data.find(item => item.cars)?.cars.slice(-3) || [];  // slice(-3) selecciona los últimos tres autos
+  const cars = data.find(item => item.cars)?.cars?.slice(-3) || [];  // Usamos el encadenamiento opcional (?.)
 
   return (
     <div className="container mx-auto p-4">
