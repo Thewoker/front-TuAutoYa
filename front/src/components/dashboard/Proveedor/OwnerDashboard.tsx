@@ -23,11 +23,10 @@ export default function OwnerDashboard() {
       brand: 'Tesla',
       price: 150,
       description: 'Vehículo eléctrico de alta gama',
-      image: '/placeholder.svg?height=200&width=300',
+      image: 'https://www.usnews.com/object/image/0000018c-5f08-dc6c-aded-ffbc687b0000/https-cars-dms-usnews-com-static-uploads-images-auto-custom-15203-original-2023-tesla-model-3-angular-front-1.jpg?update-time=1684170388000&size=responsiveGallery',
       year: 2023,
       stock: 5,
     },
-    // Add more sample cars as needed
   ])
 
   const [showAddForm, setShowAddForm] = useState(false)
