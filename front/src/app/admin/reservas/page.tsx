@@ -1,5 +1,5 @@
 import React from 'react'
-import ReservasView from '@/Views/Admin/ReservasView'
+import ReservasView from '@/Views/Admin/Reservs/ReservasView'
 
 export default function page() {
     return (
