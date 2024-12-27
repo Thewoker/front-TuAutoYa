@@ -7,12 +7,6 @@ export async function middleware(request: NextRequest) {
   const user = cookieStore.get('user') 
   const path = request.nextUrl.pathname
 
-  if (path.startsWith('/dashboard')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/Login', request.url))
-    }
-  }
-
   if (path.startsWith('/admin')) {
     if (!user) {
       return NextResponse.redirect(new URL('/Login', request.url))
@@ -20,11 +14,17 @@ export async function middleware(request: NextRequest) {
 
     try {
       const userData = JSON.parse(user.value)
-      if (userData.rol !== 'admin') {
+      if (userData.role !== 'admin') {
         return NextResponse.redirect(new URL('/dashboard', request.url))
       }
     } catch (error) {
       console.error('Error parsing user data:', error)
+      return NextResponse.redirect(new URL('/Login', request.url))
+    }
+  }
+
+  if (path.startsWith('/dashboard')) {
+    if (!user) {
       return NextResponse.redirect(new URL('/Login', request.url))
     }
   }
