@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../../src/firebase.config";
 import { useRouter } from "next/navigation"; // Importa useRouter
 
@@ -18,24 +18,58 @@ const LoginView = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { // --> Server Action(recommended)
     e.preventDefault();
-    console.log(formData);
     // Aquí puedes implementar tu lógica para autenticación con email y contraseña
     // Si el login con email y password es exitoso:
     // router.push("/dashboard");
+
+    try {
+      const result = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = result.user;
+      const token = await user.getIdToken();
+
+      await sendTokenToBackend(token);
+
+      router.push('/dashboard')
+    }catch (error) {
+      console.error("Error al iniciar sesión con email y contraseña:", error);
+    }
   };
 
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log("Usuario autenticado:", user);
+      const token = await user.getIdToken();
+      // console.log("Usuario autenticado:", user);
 
-      // Redirige al dashboard después de un login exitoso
-      router.push("/dashboard");
+      await sendTokenToBackend(token); // Enviar el token al backend
+      router.push('/dashboard'); // Redirigir a la página de dashboard
     } catch (error) {
       console.error("Error al iniciar sesión con Google:", error);
+    }
+  };
+
+  const sendTokenToBackend = async (token: string) => { // --> Lib/utils
+    try {
+      const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Authorization': `Bearer ${token}`, 
+        },
+      }); // Enviar el token al backend
+
+      if (!response.ok) {
+        throw new Error('Error al verificar el token');
+      }
+
+      // Aquí puedes manejar lo que el backend responda
+      const data = await response.json();
+      console.log('Token verificado en el backend:', data);
+    } catch (error) {
+      console.error('Hubo un problema al enviar el token al backend');
     }
   };
 
