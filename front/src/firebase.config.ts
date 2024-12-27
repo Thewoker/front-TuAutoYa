@@ -2,14 +2,23 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCIi0IyQbFu-5S_Ak0H3fSTl6GMCYlzFL8",
-  authDomain: "tuautoya-43f02.firebaseapp.com",
-  projectId: "tuautoya-43f02",
-  storageBucket: "tuautoya-43f02.firebasestorage.app",
-  messagingSenderId: "822543021709",
- appId: "1:822543021709:web:3c03236fdc77170f07d4c4",
-  measurementId: "G-VBSWW48DV2"
+
+  apiKey: "AIzaSyBTLGOVnxxOC5JOEeHuFnJLxjJa6wGhuZ0",
+
+  authDomain: "auth-user-f8c65.firebaseapp.com",
+
+  projectId: "auth-user-f8c65",
+
+  storageBucket: "auth-user-f8c65.firebasestorage.app",
+
+  messagingSenderId: "995627538196",
+
+  appId: "1:995627538196:web:9057bd5e7cfe120f135401",
+
+  measurementId: "G-NDEEEW80NR"
+
 };
+
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

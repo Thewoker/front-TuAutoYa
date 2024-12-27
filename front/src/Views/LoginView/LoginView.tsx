@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../../src/firebase.config";
+import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation"; // Importa useRouter
+import Cookies from 'js-cookie';
 
 const LoginView = () => {
   const [formData, setFormData] = useState({
@@ -68,7 +69,17 @@ const LoginView = () => {
       // Aquí puedes manejar lo que el backend responda
       const data = await response.json();
       console.log('Token verificado en el backend:', data);
+
+      // Almacenar la información en las cookies
+      if (data.token) {
+        Cookies.set('authToken', data.token, { expires: 7 }); // La cookie expirará en 7 días
+      }
+      if (data.user) {
+        Cookies.set('user', JSON.stringify(data.user), { expires: 7 });
+      }
+
     } catch (error) {
+      console.error("Error: ", error);
       console.error('Hubo un problema al enviar el token al backend');
     }
   };
