@@ -8,7 +8,7 @@ import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
 import { CarCarousel2 } from "@/components/CarCarrousel2";
 import { useEffect, useState } from "react";
 import Car from "@/Interfaces/ICar";
-
+import Link from 'next/link';
 
 
 function CarDetail() {
@@ -157,13 +157,14 @@ function CarDetail() {
                                         <input type="date" className="border border-gray-300 rounded-md p-2 bg-white focus:outline-none focus:ring-primary focus:border-primary" />
                                     </div>
                                 </div>
-
+                                <Link href="/Reserva">
                                 <button
-                                    type="submit"
+                                    type="button"
                                     className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
                                     Reservar ahora
                                 </button>
+                                </Link>
                             </form>
                         </div>
                     </div>
