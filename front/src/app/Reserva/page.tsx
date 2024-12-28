@@ -136,7 +136,7 @@ function Reserva() {
 
           {/* Checkbox para guardar los detalles */}
           <div className="flex items-center space-x-2">
-            <input type="checkbox border border-amber-400" id="saveDetails" className="h-5 w-5" />
+            <input type="checkbox " id="saveDetails" className="h-5 w-5" />
             <label htmlFor="saveDetails" className="text-sm emerald-900">
               Guardar mis detalles para futuras reservas
             </label>
