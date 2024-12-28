@@ -8,7 +8,7 @@ interface Car {
     description: string;
     transmission: string;
     fuelType: string;
-    mileage: string;
+    kilometer: string;
     brakes: string;
     insurance: string;
     rating: number;

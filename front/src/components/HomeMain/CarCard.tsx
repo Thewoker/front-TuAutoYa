@@ -12,7 +12,7 @@ export function CarCard({
     pricePerDay,
     image,
     transmission,
-    mileage,
+    kilometer,
     brakes,
     fuelType,
     rating,
@@ -46,7 +46,7 @@ export function CarCard({
                     </div>
                     <div className="flex items-center gap-2">
                         <Gauge className="h-4 w-4 text-muted-foreground text-zinc-200" />
-                        <span className="text-sm">{mileage}</span>
+                        <span className="text-sm">{kilometer}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Disc className="h-4 w-4 text-muted-foreground text-zinc-200" />

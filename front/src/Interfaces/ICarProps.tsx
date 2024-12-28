@@ -5,7 +5,7 @@ interface CarProps {
     pricePerDay: string;
     image: string;
     transmission: string;
-    mileage: string;
+    kilometer: string;
     brakes: string;
     fuelType: string;
     rating: number;
