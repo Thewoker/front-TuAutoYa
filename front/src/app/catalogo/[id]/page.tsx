@@ -6,12 +6,33 @@ import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
 import { CarCarousel2 } from "@/components/CarCarrousel2";
+import { useEffect, useState } from "react";
+import Car from "@/Interfaces/ICar";
+
 
 
 function CarDetail() {
+   
+    const [cars, setCars] = useState<Car[]>([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/cars');
+                const data = await response.json();
+                setCars(data);
+            } catch (error) {
+                console.error('Error fetching cars:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCars();
+    }, []);
     const { id } = useParams();
-    const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
-    const car = cars.find((car) => car.id === Number(id));
+    // const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
+    const car = cars.find((car) => car.id === id);
     const filtro = car?.model || '';
     const title = 'Modelos Relacionados';
 
@@ -36,7 +57,7 @@ function CarDetail() {
                         <div className="img">
                             <div className="relative h-80 w-full">
                                 <Image
-                                    src={car?.img || "/placeholder-image.jpg"}
+                                    src={car?.image|| "/placeholder-image.jpg"}
                                     alt={car?.model || "Imagen del coche"}
                                     layout="fill"
                                     objectFit="cover"
