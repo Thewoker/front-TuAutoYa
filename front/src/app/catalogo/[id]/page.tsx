@@ -141,9 +141,19 @@ function CarDetail() {
                                 <h2 className="text-2xl text-amber-400">Realizar Reserva</h2>
                             </div>
                             <div className="mt-3">
-                                <p className="text-xl tracking-tight text-emerald-900">Precio por Hora: {car?.pricePerDay}</p>
+                                <p className="text-xl tracking-tight text-emerald-900">Precio por Día: $ {car?.pricePerDay}</p>
                             </div>
-                            <form className="mt-5">
+                            <div className="mt-3">
+                                <Link href={`/Reserva/${car?.id}`}>
+                                    <button
+                                        type="button"
+                                        className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-amber-400 px-8 py-3 text-base font-medium text-white hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    >
+                                        Reservar ahora
+                                    </button>
+                                </Link>
+                            </div>
+                            {/* <form className="mt-5">
 
                                 <div className="flex items-center">
                                     <label className="block text-md font-medium text-emerald-900">Salida: </label>
@@ -166,7 +176,7 @@ function CarDetail() {
                                     Reservar ahora
                                 </button>
                                 </Link>
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                 </div>
