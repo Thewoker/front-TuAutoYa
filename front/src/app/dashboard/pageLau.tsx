@@ -12,7 +12,7 @@ const Dashboard = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth); // Cierra la sesión del usuario en Firebase
-            router.push('/login'); // Redirige a la página de login
+            router.push('/Login'); // Redirige a la página de login
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
         }
@@ -22,7 +22,7 @@ const Dashboard = () => {
         // Verifica si hay un usuario autenticado
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (!user) {
-                router.push('/login'); // Redirige si no hay usuario autenticado
+                router.push('/Login'); // Redirige si no hay usuario autenticado
             }
         });
 
