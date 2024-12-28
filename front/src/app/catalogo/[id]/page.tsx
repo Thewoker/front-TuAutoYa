@@ -5,7 +5,7 @@ import ICars from "@/Interfaces/ICars";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
-import { CarCarousel2 } from "@/components/Catalogo/CarDetalle/CarCarrousel2";
+import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
 import { useEffect, useState } from "react";
 import Car from "@/Interfaces/ICar";
 import Link from 'next/link';
