@@ -68,7 +68,7 @@ export function Hero() {
                         <div className="rounded-md shadow">
                             <Link
                                 href="/catalogo"
-                                className="flex w-full items-center justify-center rounded-md border border-transparent bg-orange-600 px-8 py-3 text-base font-medium text-white hover:bg-orange-700 md:py-4 md:px-10 md:text-lg"
+                                className="flex w-full items-center justify-center rounded-md border border-transparent bg-amber-500 px-8 py-3 text-base font-medium text-white hover:bg-emerald-950 md:py-4 md:px-10 md:text-lg"
                             >
                                 Reserva ahora
                             </Link>
@@ -76,7 +76,7 @@ export function Hero() {
                         <div className="mt-3 sm:mt-0 sm:ml-3">
                             <Link
                                 href="#FAQ"
-                                className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-orange-600 hover:bg-orange-50 md:py-4 md:px-10 md:text-lg"
+                                className="flex w-full items-center justify-center rounded-md border border-transparent bg-emerald-950 px-8 py-3 text-base font-medium text-amber-500 hover:bg-orange-50 md:py-4 md:px-10 md:text-lg"
                             >
                                 Más información
                             </Link>

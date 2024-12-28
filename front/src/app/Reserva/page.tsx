@@ -1,7 +1,10 @@
 
 function Reserva() {
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> 603d55744a065ce8349fa542dd2b3c166ff9f526
     return (
       <div>
         <form className="mt-5">
