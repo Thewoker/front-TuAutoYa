@@ -15,7 +15,7 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
-import { CarList } from '@/components/HomeMain/CarList'
+import { CarList } from '@/components/Catalogo/CarList'
 import Car from '@/Interfaces/ICar'
 
 const sortOptions = [

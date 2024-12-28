@@ -5,14 +5,14 @@ import ICars from "@/Interfaces/ICars";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 import { CarCarousel } from "@/components/HomeMain/CarCarrousel";
-import { CarCarousel2 } from "@/components/CarCarrousel2";
+import { CarCarousel2 } from "@/components/Catalogo/CarDetalle/CarCarrousel2";
 import { useEffect, useState } from "react";
 import Car from "@/Interfaces/ICar";
 import Link from 'next/link';
 
 
 function CarDetail() {
-   
+
     const [cars, setCars] = useState<Car[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -34,6 +34,7 @@ function CarDetail() {
     // const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
     const car = cars.find((car) => car.id === id);
     const filtro = car?.model || '';
+    const carid = car?.id || '';
     const title = 'Modelos Relacionados';
 
     return (
@@ -83,8 +84,8 @@ function CarDetail() {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
                                     </svg>
-                                    <p className="ml-2">Mileage: </p>
-                                    <p>{car?.mileage}</p>
+                                    <p className="ml-2">Kilometer: </p>
+                                    <p>{car?.kilometer}</p>
                                 </div>
                                 <div className="bg-white border rounded-lg p-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -140,9 +141,19 @@ function CarDetail() {
                                 <h2 className="text-2xl text-amber-400">Realizar Reserva</h2>
                             </div>
                             <div className="mt-3">
-                                <p className="text-xl tracking-tight text-emerald-900">Precio por Hora: {car?.pricePerDay}</p>
+                                <p className="text-xl tracking-tight text-emerald-900">Precio por Día: $ {car?.pricePerDay}</p>
                             </div>
-                            <form className="mt-5">
+                            <div className="mt-3">
+                                <Link href={`/Reserva/${car?.id}`}>
+                                    <button
+                                        type="button"
+                                        className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-amber-400 px-8 py-3 text-base font-medium text-white hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    >
+                                        Reservar ahora
+                                    </button>
+                                </Link>
+                            </div>
+                            {/* <form className="mt-5">
 
                                 <div className="flex items-center">
                                     <label className="block text-md font-medium text-emerald-900">Salida: </label>
@@ -165,12 +176,12 @@ function CarDetail() {
                                     Reservar ahora
                                 </button>
                                 </Link>
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                 </div>
                 <div className="border-b flex flex-wrap items-baseline mx-auto max-w-2xl px-4 pb-5 pt-10 sm:px-6 lg:max-w-7xl">
-                    <CarCarousel2 filtro={filtro} title={title}/>
+                    <CarCarousel2 carid={carid} filtro={filtro} title={title}/>
                 </div>
             </div>
         </div>

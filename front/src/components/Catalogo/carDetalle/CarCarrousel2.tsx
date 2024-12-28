@@ -4,19 +4,38 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CarCard } from '@/components/HomeMain/CarCard'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import data from '@/helpers/data'
 import ICars from '@/Interfaces/ICars'
+import Car from '@/Interfaces/ICar'
 
 interface CarCarouselProps {
     filtro: string;
     title: string;
+    carid: string;
 }
 
-export function CarCarousel2({ filtro, title }: CarCarouselProps) {
-    const cars = data.find(item => item.cars)?.cars || []
-    const fils = cars.filter(car => car.model === filtro) 
+export function CarCarousel2({ carid, filtro, title }: CarCarouselProps) {
+    const [cars, setCars] = useState<Car[]>([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/cars');
+                const data = await response.json();
+                setCars(data);
+            } catch (error) {
+                console.error('Error fetching cars:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCars();
+    }, []);
+    // const cars = data.find(item => item.cars)?.cars || []
+    const fils = cars.filter(car => car.model === filtro && car.id !== carid) 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,
