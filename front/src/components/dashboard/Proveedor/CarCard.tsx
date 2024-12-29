@@ -1,30 +1,42 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import Image from 'next/image'
+import { CarCardProps } from "@/Interfaces/ICreateCar"
 
-interface CarCardProps {
-  id: string
-  model: string
-  brand: string
-  price: number
-  description: string
-  image: string
-  year: number
-  stock: number
-  onDelete: () => void
-}
 
-export function CarCard({ id, model, brand, price, description, image, year, stock, onDelete }: CarCardProps) {
+export function CarCard({ car, onDelete }: CarCardProps) {
   return (
-    <Card className="w-full bg-[#f59e0b] rounded-xl">
-      <img src={image} alt={`${brand} ${model}`} className="w-full h-48 object-cover rounded-t-xl" />
-      <CardContent className="p-4">
-        <h3 className="text-lg font-bold">{brand} {model}</h3>
-        <p className="text-sm text-gray-500 mt-1">{description}</p>
-        <p className="text-sm mt-2">Año: {year}</p>
-        <p className="text-sm">Stock: {stock}</p>
-        <p className="text-lg font-semibold mt-2">${price}/día</p>
+    <Card className="bg-[#f59e0b]">
+      <CardHeader>
+        <CardTitle>{car.brand} {car.model}</CardTitle>
+      </CardHeader>
+      <CardContent>
+          <Badge variant={car.status === 'active' ? 'default' : 'secondary'} className="mb-3">{car.status}</Badge>
+        <div className="aspect-video relative mb-4">
+          <Image
+            src={car.image}
+            alt={`${car.brand} ${car.model}`}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-md"
+          />
+        </div>
+        <p className="text-sm text-gray-500 mb-2">{car.description}</p>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <p><strong>Año:</strong> {car.year}</p>
+          <p><strong>Precio/día:</strong> ${car.pricePerDay}</p>
+          <p><strong>Transmisión:</strong> {car.transmission}</p>
+          <p><strong>Combustible:</strong> {car.fuelType}</p>
+          <p><strong>Kilometraje:</strong> {car.kilometer}</p>
+          <p><strong>Frenos:</strong> {car.brakes}</p>
+          <p><strong>Calificación:</strong> {car.rating}/5</p>
+        </div>
+        <div className="mt-4">
+          <p className="text-sm"><strong>Propietario:</strong> {car.users.name || car.users.email}</p>
+        </div>
       </CardContent>
-      <CardFooter className="p-4">
+      <CardFooter>
         <Button variant="destructive" onClick={onDelete}>Eliminar</Button>
       </CardFooter>
     </Card>

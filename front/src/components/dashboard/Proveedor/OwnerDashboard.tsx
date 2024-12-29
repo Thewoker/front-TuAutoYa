@@ -1,44 +1,83 @@
-import { useState } from 'react'
+'use client'
+
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AddCarForm } from './AddCarForm'
 import { CarCard } from './CarCard'
+import axios from 'axios'
+import { Car, User } from  "@/Interfaces/ICreateCar"
 
-interface Car {
-  id: string
-  model: string
-  brand: string
-  price: number
-  description: string
-  image: string
-  year: number
-  stock: number
-}
+
 
 export default function OwnerDashboard() {
-  const [cars, setCars] = useState<Car[]>([
-    {
-      id: '1',
-      model: 'Model 3',
-      brand: 'Tesla',
-      price: 150,
-      description: 'Vehículo eléctrico de alta gama',
-      image: 'https://www.usnews.com/object/image/0000018c-5f08-dc6c-aded-ffbc687b0000/https-cars-dms-usnews-com-static-uploads-images-auto-custom-15203-original-2023-tesla-model-3-angular-front-1.jpg?update-time=1684170388000&size=responsiveGallery',
-      year: 2023,
-      stock: 5,
-    },
-  ])
-
+  const [cars, setCars] = useState<Car[]>([])
   const [showAddForm, setShowAddForm] = useState(false)
+  const [userData, setUserData] = useState<User | null>(null)
 
-  const handleAddCar = (newCar: Omit<Car, 'id'>) => {
-    const carWithId = { ...newCar, id: Date.now().toString() }
-    setCars([...cars, carWithId])
-    setShowAddForm(false)
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const cars = await axios.get("http://localhost:3000/api/v1/cars")
+
+        setCars(cars.data)
+        const { data } = await axios.get('/api/getUserData')
+        if (!data) {
+          throw new Error('Failed to fetch user data')
+        }
+        setUserData(JSON.parse(data))
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+    fetchUserData()
+  }, [])
+
+  const handleAddCar = async (newCar: Omit<Car, 'id' | 'users'>) => {
+    if (!userData) {
+      console.error('User data not available')
+      return
+    }
+    try {
+      const response = await fetch('http://localhost:3000/api/v1/cars', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...newCar,
+          user: userData,
+          userId: userData.id,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to add car')
+      }
+
+      const addedCar = await response.json()
+      setCars([...cars, addedCar])
+      setShowAddForm(false)
+    } catch (error) {
+      console.error('Error adding car:', error)
+    }
   }
 
-  const handleDeleteCar = (id: string) => {
-    setCars(cars.filter(car => car.id !== id))
+  const handleDeleteCar = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/cars/${id}`, {
+        method: 'DELETE',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to delete car')
+      }
+
+      setCars(cars.filter(car => car.id !== id))
+    } catch (error) {
+      console.error('Error deleting car:', error)
+    }
   }
 
   return (
@@ -48,21 +87,21 @@ export default function OwnerDashboard() {
           <CardTitle>Gestión de Vehículos</CardTitle>
         </CardHeader>
         <CardContent>
-          <Button onClick={() => setShowAddForm(!showAddForm)}>
+          <Button className='bg-[#022c22]' onClick={() => setShowAddForm(!showAddForm)}>
             {showAddForm ? 'Cancelar' : 'Agregar Nuevo Vehículo'}
           </Button>
-          
-          {showAddForm && (
+
+          {showAddForm && userData && (
             <div className="mt-4">
-              <AddCarForm onSubmit={handleAddCar} />
+              <AddCarForm onSubmit={handleAddCar} userData={userData} />
             </div>
           )}
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
             {cars.map(car => (
               <CarCard
                 key={car.id}
-                {...car}
+                car={car}
                 onDelete={() => handleDeleteCar(car.id)}
               />
             ))}

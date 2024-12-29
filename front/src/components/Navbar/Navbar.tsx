@@ -109,7 +109,7 @@ const NavBar: React.FC = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 p-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 transition"
+                className="flex items-center  p-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 transition"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
