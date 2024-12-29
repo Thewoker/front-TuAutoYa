@@ -4,44 +4,38 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { AddCarFormProps, CloudinaryResult, CarFormData} from "@/Interfaces/ICreateCar"
 
-interface CarFormData {
-  model: string;
-  brand: string;
-  price: number;
-  description: string;
-  image: string;
-  year: number;
-  stock: number;
-}
-
-interface CloudinaryResult {
-  info: {
-    secure_url: string;
-  };
-}
-
-export function AddCarForm({ onSubmit }: { onSubmit: (data: CarFormData) => void }) {
+export function AddCarForm({ onSubmit, userData }: AddCarFormProps) {
   const [formData, setFormData] = useState<CarFormData>({
-    model: '',
     brand: '',
-    price: 0,
-    description: '',
+    model: '',
+    year: new Date().getFullYear().toString(),
+    pricePerDay: 0,
     image: '',
-    year: new Date().getFullYear(),
-    stock: 0,
+    description: '',
+    transmission: '',
+    fuelType: '',
+    kilometer: '',
+    brakes: '',
+    rating: 0,
+    status: 'active',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ 
       ...prev, 
-      [name]: ['price', 'year', 'stock'].includes(name) ? Number(value) : value 
+      [name]: ['pricePerDay', 'rating'].includes(name) ? Number(value) : value 
     }));
   };
 
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const handleImageUpload = (result: CloudinaryResult) => {
-    console.log('Cloudinary upload result:', result);
     if (result.info && result.info.secure_url) {
       setFormData(prev => ({ ...prev, image: result.info.secure_url }));
     }
@@ -50,15 +44,19 @@ export function AddCarForm({ onSubmit }: { onSubmit: (data: CarFormData) => void
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
-    console.log('Cloudinary submit result', formData);
     setFormData({
-      model: '',
       brand: '',
-      price: 0,
-      description: '',
+      model: '',
+      year: new Date().getFullYear().toString(),
+      pricePerDay: 0,
       image: '',
-      year: new Date().getFullYear(),
-      stock: 0,
+      description: '',
+      transmission: '',
+      fuelType: '',
+      kilometer: '',
+      brakes: '',
+      rating: 0,
+      status: 'active',
     });
   };
 
@@ -74,19 +72,66 @@ export function AddCarForm({ onSubmit }: { onSubmit: (data: CarFormData) => void
       </div>
       <div className="space-y-2">
         <Label htmlFor="year">Año</Label>
-        <Input id="year" name="year" type="number" value={formData.year} onChange={handleChange} required />
+        <Input id="year" name="year" value={formData.year} onChange={handleChange} required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="price">Precio por día</Label>
-        <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} required />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="stock">Stock</Label>
-        <Input id="stock" name="stock" type="number" value={formData.stock} onChange={handleChange} required />
+        <Label htmlFor="pricePerDay">Precio por día</Label>
+        <Input id="pricePerDay" name="pricePerDay" type="number" value={formData.pricePerDay} onChange={handleChange} required />
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Descripción</Label>
         <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="transmission">Transmisión</Label>
+        <Select name="transmission" value={formData.transmission} onValueChange={(value) => handleSelectChange('transmission', value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccione la transmisión" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="automatic">Automática</SelectItem>
+            <SelectItem value="manual">Manual</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="fuelType">Tipo de combustible</Label>
+        <Select name="fuelType" value={formData.fuelType} onValueChange={(value) => handleSelectChange('fuelType', value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccione el tipo de combustible" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="gnc">Gas</SelectItem>
+            <SelectItem value="nafta">Gasolina</SelectItem>
+            <SelectItem value="diesel">Diesel</SelectItem>
+            <SelectItem value="electric">Eléctrico</SelectItem>
+            <SelectItem value="hybrid">Híbrido</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="kilometer">Kilometraje</Label>
+        <Input id="kilometer" name="kilometer" value={formData.kilometer} onChange={handleChange} required />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="brakes">Frenos</Label>
+        <Input id="brakes" name="brakes" value={formData.brakes} onChange={handleChange} required />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="rating">Calificación</Label>
+        <Input id="rating" name="rating" type="number" min="0" max="5" step="0.1" value={formData.rating} onChange={handleChange} required />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="status">Estado</Label>
+        <Select name="status" value={formData.status} onValueChange={(value) => handleSelectChange('status', value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccione el estado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="active">Activo</SelectItem>
+            <SelectItem value="inactive">Inactivo</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div className="space-y-2">
         <Label htmlFor="image">Imagen del coche</Label>
