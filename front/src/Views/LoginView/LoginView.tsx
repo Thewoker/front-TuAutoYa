@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
-import login from "@/firebaseClient";
+
 
 
 const LoginView = () => {

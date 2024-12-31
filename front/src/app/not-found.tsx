@@ -9,7 +9,7 @@ const NotFound: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/"); // Redirige al inicio después de 5 segundos
-    }, 5000);
+    }, 8000);
 
     return () => clearTimeout(timer); // Limpia el temporizador al desmontar
   }, [router]);
@@ -23,7 +23,7 @@ const NotFound: React.FC = () => {
       }}
     >
     
-      <h1 className="text-4xl font-bold text-red-500 mb-4">
+      <h1 className="text-4xl font-bold text-green-950 mb-4">
         404 - Página no encontrada
       </h1>
       <p className="text-lg">

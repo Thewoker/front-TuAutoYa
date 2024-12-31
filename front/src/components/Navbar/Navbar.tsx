@@ -129,7 +129,7 @@ const NavBar: React.FC = () => {
               </button>
             ) : (
               <Link
-                href="/Login"
+                href="/login"
                 className="flex items-center space-x-2 p-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 transition"
               >
                 <svg
