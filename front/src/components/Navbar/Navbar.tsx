@@ -151,6 +151,7 @@ const NavBar: React.FC = () => {
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
+<<<<<<< HEAD
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -159,6 +160,45 @@ const NavBar: React.FC = () => {
                 </svg>
                 <span className="hidden md:block">Iniciar sesión</span>
               </Link>
+=======
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 9V5.25a3.75 3.75 0 10-7.5 0V9m7.5 0A3.75 3.75 0 0112 12.75m7.5 0v8.25a3.75 3.75 0 01-3.75 3.75h-6A3.75 3.75 0 015.25 21v-8.25m0 0A3.75 3.75 0 0112 9m0 3.75A3.75 3.75 0 0115.75 9"
+                    />
+                  </svg>
+                  <span className="hidden md:block">Iniciar sesión</span>
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex items-center space-x-2 p-2 bg-amber-500 text-white rounded-full hover:bg-sky-500 focus:ring-2 focus:ring-gray-600 transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16.5 9.75a6 6 0 11-9 0m9 0v6a3 3 0 01-6 0v-6"
+                    />
+                  </svg>
+                  <span className="hidden md:block">Registro</span>
+                </Link>
+              </div>
+>>>>>>> NavBar
             )}
           </div>
         </div>
