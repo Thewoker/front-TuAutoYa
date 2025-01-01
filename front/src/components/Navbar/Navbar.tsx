@@ -2,23 +2,31 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+
 
 const NavBar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const userCookie = Cookies.get('user');
+
+
+    const userCookie = Cookies.get("user");
+
     setIsLoggedIn(!!userCookie);
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove('user');
-    Cookies.remove('authToken');
+
+
+    Cookies.remove("user");
+    Cookies.remove("authToken");
     setIsLoggedIn(false);
-    router.push('/');
+    router.push("/");
+
   };
 
   return (
@@ -109,7 +117,10 @@ const NavBar: React.FC = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
+
                 className="flex items-center  p-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 transition"
+
+
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -159,16 +170,16 @@ const NavBar: React.FC = () => {
               type="text"
               defaultValue="Bogotá, Distrito Capital, Colombia"
               placeholder="Ciudad"
-              className="p-2 flex-1 text-gray-700 text-sm border-none outline-none rounded-l-lg"
+              className="p-2 flex-1 text-emerald-900 text-sm border-none outline-none rounded-l-lg"
             />
             <input
               type="date"
               defaultValue="2024-12-24"
-              className="p-2 text-sm border-none text-gray-700"
+              className="p-2 text-sm border-none text-emerald-900"
             />
             <select
               defaultValue="12:00"
-              className="p-2 text-sm border-none text-gray-700"
+              className="p-2 text-sm border-none text-emerald-900"
             >
               <option value="12:00">Mediodía</option>
               <option value="06:00">Mañana</option>
@@ -177,11 +188,11 @@ const NavBar: React.FC = () => {
             <input
               type="date"
               defaultValue="2024-12-31"
-              className="p-2 text-sm border-none text-gray-700"
+              className="p-2 text-sm border-none text-emerald-900"
             />
             <select
               defaultValue="12:00"
-              className="p-2 text-sm border-none text-gray-700"
+              className="p-2 text-sm border- text-emerald-900"
             >
               <option value="12:00">Mediodía</option>
               <option value="06:00">Mañana</option>
@@ -189,7 +200,7 @@ const NavBar: React.FC = () => {
             </select>
             <button
               type="submit"
-              className="bg-amber-500 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-amber-600 transition"
+              className="bg-amber-500 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-sky-500 transition"
             >
               Buscar
             </button>
