@@ -167,7 +167,7 @@ const NavBar: React.FC = () => {
                       d="M16.5 9.75a6 6 0 11-9 0m9 0v6a3 3 0 01-6 0v-6"
                     />
                   </svg>
-                  <span className="hidden md:block">Registrar</span>
+                  <span className="hidden md:block">Registro</span>
                 </Link>
               </div>
             )}
