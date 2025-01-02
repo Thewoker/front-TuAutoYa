@@ -1,8 +1,9 @@
 import React from 'react';
-import { Rental } from "@/Interfaces/IClientDashboard"
-import RentalCard from "@/components/dashboard/Cliente/ClientCarCard"
+import { Rental } from "@/Interfaces/IClientDashboard";
+import RentalCard from "@/components/dashboard/Cliente/ClientCarCard";
 
 const ClientReservations: React.FC = () => {
+  // Datos de reservas (simulados para este ejemplo)
   const rentals: Rental[] = [
     {
       id: '1',
@@ -43,24 +44,46 @@ const ClientReservations: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Mis Reservas</h1>
-      
-      <h2 className="text-2xl font-semibold mb-4">Próximas Reservas</h2>
-      <div className="space-y-6 mb-8">
-        {upcomingRentals.map(rental => (
-          <RentalCard key={rental.id} rental={rental} />
-        ))}
+      {/* Barra de navegación superior */}
+      <div className="flex container mx-auto px-4 py-8">
+        <h2 className="text-3xl font-bold text-sky-500"></h2>
+
+        {/* Contenedor con fondo blanco, bordes redondeados y sombra */}
+        <div className="bg-white rounded-xl p-4 shadow-lg flex space-x-4">
+          <button className="bg-amber-400 text-white px-4 py-2 rounded hover:bg-sky-500 transition">
+            Lista de Favoritos
+          </button>
+          <button className="bg-amber-400 text-white px-4 py-2 rounded hover:bg-sky-500 transition">
+            Reservas
+          </button>
+          <button className="bg-emerald-900 text-white px-4 py-2 rounded hover:bg-amber-400 transition">
+            Cerrar Sesión
+          </button>
+        </div>
       </div>
 
-      <h2 className="text-2xl font-semibold mb-4">Reservas Pasadas</h2>
-      <div className="space-y-6">
-        {pastRentals.map(rental => (
-          <RentalCard key={rental.id} rental={rental} />
-        ))}
+      {/* Contenido principal */}
+      <div className="flex-1 p-6">
+      
+
+        {/* Sección de Próximas Reservas */}
+        <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Próximas Reservas</h2>
+        <div className="space-y-6 mb-8">
+          {upcomingRentals.map(rental => (
+            <RentalCard key={rental.id} rental={rental} />
+          ))}
+        </div>
+
+        {/* Sección de Reservas Pasadas */}
+        <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Reservas Pasadas</h2>
+        <div className="space-y-6">
+          {pastRentals.map(rental => (
+            <RentalCard key={rental.id} rental={rental} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default ClientReservations;
-

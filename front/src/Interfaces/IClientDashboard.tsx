@@ -14,3 +14,7 @@ export interface Rental {
     transmission: string;
     location: string;
 }
+// src/Interfaces/IClientDashboard.ts
+
+
+  
