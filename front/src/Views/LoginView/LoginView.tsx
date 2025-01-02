@@ -132,3 +132,7 @@ const LoginView = () => {
 };
 
 export default LoginView;
+
+function login(email: string, password: string) {
+  throw new Error("Function not implemented.");
+}

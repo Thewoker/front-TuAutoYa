@@ -17,7 +17,6 @@ const RegisterView = () => {
 
   const provider = new GoogleAuthProvider();
 
-  // Maneja el registro con email y contraseña
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
