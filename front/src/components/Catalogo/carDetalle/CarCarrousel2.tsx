@@ -1,13 +1,13 @@
 "use client"
 
+import { getCars } from "@/api/getCars";
 import { CarCard } from "@/components/HomeMain/CarCard";
 import { Button } from "@/components/ui/button";
-import Car from "@/Interfaces/ICar";
+import { ResponseType } from "@/types/response";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-
+import { useCallback } from "react";
 
 
 interface CarCarouselProps {
@@ -17,24 +17,7 @@ interface CarCarouselProps {
 }
 
 export function CarCarousel2({ carid, filtro, title }: CarCarouselProps) {
-    const [cars, setCars] = useState<Car[]>([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/api/v1/cars');
-                const data = await response.json();
-                setCars(data);
-            } catch (error) {
-                console.error('Error fetching cars:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, []);
-    // const cars = data.find(item => item.cars)?.cars || []
+    const{loading, cars}: ResponseType = getCars()
     const fils = cars.filter(car => car.model === filtro && car.id !== carid) 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
