@@ -1,19 +1,14 @@
 "use client"
 
-import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-<<<<<<<< HEAD:front/src/components/Catalogo/carDetalle/CarCarrousel2.tsx
-import { CarCard } from '@/components/HomeMain/CarCard'
-import { useCallback, useEffect, useState } from 'react'
-========
-import { CarCard } from './HomeMain/CarCard'
-import { useCallback } from 'react'
->>>>>>>> NavBar:front/src/components/HomeMain/CarCarrousel2.tsx
-import Link from 'next/link'
-import data from '@/helpers/data'
-import ICars from '@/Interfaces/ICars'
-import Car from '@/Interfaces/ICar'
+import { CarCard } from "@/components/HomeMain/CarCard";
+import { Button } from "@/components/ui/button";
+import Car from "@/Interfaces/ICar";
+import useEmblaCarousel from "embla-carousel-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+
+
 
 interface CarCarouselProps {
     filtro: string;

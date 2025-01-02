@@ -1,11 +1,7 @@
 'use client'
 
-<<<<<<<< HEAD:front/src/components/Catalogo/CarList.tsx
-import { CarCard } from "../HomeMain/CarCard"
-========
-import { CarCard } from "./HomeMain/CarCard"
->>>>>>>> NavBar:front/src/components/HomeMain/CarList.tsx
 import Car from '@/Interfaces/ICar'
+import { CarCard } from '../HomeMain/CarCard';
 
 interface CarListProps {
     cars: Car[];
