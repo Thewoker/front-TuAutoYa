@@ -1,35 +1,17 @@
 'use client'
 import Image from "next/image";
-import data from "@/helpers/data";
-import ICars from "@/Interfaces/ICars";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 
-import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
-import { useEffect, useState } from "react";
-import Car from "@/Interfaces/ICar";
 import Link from 'next/link';
+import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
+import { getCars } from "@/api/getCars";
+import { ResponseType } from "@/types/response";
 
 
 function CarDetail() {
 
-    const [cars, setCars] = useState<Car[]>([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/api/v1/cars');
-                const data = await response.json();
-                setCars(data);
-            } catch (error) {
-                console.error('Error fetching cars:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, []);
+    const{loading, cars}: ResponseType = getCars()
     const { id } = useParams();
     // const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
     const car = cars.find((car) => car.id === id);
