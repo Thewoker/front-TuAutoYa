@@ -44,8 +44,8 @@ const RegisterView = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Crea tu cuenta</h1>
-      <form onSubmit={handleRegister} className="w-full max-w-sm bg-white p-6 rounded shadow-md">
+      <h1 className="text-2xl font-bold mb-4 text-amber-400 ">Crea tu cuenta</h1>
+      <form onSubmit={handleRegister} className="w-full max-w-sm bg-emerald-900 p-6 rounded shadow-md">
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -75,24 +75,24 @@ const RegisterView = () => {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-sky-400 text-white font-medium rounded-md hover:bg-blue-600"
+          className="w-full px-4 py-2 bg-sky-400 text-white font-medium rounded-md hover:bg-amber-500"
         >
           Registrarse
         </button>
       </form>
 
       <div className="mt-6">
-        <p className="mb-4">O regístrate con:</p>
+        <p className="mb-4 text-emerald-900"> También puedes  regístrate con:</p>
         <button
           onClick={handleGoogleSignIn}
-          className="w-full px-4 py-2 bg-amber-400 text-white font-medium rounded-md hover:bg-red-600"
+          className="w-full px-4 py-2 bg-amber-400 text-white font-medium rounded-md hover:bg-sky-500"
         >
           Continuar con Google
         </button>
       </div>
-      <p className="mt-4">
+      <p className="mt-4 text-amber-500">
         ¿Ya tienes cuenta?{' '}
-        <a href="/login" className="text-blue-500 hover:underline">
+        <a href="/login" className="text-emerald-900 hover:underline">
           Inicia sesión
         </a>
       </p>

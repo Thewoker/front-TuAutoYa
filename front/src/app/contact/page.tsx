@@ -5,26 +5,26 @@ import React from "react";
 const Contacto: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-4xl font-bold text-center text-amber-500 mb-6">
+      <h1 className=" text-4xl font-bold text-center text-amber-400 mb-6">
         Contáctanos
       </h1>
-      <p className="text-gray-700 text-center mb-6">
+      <p className="text-emerald-900 text-center mb-6">
         ¿Tienes preguntas? ¡Estamos aquí para ayudarte!
       </p>
-      <form className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+      <form className="max-w-lg mx-auto bg-amber-400 p-6 rounded-lg shadow-md">
         <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-medium">
+          <label htmlFor="name" className="block text-white font-medium">
             Nombre
           </label>
           <input
             type="text"
             id="name"
-            className="w-full border-gray-300 rounded-lg p-2 mt-1"
+            className="w-full border-gray-300 rounded-lg p-2 mt-1 text-emerald-900"
             placeholder="Escribe tu nombre"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-medium">
+          <label htmlFor="email" className="block text-white font-medium">
             Correo electrónico
           </label>
           <input
@@ -35,7 +35,7 @@ const Contacto: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="message" className="block text-gray-700 font-medium">
+          <label htmlFor="message" className="block text-white font-medium">
             Mensaje
           </label>
           <textarea
@@ -47,7 +47,7 @@ const Contacto: React.FC = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-amber-500 text-white rounded-lg p-2 hover:bg-amber-600 transition"
+          className="w-full bg-emerald-900 text-white rounded-lg p-2 hover:bg-sky-500 transition"
         >
           Enviar
         </button>

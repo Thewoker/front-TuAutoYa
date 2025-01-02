@@ -74,7 +74,7 @@ const LoginView = () => {
 
   return (
     <div className="pl-20 ml-15 min-h-screen flex items-center justify-center">
-      <div className="bg-zinc-200 p-8 rounded-lg shadow-lg w-full max-w-sm">
+      <div className="bg-emerald-900 p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -114,15 +114,15 @@ const LoginView = () => {
         </form>
         <button
           onClick={handleGoogleLogin}
-          className="w-full mt-4 py-2 bg-amber-400 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full mt-4 py-2 bg-amber-400 text-white rounded-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Login with Google
         </button>
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{" "}
-            <a href="/register" className="text-green-900 hover:text-blue-700">
-              Sign up
+          <p className="text-sm text-white m-1">
+            No tienes una cuenta?{" "}
+            <a href="/register" className=" p-2 text-amber-500  hover:texz bg-emerald-900">
+              Registro
             </a>
           </p>
         </div>
