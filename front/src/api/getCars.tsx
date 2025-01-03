@@ -2,7 +2,7 @@ import Car from "@/Interfaces/ICar";
 import { useEffect, useState } from "react";
 
 export function getCars(){
-    const url ='http://localhost:3000/api/v1/cars'
+    const url =`${process.env.NEXT_PUBLIC_API_URL}/cars`
     const [cars, setCars] = useState<Car[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')

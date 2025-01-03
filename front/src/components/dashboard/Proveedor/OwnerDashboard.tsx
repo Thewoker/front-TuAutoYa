@@ -18,7 +18,7 @@ export default function OwnerDashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const cars = await axios.get("http://localhost:3000/api/v1/cars")
+        const cars = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cars`)
 
         setCars(cars.data)
         const { data } = await axios.get('/api/getUserData')
@@ -40,7 +40,7 @@ export default function OwnerDashboard() {
       return
     }
     try {
-      const response = await fetch('http://localhost:3000/api/v1/cars', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export default function OwnerDashboard() {
 
   const handleDeleteCar = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/cars/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${id}`, {
         method: 'DELETE',
       })
 

@@ -19,7 +19,7 @@ function Reserva() {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/cars');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`);
         const data = await response.json();
         setCars(data);
       } catch (error) {

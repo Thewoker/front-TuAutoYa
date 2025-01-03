@@ -23,7 +23,7 @@ function ReservasView() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/orders');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`);
         if (!response.ok) {
           throw new Error('Failed to fetch orders');
         }

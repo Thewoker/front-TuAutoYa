@@ -46,7 +46,7 @@ const LoginView = () => {
 
   const sendTokenToBackend = async (token: string) => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
         credentials: 'include',
         headers: {

@@ -12,7 +12,7 @@ export default function VehicleView() {
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/v1/cars');
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch cars');
                 }

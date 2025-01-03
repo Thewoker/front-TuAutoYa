@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AddCarFormProps, CloudinaryResult, CarFormData} from "@/Interfaces/ICreateCar"
 
-export function AddCarForm({ onSubmit, userData }: AddCarFormProps) {
+export function AddCarForm({ onSubmit }: AddCarFormProps) {
   const [formData, setFormData] = useState<CarFormData>({
     brand: '',
     model: '',

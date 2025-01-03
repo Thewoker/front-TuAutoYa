@@ -1,59 +1,87 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import ClientDashboard from '@/components/dashboard/Cliente/ClientDashboard'
-import OwnerDashboard from '@/components/dashboard/Proveedor/OwnerDashboard'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import ClientDashboard from '@/components/dashboard/Cliente/ClientDashboard'
+import OwnerDashboard from '@/components/dashboard/Proveedor/OwnerDashboard'
+import { DashboardSidebar } from '@/components/dashboard/Sidebar'
 
 export default function Dashboard() {
+    const [role, setRole] = useState<string | null>(null)
     const [isOwner, setIsOwner] = useState(false)
-    const [role, setRole] = useState<Boolean>(false)
+    const [activeView, setActiveView] = useState('pasadas')
     const router = useRouter()
 
     useEffect(() => {
+        const getRole = async () => {
+            try {
+                const { data } = await axios.get("/api/getUserData")
+                const user = JSON.parse(data)
+
+                if (user) {
+                    setRole(user.role)
+                } else {
+                    router.push('/Login')
+                }
+            } catch (error) {
+                console.error("Se ha producido un error: ", error)
+                router.push('/Login')
+            }
+        }
+
         getRole()
-    }, []);
+    }, [router]);
 
-    const getRole = async () => {
-        const { data: user } = await axios.get("/api/getUserData")
-        console.log(user)
+    useEffect(() => {
+        console.log("Vista escojida: ", activeView)
+    }, [activeView])
 
-        try {
-            if (user) {
-                setRole(user.role == "customer" ? false : true)
-            } else router.push('/Login')
 
-        } catch (error) {
-            console.error("Se ha producido un error: ", error)
+    const renderContent = () => {
+        switch (activeView) {
+            case "pending":
+                return <ClientDashboard />
+                break;
+            case "before":
+                return <ClientDashboard />
+                break;
+            case "data":
+                return <>Falta desarrollar el componente</>
+                break;
+            case "supplier":
+                return <OwnerDashboard />
+                break;
+            case "join_us":
+                return <>Falta desarrollar el componente</>
+                break;
+            default:
+                return <h1>Area no disponible</h1>
+                break;
         }
     }
 
+    if (!role) {
+        return <div>Cargando...</div>
+    }
+
     return (
-        <div className="container mx-auto p-4">
-            {role &&
-                (
-                <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold">
-                        {isOwner ? 'Dashboard del Propietario' : 'Dashboard del Cliente'}
-                    </h1>
-                    <div className="flex items-center space-x-2">
-                        <Switch
-                            id="dashboard-mode"
-                            checked={isOwner}
-                            onCheckedChange={setIsOwner}
-                        />
-
-                        <Label htmlFor="dashboard-mode">
-                            {isOwner ? 'Modo Propietario' : 'Modo Cliente'}
-                        </Label>
-                    </div>
+        <div className="min-h-screen flex flex-col">
+            <div className="flex-1 flex">
+                {/* Sidebar */}
+                <div className="w-64 border-r bg-gray-50">
+                    <DashboardSidebar
+                        activeView={activeView}
+                        onViewChange={setActiveView}
+                        role={role}
+                    />
                 </div>
-                )}
 
-            {isOwner ? <OwnerDashboard /> : <ClientDashboard />}
+                {/* Área principal de contenido */}
+                <div className="flex-1 p-6">
+                    {renderContent()}
+                </div>
+            </div>
         </div>
     )
 }

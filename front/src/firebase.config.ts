@@ -2,23 +2,19 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const firebaseConfig = {
+  apiKey: `${process.env.NEXT_PUBLIC_BACKEND_API}`,
 
+  authDomain: `${process.env.NEXT_PUBLIC_DOMAIN_API}`,
 
-  apiKey: "AIzaSyBTLGOVnxxOC5JOEeHuFnJLxjJa6wGhuZ0",
+  projectId: `${process.env.NEXT_PUBLIC_PROYECT_ID_API}`,
 
-  authDomain: "auth-user-f8c65.firebaseapp.com",
+  storageBucket: `${process.env.NEXT_PUBLIC_STORAGE_API}`,
 
-  projectId: "auth-user-f8c65",
+  messagingSenderId: `${process.env.NEXT_PUBLIC_MESSAGE_API}`,
 
-  storageBucket: "auth-user-f8c65.firebasestorage.app",
+  appId: `${process.env.NEXT_PUBLIC_APP_ID}`,
 
-  messagingSenderId: "995627538196",
-
-  appId: "1:995627538196:web:9057bd5e7cfe120f135401",
-
-  measurementId: "G-NDEEEW80NR"
-
-
+  measurementId: `${process.env.NEXT_PUBLIC_MEASUREMENT_ID}`
 };
 
 
@@ -26,4 +22,3 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export {  signInWithPopup }
-

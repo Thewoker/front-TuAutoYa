@@ -66,27 +66,23 @@ const ClientReservations: React.FC = () => {
             Mi perfil
           </h1>
           <ul>
-            <li className="flex space-x-2 mt-10 
-            text-emerald-950 cursor-pointer hover:text-sky-500">
-                <Link href="/">
+            <li className="flex space-x-2 mt-10 text-emerald-950 cursor-pointer hover:text-sky-500">
+              <Link href="/">
                 <span className="font-semibold">Home</span>
-          </Link>
-              
+              </Link>
             </li>
             <li className="flex space-x-2 mt-10 text-emerald-950 cursor-pointer hover:text-sky-500">
-              <span className="font-semibold">Mis Reservas</span>
               <Link href="/Reserva">
-                <span className="font-semibold">Home</span>
-          </Link>
+                <span className="font-semibold">Mis Reservas</span>
+              </Link>
             </li>
             <li className="flex space-x-2 mt-10 cursor-pointer hover:text-sky-500">
               <span className="font-semibold">Mis Pagos</span>
             </li>
-            <li className="flex space-x-2 mt-10 text-emerald-950cursor-pointer hover:text-sky-500">
-            <Link href="/perfil">
+            <li className="flex space-x-2 mt-10 text-emerald-950 cursor-pointer hover:text-sky-500">
+              <Link href="/perfil">
                 <span className="font-semibold">Perfil</span>
-          </Link>
-          
+              </Link>
             </li>
           </ul>
           <button className="mt-10 w-full bg-amber-400 text-emerald-950 rounded-full py-2 hover:text-sky-500">
@@ -120,7 +116,16 @@ const ClientReservations: React.FC = () => {
             Próximas Reservas
           </h2>
           <div className="space-y-6 mb-8">
-            {rentals.map((rental) => (
+            {upcomingRentals.map((rental) => (
+              <RentalCard key={rental.id} rental={rental} />
+            ))}
+          </div>
+
+          <h2 className="text-2xl font-semibold mb-4 text-emerald-900">
+            Reservas Pasadas
+          </h2>
+          <div className="space-y-6 mb-8">
+            {pastRentals.map((rental) => (
               <RentalCard key={rental.id} rental={rental} />
             ))}
           </div>
