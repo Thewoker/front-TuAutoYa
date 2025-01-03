@@ -1,8 +1,9 @@
 import React from 'react';
-import { Rental } from "@/Interfaces/IClientDashboard"
-import RentalCard from "@/components/dashboard/Cliente/ClientCarCard"
+import { Rental } from "@/Interfaces/IClientDashboard";
+import RentalCard from "@/components/dashboard/Cliente/ClientCarCard";
 
 const ClientReservations: React.FC = () => {
+  // Datos de reservas (simulados para este ejemplo)
   const rentals: Rental[] = [
     {
       id: '1',
@@ -42,25 +43,28 @@ const ClientReservations: React.FC = () => {
   const pastRentals = rentals.filter(rental => rental.status === 'past');
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Mis Reservas</h1>
+    <div className="container mx-auto px-4">
+      <div className="flex-1 p-3">
       
-      <h2 className="text-2xl font-semibold mb-4">Próximas Reservas</h2>
-      <div className="space-y-6 mb-8">
-        {upcomingRentals.map(rental => (
-          <RentalCard key={rental.id} rental={rental} />
-        ))}
-      </div>
 
-      <h2 className="text-2xl font-semibold mb-4">Reservas Pasadas</h2>
-      <div className="space-y-6">
-        {pastRentals.map(rental => (
-          <RentalCard key={rental.id} rental={rental} />
-        ))}
+        {/* Sección de Próximas Reservas */}
+        <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Próximas Reservas</h2>
+        <div className="space-y-6 mb-8">
+          {upcomingRentals.map(rental => (
+            <RentalCard key={rental.id} rental={rental} />
+          ))}
+        </div>
+
+        {/* Sección de Reservas Pasadas */}
+        <h2 className="text-2xl font-semibold mb-4 text-emerald-900">Reservas Pasadas</h2>
+        <div className="space-y-6">
+          {pastRentals.map(rental => (
+            <RentalCard key={rental.id} rental={rental} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default ClientReservations;
-

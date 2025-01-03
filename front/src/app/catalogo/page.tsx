@@ -17,6 +17,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { CarList } from '@/components/Catalogo/CarList'
 import Car from '@/Interfaces/ICar'
+import { getCars } from '@/api/getCars'
+import { ResponseType } from '@/types/response'
 
 const sortOptions = [
     { name: 'Most Popular', value: 'popular', current: true },
@@ -31,8 +33,7 @@ function classNames(...classes: (string | undefined | null)[]): string {
 }
 
 export default function CatalogPage() {
-    const [cars, setCars] = useState<Car[]>([]);
-    const [loading, setLoading] = useState(true);
+    const {loading, cars} : ResponseType = getCars();
     
     // Estado para filtros seleccionados
     const [selectedFilters, setSelectedFilters] = useState({
@@ -44,23 +45,6 @@ export default function CatalogPage() {
 
     // Estado para el orden seleccionado
     const [selectedSort, setSelectedSort] = useState<string>('popular');
-    
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`);
-                const data = await response.json();
-                setCars(data);
-            } catch (error) {
-                console.error('Error fetching cars:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, []);
-
     const filters = [
         {
             id: 'brand',

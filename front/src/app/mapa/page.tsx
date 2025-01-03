@@ -8,7 +8,7 @@ const MapsPage = () => {
   return (
     <div>
       <h1>Mapa de Agencias</h1>
-      <MapaDeAgencias agencies={agencies} /> {/* Pasa las agencias como prop */}
+      <MapaDeAgencias markers={[]} /> {/* Pasa las agencias como prop */}
     </div>
   );
 };

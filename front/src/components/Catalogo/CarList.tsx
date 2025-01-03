@@ -1,7 +1,7 @@
 'use client'
 
-import { CarCard } from "../HomeMain/CarCard"
 import Car from '@/Interfaces/ICar'
+import { CarCard } from '../HomeMain/CarCard';
 
 interface CarListProps {
     cars: Car[];

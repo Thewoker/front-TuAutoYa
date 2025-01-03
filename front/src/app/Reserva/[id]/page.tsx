@@ -1,5 +1,6 @@
 "use client"
 import Car from "@/Interfaces/ICar";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -166,12 +167,14 @@ function Reserva() {
             </label>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 px-6 text-white font-semibold bg-amber-500 rounded-md hover:bg-emerald-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Reservar ahora
-          </button>
+          <Link href="/GraciasPorTuReserva">
+      <button
+        type="button"
+        className="w-full py-3 px-6 text-white font-semibold bg-amber-500 rounded-md hover:bg-emerald-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      >
+        Reservar ahora
+      </button>
+    </Link>
         </form>
       </div>
     </div>

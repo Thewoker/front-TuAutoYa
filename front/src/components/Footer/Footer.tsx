@@ -80,9 +80,9 @@ const Footer: React.FC = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Contacto</h3>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li>Teléfono: + 54  (555) 123-4567</li>
+            <li>Teléfono: + 57  (555) 123-4567</li>
             <li>Email: support@TuAutoYa.com</li>
-            <li>Ubicación: Buenos Aires, Argentina</li>
+            <li>Ubicación: Bogotá - colombia</li>
           </ul>
         </div>
 

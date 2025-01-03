@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button'
 import { CarCard } from './CarCard'
 import { useCallback } from 'react'
 import Link from 'next/link'
-import Car from '@/Interfaces/ICarsCarrousel'
+import { ResponseType } from '@/types/response'
+import { getCars } from '@/api/getCars'
 
 export function CarCarousel() {
-    const [cars, setCars] = useState<Car[]>([])
+    const {loading, cars} : ResponseType = getCars()
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,
@@ -25,20 +26,6 @@ export function CarCarousel() {
     const scrollNext = useCallback(() => {
         if (emblaApi) emblaApi.scrollNext()
     }, [emblaApi])
-
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`)
-                const data = await response.json()
-                setCars(data)
-            } catch (error) {
-                console.error('Error fetching cars:', error)
-            }
-        }
-
-        fetchCars()
-    }, [])
 
     return (
         <div className="relative w-full">
