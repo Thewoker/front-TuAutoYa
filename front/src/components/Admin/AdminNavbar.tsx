@@ -110,18 +110,3 @@ export function AdminNavbar() {
         </nav>
     )
 }
-
-{/* <div className="space-x-4">
-                    <Link href='/admin/caja'>
-                        Caja
-                    </Link>
-                    <Link href='/admin/usuarios'>
-                        Usuarios
-                    </Link>
-                    <Link href='/admin/vehiculos'>
-                        Vehículos
-                    </Link>
-                    <Link href='/admin/reservas'>
-                        Reservas
-                    </Link>
-                </div> */}

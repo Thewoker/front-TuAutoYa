@@ -11,7 +11,7 @@ const NavBar: React.FC = () => {
 
   useEffect(() => {
     const userCookie = Cookies.get("user");
-    setIsLoggedIn(!!userCookie);
+    setIsLoggedIn(userCookie != undefined || userCookie != null ? true : false );
   }, []);
 
   const handleLogout = () => {
