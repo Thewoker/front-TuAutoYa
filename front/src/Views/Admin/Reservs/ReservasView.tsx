@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { IOrder } from '@/Interfaces/IReservs'
 import Filter from '@/components/Admin/Reservs/Filter'
 import ReservedCardCard from '@/components/Admin/Reservs/ReservedCardCard'
 import { Card } from "@/components/ui/card"
-
+import { useToast } from "@/hooks/use-toast"
 
 function ReservasView() {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -19,28 +20,50 @@ function ReservasView() {
     userName: '',
     userEmail: '',
   });
+  const { toast } = useToast()
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-        const data = await response.json();
-        setOrders(data);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOrders();
   }, []);
 
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get<IOrder[]>(`${process.env.NEXT_PUBLIC_API_URL}/orders`);
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch orders. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const cancelOrder = async (orderId: string) => {
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/orders/${orderId}/cancel`);
+      setOrders(orders.map(order => 
+        order.id === orderId ? { ...order, status: 'cancelled' } : order
+      ));
+      toast({
+        title: "Success",
+        description: "Order cancelled successfully",
+      })
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      toast({
+        title: "Error",
+        description: "Failed to cancel order. Please try again.",
+        variant: "destructive",
+      })
+    }
   };
 
   const filteredOrders = orders.filter(order => {
@@ -73,7 +96,7 @@ function ReservasView() {
 
       {filteredOrders.map((order) => (
         <Card key={order.id} className='bg-[#f59e0b]'>
-          <ReservedCardCard order={order}/>
+          <ReservedCardCard order={order} onCancelOrder={cancelOrder} />
         </Card>
       ))}
     </div>
@@ -81,3 +104,4 @@ function ReservasView() {
 }
 
 export default ReservasView
+

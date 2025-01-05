@@ -22,9 +22,12 @@ export interface ICar {
     brakes: string;
     rating: number;
     status: string;
+    approvalStatus: 'pending' | 'approved' | 'rejected';
     users: IUser;
 }
 
 export interface ICarProps {
     car: ICar;
+    onStatusChange: (carId: string, newStatus: 'pending' | 'approved' | 'rejected') => void;
 }
+

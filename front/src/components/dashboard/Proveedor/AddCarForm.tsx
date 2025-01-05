@@ -19,6 +19,7 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
     fuelType: '',
     kilometer: '',
     brakes: '',
+    approvalStatus: 'pending',
     rating: 0,
     status: 'active',
   });
@@ -57,6 +58,7 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
       brakes: '',
       rating: 0,
       status: 'active',
+      approvalStatus: 'pending',
     });
   };
 
@@ -117,7 +119,7 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
         <Label htmlFor="brakes">Frenos</Label>
         <Input id="brakes" name="brakes" value={formData.brakes} onChange={handleChange} required />
       </div>
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <Label htmlFor="rating">Calificación</Label>
         <Input id="rating" name="rating" type="number" min="0" max="5" step="0.1" value={formData.rating} onChange={handleChange} required />
       </div>
@@ -132,7 +134,7 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
             <SelectItem value="inactive">Inactivo</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
       <div className="space-y-2">
         <Label htmlFor="image">Imagen del coche</Label>
         <CldUploadWidget
