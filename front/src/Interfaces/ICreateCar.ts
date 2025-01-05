@@ -63,6 +63,7 @@ export interface CarFormData {
     brakes: string
     rating: number
     status: string
+    approvalStatus: string
 }
 
 export interface CloudinaryResult {

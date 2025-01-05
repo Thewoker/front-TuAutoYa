@@ -4,6 +4,7 @@ import "./globals.css";
 import { Bebas_Neue } from 'next/font/google';
 import './globals.css'; // Archivo donde Tailwind está configurado
 import { ConditionalHeader } from "@/components/Layout/ConditionalHeader";
+import { Toaster } from "@/components/ui/toaster"
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
         <ConditionalHeader />
         {children}
+        <Toaster />
         <Footer/>
       </body>
     </html>

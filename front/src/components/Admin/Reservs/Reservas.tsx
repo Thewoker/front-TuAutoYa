@@ -5,52 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { format } from 'date-fns'
 import Image from 'next/image'
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  identity: number;
-  phone: string;
-  city: string;
-  role: string;
-}
-
-interface ICar {
-  id: string;
-  brand: string;
-  model: string;
-  year: string;
-  pricePerDay: number;
-  image: string;
-  description: string;
-  transmission: string;
-  fuelType: string;
-  kilometer: string;
-  brakes: string;
-  rating: number;
-  status: string;
-  users: IUser;
-}
-
-interface IOrderDetails {
-  id: string;
-  startDate: string;
-  endDate: string;
-  price: string;
-  subtotal: string;
-  cars: ICar;
-}
-
-interface IOrder {
-  id: string;
-  orderDate: string;
-  orderDetails: IOrderDetails;
-  users: IUser;
-}
+import { IUser, ICar, IOrderDetails, IOrder } from '@/Interfaces/IAdminReservs'
 
 export function Reservas() {
   const [orders, setOrders] = useState<IOrder[]>([]);
