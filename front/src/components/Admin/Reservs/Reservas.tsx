@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { format } from 'date-fns'
 import Image from 'next/image'
-import { IUser, ICar, IOrderDetails, IOrder } from '@/Interfaces/IAdminReservs'
+import { IOrder } from '@/Interfaces/IAdminReservs'
 
 export function Reservas() {
   const [orders, setOrders] = useState<IOrder[]>([]);

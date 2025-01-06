@@ -4,16 +4,15 @@ import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 
 import Link from 'next/link';
-import { CarCarousel2 } from "@/components/Catalogo/CarDetalle/CarCarrousel2";
-import { getCars } from "@/api/getCars";
+import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
+import { useGetCars } from "@/api/getCars";
 import { ResponseType } from "@/types/response";
 
 
 function CarDetail() {
 
-    const{loading, cars}: ResponseType = getCars()
+    const{cars}: ResponseType = useGetCars()
     const { id } = useParams();
-    // const cars: ICars[] = data.find((item) => item.cars)?.cars || [];
     const car = cars.find((car) => car.id === id);
     const filtro = car?.model || '';
     const carid = car?.id || '';

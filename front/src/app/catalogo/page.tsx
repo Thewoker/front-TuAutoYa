@@ -1,10 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -13,11 +10,10 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { CarList } from '@/components/Catalogo/CarList'
 import Car from '@/Interfaces/ICar'
-import { getCars } from '@/api/getCars'
+import { useGetCars } from '@/api/getCars'
 import { ResponseType } from '@/types/response'
 
 const sortOptions = [
@@ -33,7 +29,7 @@ function classNames(...classes: (string | undefined | null)[]): string {
 }
 
 export default function CatalogPage() {
-    const {loading, cars} : ResponseType = getCars();
+    const {loading, cars} : ResponseType = useGetCars();
     
     // Estado para filtros seleccionados
     const [selectedFilters, setSelectedFilters] = useState({
@@ -67,8 +63,6 @@ export default function CatalogPage() {
             options: Array.from(new Set(cars.map(car => car.transmission))),
         },
     ];
-    
-    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     // Manejo de cambios en los filtros
     const handleFilterChange = (id: string, value: string) => {
@@ -170,14 +164,6 @@ export default function CatalogPage() {
                             <div className="-m-2 ml-5 p-2 text-gray-500 sm:ml-7">
                                 Total de carros: {filteredCars.length}
                             </div>
-                            <button
-                                type="button"
-                                onClick={() => setMobileFiltersOpen(true)}
-                                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                            >
-                                <span className="sr-only">Filtros</span>
-                                <FunnelIcon className="size-5" aria-hidden="true" />
-                            </button>
                         </div>
                     </div>
 

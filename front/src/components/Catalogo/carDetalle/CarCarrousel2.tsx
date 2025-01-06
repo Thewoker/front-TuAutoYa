@@ -1,6 +1,6 @@
 "use client"
 
-import { getCars } from "@/api/getCars";
+import { useGetCars } from "@/api/getCars";
 import { CarCard } from "@/components/HomeMain/CarCard";
 import { Button } from "@/components/ui/button";
 import { ResponseType } from "@/types/response";
@@ -18,7 +18,7 @@ interface CarCarouselProps {
 }
 
 export function CarCarousel2({ carid, filtro, title }: CarCarouselProps) {
-    const{loading, cars}: ResponseType = getCars()
+    const{cars}: ResponseType = useGetCars()
     const fils = cars.filter(car => car.model === filtro && car.id !== carid) 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',

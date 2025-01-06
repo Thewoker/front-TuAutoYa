@@ -8,10 +8,10 @@ import { CarCard } from './CarCard'
 import { useCallback } from 'react'
 import Link from 'next/link'
 import { ResponseType } from '@/types/response'
-import { getCars } from '@/api/getCars'
+import { useGetCars } from '@/api/getCars'
 
 export function CarCarousel() {
-    const {cars} : ResponseType = getCars()
+    const {cars} : ResponseType = useGetCars()
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,

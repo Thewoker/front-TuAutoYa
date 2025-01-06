@@ -1,7 +1,7 @@
 import Car from "@/Interfaces/ICar";
 import { useEffect, useState } from "react";
 
-export function getCars(){
+export function useGetCars(){
     const url =`${process.env.NEXT_PUBLIC_API_URL}/cars`
     console.log("linkurl", url )
     const [cars, setCars] = useState<Car[]>([])
@@ -14,9 +14,9 @@ export function getCars(){
                     const response = await fetch(url);
                     const data = await response.json();
                     setCars(data);
-                } catch (error:any) {
+                } catch (error) {
                     console.error('Error fetching cars:', error);
-                    setError(error)
+                    setError("")
                 } finally {
                     setLoading(false);
                 }

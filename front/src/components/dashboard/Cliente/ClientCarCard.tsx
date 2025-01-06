@@ -3,10 +3,6 @@ import { format, differenceInDays } from 'date-fns';
 import { Car, Calendar, Clock, DollarSign, MapPin, Fuel, Gauge, Zap } from 'lucide-react';
 import { Rental } from "@/Interfaces/IClientDashboard";
 
-interface RentalCardProps {
-  rental: Rental;
-}
-
 const RentalCard: React.FC<{ rental: Rental }> = ({ rental }) => {
     const car = rental.users.cars?.[0];
     if (!car) return null;
