@@ -1,5 +1,6 @@
 import React from 'react';
 import cars from '@/helpers/cars'; // Ajusta la ruta según corresponda
+import Image from 'next/image'; // Importar Image de next/image
 
 const RentaAutos: React.FC = () => {
   return (
@@ -15,9 +16,11 @@ const RentaAutos: React.FC = () => {
               className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition"
             >
               <div className="w-full h-72 overflow-hidden">
-                <img
+                <Image
                   src={car.img}
                   alt={`${car.brand} ${car.model}`}
+                  width={500}  // Ajusta el ancho de la imagen según sea necesario
+                  height={300} // Ajusta la altura de la imagen según sea necesario
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>

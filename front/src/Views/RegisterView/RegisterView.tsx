@@ -49,12 +49,14 @@ const RegisterView = () => {
         throw new Error('No se pudo registrar el usuario en la base de datos');
       }
       router.push('/login'); // Redirigir al login después de registro exitoso
-    } catch (err: any) {
-      if (err.code === 'auth/email-already-in-use') {
-        setError('El correo electrónico ya está registrado. Usa otro o inicia sesión.');
-      } else {
-        console.error('Error al registrar usuario:', err.message);
-        setError('Error al registrar. Verifica tus datos e intenta nuevamente.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if ((err as any).code === 'auth/email-already-in-use') {
+          setError('El correo electrónico ya está registrado. Usa otro o inicia sesión.');
+        } else {
+          console.error('Error al registrar usuario:', err.message);
+          setError('Error al registrar. Verifica tus datos e intenta nuevamente.');
+        }
       }
     }
   };
@@ -64,9 +66,11 @@ const RegisterView = () => {
     try {
       await signInWithPopup(auth, provider);
       router.push('/dashboard'); // Redirige al dashboard si el inicio de sesión es exitoso
-    } catch (err: any) {
-      console.error('Error al iniciar sesión con Google:', err.message);
-      setError('No se pudo autenticar con Google. Intenta de nuevo.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Error al iniciar sesión con Google:', err.message);
+        setError('No se pudo autenticar con Google. Intenta de nuevo.');
+      }
     }
   };
 
@@ -120,7 +124,7 @@ const RegisterView = () => {
               </div>
               <div className="flex-auto mb-4">
                 <label htmlFor="phone" className="block text-sm font-medium text-white">
-                  Telefono
+                  Teléfono
                 </label>
                 <input
                   id="phone"
@@ -174,7 +178,7 @@ const RegisterView = () => {
       </form>
 
       <div className="mt-6">
-        <p className="mb-4 text-emerald-900"> También puedes  regístrate con:</p>
+        <p className="mb-4 text-emerald-900"> También puedes registrarte con:</p>
         <button
           onClick={handleGoogleSignIn}
           className="w-full px-4 py-2 bg-amber-400 text-white font-medium rounded-md hover:bg-sky-500"

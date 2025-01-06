@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Cookies from "js-cookie";
 
 const NavBar: React.FC = () => {
@@ -11,7 +12,7 @@ const NavBar: React.FC = () => {
 
   useEffect(() => {
     const userCookie = Cookies.get("user");
-    setIsLoggedIn(userCookie != undefined || userCookie != null ? true : false );
+    setIsLoggedIn(userCookie != undefined || userCookie != null ? true : false);
   }, []);
 
   const handleLogout = () => {
@@ -37,11 +38,12 @@ const NavBar: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/">
-            <img
+            <Image
               src="/images/logo (2).png"
               alt="Logo"
-              className="h-12"
-              style={{ height: "200px" }}
+              width={200}
+              height={200}
+              priority
             />
           </Link>
 
@@ -86,12 +88,10 @@ const NavBar: React.FC = () => {
             {isLoggedIn && (
               <Link
                 href="/dashboard"
-                className="p-2 rounded-full bg-amber-400 text-emerald-950 hover:bg-sky-500  transition"
+                className="p-2 rounded-full bg-amber-400 text-emerald-950 hover:bg-sky-500 transition"
                 title="Favoritos"
-
               >
-                 <span className="hidden md:block"> Dashboard </span>
-              
+                <span className="hidden md:block"> Dashboard </span>
               </Link>
             )}
 
@@ -199,13 +199,12 @@ const NavBar: React.FC = () => {
               <option value="18:00">Tarde</option>
             </select>
             <Link href="/Reserva\id">
-            <button
-              type="submit"
-              className="bg-amber-400 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-sky-500 transition"
-            >
-              
-              Buscar
-            </button>
+              <button
+                type="submit"
+                className="bg-amber-400 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-sky-500 transition"
+              >
+                Buscar
+              </button>
             </Link>
           </form>
         </div>

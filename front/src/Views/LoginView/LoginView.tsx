@@ -6,15 +6,12 @@ import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
 
-
-
 const LoginView = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState('');
-
 
   const router = useRouter();
 
@@ -31,16 +28,16 @@ const LoginView = () => {
       // Obtener token del usuario
       const token = await userCredential.user.getIdToken();
       await sendTokenToBackend(token);
-    } catch (error: any) {
-      // Manejo de errores comunes
-      if (error.code === "auth/user-not-found") {
-        throw new Error("Usuario no encontrado. Verifica tu email.");
-      } else if (error.code === "auth/wrong-password") {
-        throw new Error("Contraseña incorrecta. Intenta nuevamente.");
-      } else {
-        console.error("Error en login:", error.message);
-        throw new Error("Hubo un problema al iniciar sesión. Intenta más tarde.");
+    } catch (error: unknown) {
+      if (error instanceof Error && (error as any).code) {
+        if ((error as any).code === "auth/user-not-found") {
+          throw new Error("Usuario no encontrado. Verifica tu email.");
+        } else if ((error as any).code === "auth/wrong-password") {
+          throw new Error("Contraseña incorrecta. Intenta nuevamente.");
+        }
       }
+      console.error("Error en login:", error);
+      throw new Error("Hubo un problema al iniciar sesión. Intenta más tarde.");
     }
   }
 
@@ -49,11 +46,12 @@ const LoginView = () => {
     setError('');
     try {
       await login(formData.email, formData.password);
-      console.log('sdadadas')
       router.push('/dashboard');
-    } catch (error:any) {
-      console.error("Error en el inicio de sesión con email y contraseña:", error.message);
-      setError(error.message); // Mostrar mensaje de error al usuario
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error en el inicio de sesión con email y contraseña:", error.message);
+        setError(error.message); // Mostrar mensaje de error al usuario
+      }
     }
   };
 
@@ -65,8 +63,10 @@ const LoginView = () => {
 
       await sendTokenToBackend(token);
       router.push('/dashboard');
-    } catch (error) {
-      console.error("Error al iniciar sesión con Google:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error al iniciar sesión con Google:", error.message);
+      }
     }
   };
 
@@ -93,8 +93,10 @@ const LoginView = () => {
       if (data.user) {
         Cookies.set('user', JSON.stringify(data.user), { expires: 7 });
       }
-    } catch (error) {
-      console.error('Hubo un problema al enviar el token al backend:', error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Hubo un problema al enviar el token al backend:', error.message);
+      }
     }
   };
 
@@ -109,7 +111,7 @@ const LoginView = () => {
             </div>
           )}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-green-900">
+            <label htmlFor="email" className="block text-sm font-medium text-amber-400">
               Email
             </label>
             <input
@@ -119,11 +121,11 @@ const LoginView = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full px-4 py-2 border rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sky-400"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-green-900">
+            <label htmlFor="password" className="block text-sm font-medium text-amber-400">
               Password
             </label>
             <input
