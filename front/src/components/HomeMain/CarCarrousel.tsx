@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { ResponseType } from '@/types/response'
 import { getCars } from '@/api/getCars'
 
 export function CarCarousel() {
-    const {loading, cars} : ResponseType = getCars()
+    const {cars} : ResponseType = getCars()
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,

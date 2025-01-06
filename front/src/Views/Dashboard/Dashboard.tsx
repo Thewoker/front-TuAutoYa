@@ -12,7 +12,6 @@ import UpcomingReservations from '@/components/dashboard/Cliente/UpcomingReserva
 
 export default function Dashboard() {
     const [role, setRole] = useState<string | null>(null)
-    const [isOwner, setIsOwner] = useState(false)
     const [activeTab, setActiveTab] = useState('reservations-pend')
     const router = useRouter()
     const [rentals, setRentals] = useState<Rental[]>([]);
@@ -122,7 +121,6 @@ export default function Dashboard() {
 
                 if (user) {
                     setRole(user.role)
-                    setIsOwner(user.role === 'owner')
                 } else {
                     router.push('/Login')
                 }
@@ -171,7 +169,7 @@ export default function Dashboard() {
         <div className="flex bg-gray-100">
             <Sidebar activeTab={activeTab} onTabChange={handleTabChange} role={role} />
             <main className="min-h-screen w-full bg-white">
-                <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
+                <Navbar onTabChange={handleTabChange} />
                 {renderComponent()}
             </main>
         </div>
