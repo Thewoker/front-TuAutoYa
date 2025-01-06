@@ -1,8 +1,5 @@
-// app/mapa/page.tsx
-// /app/maps/page.tsx
 import React from "react";
 import MapaDeAgencias from "@/components/MapaDeAgencias/MapaDeAgencias"; // Importa el componente MapaDeAgencias
-import { agencies } from "@/Interfaces/agencies"; // Asegúrate de importar las agencias desde su archivo
 
 const MapsPage = () => {
   return (

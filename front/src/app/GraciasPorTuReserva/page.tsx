@@ -20,7 +20,7 @@ const GraciasPorTuReserva = () => {
         <p className="mt-2 text-md text-gray-600">
           Serás redirigido a tus reservas en breve...
         </p>
-        <Link href="/Reserva">
+        <Link href="/Reserva\id">
           <button
             type="button"
             className="mt-6 py-3 px-6 text-white font-semibold bg-amber-500 rounded-md hover:bg-emerald-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

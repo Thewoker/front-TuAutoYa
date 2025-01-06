@@ -1,18 +1,19 @@
-"use client"; // Si estás usando React 18 y Server Components
+"use client";
 
 import React, { useState } from "react";
 import data from "@/helpers/data";
-import Car from "@/Interfaces/Car"; // Importa los datos
+import Car from "@/Interfaces/Car";
+import Image from "next/image"; // Importa el componente Image de Next.js
 
 const UltimasOfertas: React.FC = () => {
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<Car[]>([]); // Especifica el tipo de estado
 
   const addFavorite = (car: Car) => {
-    setFavorites([...favorites, car]);
+    setFavorites((prevFavorites) => [...prevFavorites, car]);
   };
 
   // Obtener los autos y seleccionar solo los tres últimos
-  const cars = data.find((item) => item.cars)?.cars?.slice(-3) || []; // Usamos el encadenamiento opcional (?.)
+  const cars = data.find((item) => item.cars)?.cars?.slice(-3) || [];
 
   return (
     <div className="max-w-screen-xl mx-auto p-6">
@@ -27,9 +28,11 @@ const UltimasOfertas: React.FC = () => {
           >
             {/* Contenedor de la imagen */}
             <div className="w-full h-48 overflow-hidden">
-              <img
+              <Image
                 src={car.img}
                 alt={car.model}
+                width={500} // Especifica el ancho de la imagen
+                height={300} // Especifica la altura de la imagen
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>

@@ -1,7 +1,9 @@
+// src/app/profile/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image"; // Importa el componente Image de Next.js
 
 const Profile = () => {
   const [email] = useState("usuario@ejemplo.com"); // Simulación del email del usuario logueado
@@ -74,9 +76,11 @@ const Profile = () => {
         <div className="mb-4">
           <label htmlFor="avatarInput">
             {avatar ? (
-              <img
+              <Image
                 src={avatar}
                 alt="Avatar del usuario"
+                width={128} // Ancho de la imagen
+                height={128} // Alto de la imagen
                 className="w-32 h-32 rounded-full object-cover mx-auto cursor-pointer"
               />
             ) : (
