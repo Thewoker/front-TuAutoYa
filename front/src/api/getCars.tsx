@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export function getCars(){
     const url =`${process.env.NEXT_PUBLIC_API_URL}/cars`
+    console.log("linkurl", url )
     const [cars, setCars] = useState<Car[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')

@@ -60,28 +60,33 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, role }) => {
           </li>)}
           {isCustomer &&
           (<li 
+            
             className={`flex space-x-2 mt-10 cursor-pointer ${
               activeTab === 'reservations' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
             }`}
             onClick={() => onTabChange('join_us')}
           >
-            <span className="font-semibold">Unete como Proveedor</span>
+           <Link href="/UneteComoProveedor">
+  <span className="font-semibold cursor-pointer text-emerald-950 hover:text-sky-500">
+    Únete como Proveedor
+  </span>
+</Link>
           </li>)}
+       
           <li 
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'payments' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('payments')}
-          >
-            <span className="font-semibold">Mis Pagos</span>
-          </li>
-          <li 
-            className={`flex space-x-2 mt-10 cursor-pointer ${
+            className={`flex space-x-2  cursor-pointer ${
               activeTab === 'profile' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
             }`}
             onClick={() => onTabChange('profile')}
           >
-            <span className="font-semibold">Perfil</span>
+
+<Link
+        href="/profile"
+        className="flex space-x-2 mt-10 cursor-pointer text-emerald-950 hover:text-sky-500"
+      >
+        <span className="font-semibold">Perfil</span>
+      </Link>
+            
           </li>
         </ul>
         <button 

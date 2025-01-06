@@ -198,12 +198,15 @@ const NavBar: React.FC = () => {
               <option value="06:00">Mañana</option>
               <option value="18:00">Tarde</option>
             </select>
+            <Link href="/Reserva\id">
             <button
               type="submit"
               className="bg-amber-400 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-sky-500 transition"
             >
+              
               Buscar
             </button>
+            </Link>
           </form>
         </div>
       </div>
