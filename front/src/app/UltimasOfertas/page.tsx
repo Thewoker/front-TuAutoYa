@@ -45,12 +45,7 @@ const UltimasOfertas: React.FC = () => {
               <p className="mt-2 font-semibold text-amber-500">
                 Precio por día: ${car.pricePerDay}
               </p>
-              <button
-                onClick={() => addFavorite(car)}
-                className="mt-4 bg-amber-400 text-white px-4 py-2 rounded hover:bg-sky-500 transition"
-              >
-                Agregar a Favoritos
-              </button>
+              
             </div>
           </div>
         ))}
