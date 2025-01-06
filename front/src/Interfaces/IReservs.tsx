@@ -37,6 +37,7 @@ export interface IOrderDetails {
 export interface IOrder {
   id: string;
   orderDate: string;
+  status: 'active' | 'completed' | 'cancelled';
   orderDetails: IOrderDetails;
   users: IUser;
 }

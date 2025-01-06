@@ -22,12 +22,21 @@ export interface ICar {
     brakes: string;
     rating: number;
     status: string;
-    approvalStatus: 'pending' | 'approved' | 'rejected';
     users: IUser;
 }
 
-export interface ICarProps {
-    car: ICar;
-    onStatusChange: (carId: string, newStatus: 'pending' | 'approved' | 'rejected') => void;
+export interface IOrderDetails {
+    id: string;
+    startDate: string;
+    endDate: string;
+    price: string;
+    subtotal: string;
+    cars: ICar;
 }
 
+export interface IOrder {
+    id: string;
+    orderDate: string;
+    orderDetails: IOrderDetails;
+    users: IUser;
+}

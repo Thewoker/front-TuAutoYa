@@ -4,8 +4,9 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Star, Gauge, Car, Disc, Fuel } from 'lucide-react'
 import { ICarProps } from "@/Interfaces/IAuditVehicles"
+import { Button } from "@/components/ui/button"
 
-export default function VehicleAuditDetail({ car } : ICarProps) {
+export default function VehicleAuditDetail({ car, onStatusChange }: ICarProps) {
     return (
         <>
             <CardHeader className="p-0">
@@ -50,14 +51,46 @@ export default function VehicleAuditDetail({ car } : ICarProps) {
                     <span className="text-xl font-bold text-green-600">${car.pricePerDay}/día</span>
                 </div>
             </CardContent>
-            <CardFooter className=" p-4 bg-[#f59e0b]/80">
-                <div className="w-full">
+            <CardFooter className="p-4 bg-[#f59e0b]/80 flex flex-col items-start">
+                <div className="w-full mb-4">
                     <h3 className="font-semibold mb-2">Propietario</h3>
                     <p className="text-sm"><span className="font-medium">Nombre:</span> {car.users.name}</p>
                     <p className="text-sm"><span className="font-medium">Email:</span> {car.users.email}</p>
                     <p className="text-sm"><span className="font-medium">Ciudad:</span> {car.users.city}</p>
                 </div>
+                <div className="w-full">
+                    <h3 className="font-semibold mb-2">Estado de Aprobación</h3>
+                    <Badge variant={car.approvalStatus === 'approved' ? 'default' : car.approvalStatus === 'rejected' ? 'destructive' : 'secondary'}>
+                        {car.approvalStatus}
+                    </Badge>
+                    <div className="flex gap-2 mt-2">
+                        <Button 
+                            size="sm" 
+                            onClick={() => onStatusChange(car.id, 'approved')}
+                            disabled={car.approvalStatus === 'approved'}
+                        >
+                            Aprobar
+                        </Button>
+                        <Button 
+                            size="sm" 
+                            variant="destructive"
+                            onClick={() => onStatusChange(car.id, 'rejected')}
+                            disabled={car.approvalStatus === 'rejected'}
+                        >
+                            Rechazar
+                        </Button>
+                        <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => onStatusChange(car.id, 'pending')}
+                            disabled={car.approvalStatus === 'pending'}
+                        >
+                            Pendiente
+                        </Button>
+                    </div>
+                </div>
             </CardFooter>
         </>
     )
 }
+
