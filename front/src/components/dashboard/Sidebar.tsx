@@ -100,4 +100,3 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, role }) => {
 };
 
 export default Sidebar;
-
