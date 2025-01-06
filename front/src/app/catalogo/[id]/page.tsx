@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import { useParams } from "next/navigation"; 
 
 import Link from 'next/link';
-import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
+import { CarCarousel2 } from "@/components/Catalogo/CarDetalle/CarCarrousel2";
 import { getCars } from "@/api/getCars";
 import { ResponseType } from "@/types/response";
 

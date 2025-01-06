@@ -13,6 +13,8 @@ const LoginView = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState('');
+
 
   const router = useRouter();
 
@@ -21,13 +23,37 @@ const LoginView = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  async function login(email: string, password: string): Promise<void> {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Inicio de sesión exitoso:", userCredential.user);
+
+      // Obtener token del usuario
+      const token = await userCredential.user.getIdToken();
+      await sendTokenToBackend(token);
+    } catch (error: any) {
+      // Manejo de errores comunes
+      if (error.code === "auth/user-not-found") {
+        throw new Error("Usuario no encontrado. Verifica tu email.");
+      } else if (error.code === "auth/wrong-password") {
+        throw new Error("Contraseña incorrecta. Intenta nuevamente.");
+      } else {
+        console.error("Error en login:", error.message);
+        throw new Error("Hubo un problema al iniciar sesión. Intenta más tarde.");
+      }
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     try {
       await login(formData.email, formData.password);
+      console.log('sdadadas')
       router.push('/dashboard');
-    } catch (error) {
-      console.error("Error en el inicio de sesión con email y contraseña:", error);
+    } catch (error:any) {
+      console.error("Error en el inicio de sesión con email y contraseña:", error.message);
+      setError(error.message); // Mostrar mensaje de error al usuario
     }
   };
 
@@ -77,6 +103,11 @@ const LoginView = () => {
       <div className="bg-emerald-900 p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="text-red-500 text-center mb-4">
+              {error}
+            </div>
+          )}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-green-900">
               Email
@@ -132,7 +163,3 @@ const LoginView = () => {
 };
 
 export default LoginView;
-
-function login(email: string, password: string) {
-  throw new Error("Function not implemented.");
-}

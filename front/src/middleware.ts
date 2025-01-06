@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
 
   if (path.startsWith('/admin')) {
     if (!user) {
-      return NextResponse.redirect(new URL('/Login', request.url))
+      return NextResponse.redirect(new URL('/login', request.url))
     }
 
     try {
@@ -19,13 +19,13 @@ export async function middleware(request: NextRequest) {
       }
     } catch (error) {
       console.error('Error parsing user data:', error)
-      return NextResponse.redirect(new URL('/Login', request.url))
+      return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 
   if (path.startsWith('/dashboard')) {
     if (!user) {
-      return NextResponse.redirect(new URL('/Login', request.url))
+      return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 
