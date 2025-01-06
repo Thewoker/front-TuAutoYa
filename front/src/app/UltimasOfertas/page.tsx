@@ -1,17 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import data from "@/helpers/data";
-import Car from "@/Interfaces/Car";
 import Image from "next/image"; // Importa el componente Image de Next.js
 
 const UltimasOfertas: React.FC = () => {
-  const [favorites, setFavorites] = useState<Car[]>([]); // Especifica el tipo de estado
-
-  const addFavorite = (car: Car) => {
-    setFavorites((prevFavorites) => [...prevFavorites, car]);
-  };
-
   // Obtener los autos y seleccionar solo los tres últimos
   const cars = data.find((item) => item.cars)?.cars?.slice(-3) || [];
 
@@ -45,7 +38,6 @@ const UltimasOfertas: React.FC = () => {
               <p className="mt-2 font-semibold text-amber-500">
                 Precio por día: ${car.pricePerDay}
               </p>
-              
             </div>
           </div>
         ))}

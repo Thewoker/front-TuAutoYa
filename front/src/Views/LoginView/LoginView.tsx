@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { FirebaseError } from "firebase/app"; // Importar FirebaseError
 import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
@@ -12,7 +13,6 @@ const LoginView = () => {
     password: "",
   });
   const [error, setError] = useState('');
-
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,15 +29,18 @@ const LoginView = () => {
       const token = await userCredential.user.getIdToken();
       await sendTokenToBackend(token);
     } catch (error: unknown) {
-      if (error instanceof Error && (error as any).code) {
-        if ((error as any).code === "auth/user-not-found") {
-          throw new Error("Usuario no encontrado. Verifica tu email.");
-        } else if ((error as any).code === "auth/wrong-password") {
-          throw new Error("Contraseña incorrecta. Intenta nuevamente.");
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/user-not-found":
+            throw new Error("Usuario no encontrado. Verifica tu email.");
+          case "auth/wrong-password":
+            throw new Error("Contraseña incorrecta. Intenta nuevamente.");
+          default:
+            throw new Error("Hubo un problema al iniciar sesión. Intenta más tarde.");
         }
       }
       console.error("Error en login:", error);
-      throw new Error("Hubo un problema al iniciar sesión. Intenta más tarde.");
+      throw new Error("Error desconocido al iniciar sesión.");
     }
   }
 
@@ -50,7 +53,7 @@ const LoginView = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Error en el inicio de sesión con email y contraseña:", error.message);
-        setError(error.message); // Mostrar mensaje de error al usuario
+        setError(error.message);
       }
     }
   };
@@ -66,6 +69,7 @@ const LoginView = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Error al iniciar sesión con Google:", error.message);
+        setError("Error al iniciar sesión con Google. Intenta nuevamente.");
       }
     }
   };
@@ -96,6 +100,7 @@ const LoginView = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('Hubo un problema al enviar el token al backend:', error.message);
+        setError("Hubo un problema con el servidor. Intenta más tarde.");
       }
     }
   };
@@ -154,7 +159,7 @@ const LoginView = () => {
         <div className="mt-4 text-center">
           <p className="text-sm text-white m-1">
             No tienes una cuenta?{" "}
-            <a href="/register" className=" p-2 text-amber-500  hover:texz bg-emerald-900">
+            <a href="/register" className="p-2 text-amber-500 hover:text bg-emerald-900">
               Registro
             </a>
           </p>

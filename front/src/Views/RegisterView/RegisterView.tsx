@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider 
 } from 'firebase/auth';
 import { auth } from '../../firebase.config';
+import { FirebaseError } from 'firebase/app'; // Importa el tipo FirebaseError
 
 const RegisterView = () => {
   const router = useRouter();
@@ -50,13 +51,16 @@ const RegisterView = () => {
       }
       router.push('/login'); // Redirigir al login después de registro exitoso
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        if ((err as any).code === 'auth/email-already-in-use') {
+      if (err instanceof FirebaseError) {
+        if (err.code === 'auth/email-already-in-use') {
           setError('El correo electrónico ya está registrado. Usa otro o inicia sesión.');
         } else {
           console.error('Error al registrar usuario:', err.message);
           setError('Error al registrar. Verifica tus datos e intenta nuevamente.');
         }
+      } else {
+        console.error('Error desconocido:', err);
+        setError('Error desconocido. Intenta nuevamente.');
       }
     }
   };
@@ -67,9 +71,12 @@ const RegisterView = () => {
       await signInWithPopup(auth, provider);
       router.push('/dashboard'); // Redirige al dashboard si el inicio de sesión es exitoso
     } catch (err: unknown) {
-      if (err instanceof Error) {
+      if (err instanceof FirebaseError) {
         console.error('Error al iniciar sesión con Google:', err.message);
         setError('No se pudo autenticar con Google. Intenta de nuevo.');
+      } else {
+        console.error('Error desconocido:', err);
+        setError('Error desconocido. Intenta nuevamente.');
       }
     }
   };
