@@ -29,7 +29,6 @@ function ConditionalLayout({ children }: Readonly<{
                 }
             } catch (error) {
                 console.error("Se ha producido un error: ", error)
-                router.push('/Login')
             }
         }
 
