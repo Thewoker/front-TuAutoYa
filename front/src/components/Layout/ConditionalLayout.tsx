@@ -22,11 +22,13 @@ function ConditionalLayout({ children }: Readonly<{
         const getRole = async () => {
             try {
                 const { data } = await axios.get("/api/getUserData")
-                const user = JSON.parse(data)
-
-                if (user) {
-                    setRole(user.role)
-                }
+                if (data?.message != "Not logged in") {
+                    const user = JSON.parse(data)
+    
+                    if (user) {
+                        setRole(user.role)
+                    }
+                } 
             } catch (error) {
                 console.error("Se ha producido un error: ", error)
             }
