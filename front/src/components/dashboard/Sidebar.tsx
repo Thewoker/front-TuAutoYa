@@ -4,14 +4,13 @@ import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   activeTab: string;
-  onTabChange: (tab: string) => void;
   role: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, role }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
   const router = useRouter();
   const isCustomer = role === "customer"
-  console.log("isCustomer", isCustomer);
+  console.log("isCustomer", activeTab);
 
   const handleLogout = () => {
     Cookies.remove("user");
@@ -25,73 +24,69 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, role }) => {
           Mi perfil
         </h1> */}
         <ul>
-          <Link href='/'
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'home' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('home')}
-          >
-            <span className="font-semibold">Home</span>
-          </Link>
-          <li 
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'reservations' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('reservations-past')}
-          >
-            <span className="font-semibold">Reservas Pasadas</span>
+          <li>
+            <Link href='/'
+              className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === 'home' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                }`}
+            >
+              <span className="font-semibold">Home</span>
+            </Link>
           </li>
-          <li 
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'reservations' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('reservations-pend')}
-          >
-            <span className="font-semibold">Reservas Pendientes</span>
+          <li>
+            <Link href='/dashboard/reservas-pasadas'
+              className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/reservas-pasadas' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                }`}
+            >
+              <span className="font-semibold">Reservas Pasadas</span>
+            </Link>
           </li>
-          {!isCustomer && 
-          (<li 
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'reservations' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('supplier')}
-          >
-            <span className="font-semibold">Proveedor</span>
-          </li>)}
+          <li>
+            <Link href='/dashboard/reservas-pendientes'
+              className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/reservas-pendientes' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                }`}
+            >
+              <span className="font-semibold">Reservas Pendientes</span>
+            </Link>
+          </li>
+          {!isCustomer &&
+            (<li>
+              <Link href='/dashboard/proveedor'
+                className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/proveedor' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                  }`}
+              >
+                <span className="font-semibold">Proveedor</span>
+              </Link>
+            </li>)}
           {isCustomer &&
-          (<li 
-            
-            className={`flex space-x-2 mt-10 cursor-pointer ${
-              activeTab === 'reservations' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('join_us')}
-          >
-           <Link href="/UneteComoProveedor">
-  <span className="font-semibold cursor-pointer text-emerald-950 hover:text-sky-500">
-    Únete como Proveedor
-  </span>
-</Link>
-          </li>)}
-       
-          <li 
-            className={`flex space-x-2  cursor-pointer ${
-              activeTab === 'profile' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
-            }`}
-            onClick={() => onTabChange('profile')}
+            (<li
+
+              className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/unete' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                }`}
+            >
+              <Link href="/dashboard/unete">
+                <span className="font-semibold cursor-pointer text-emerald-950 hover:text-sky-500">
+                  Únete como Proveedor
+                </span>
+              </Link>
+            </li>)}
+
+          <li
+            className={`flex space-x-2  cursor-pointer ${activeTab === '/perfil' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+              }`}
           >
 
-<Link
-        href="/profile"
-        className="flex space-x-2 mt-10 cursor-pointer text-emerald-950 hover:text-sky-500"
-      >
-        <span className="font-semibold">Perfil</span>
-      </Link>
-            
+            <Link
+              href="/dashboard/perfil"
+              className="flex space-x-2 mt-10 cursor-pointer text-emerald-950 hover:text-sky-500"
+            >
+              <span className="font-semibold">Perfil</span>
+            </Link>
+
           </li>
         </ul>
-        <button 
-        className="mt-10 w-full bg-amber-400 text-emerald-950 rounded-full py-2 hover:text-sky-500"
-        onClick={handleLogout}>
+        <button
+          className="mt-10 w-full bg-amber-400 text-emerald-950 rounded-full py-2 hover:text-sky-500"
+          onClick={handleLogout}>
           Cerrar Sesión
         </button>
       </div>
