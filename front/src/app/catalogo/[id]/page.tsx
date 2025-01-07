@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { CarCarousel2 } from "@/components/Catalogo/carDetalle/CarCarrousel2";
 import { useGetCars } from "@/api/getCars";
 import { ResponseType } from "@/types/response";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 function CarDetail() {
@@ -17,6 +19,29 @@ function CarDetail() {
     const filtro = car?.model || '';
     const carid = car?.id || '';
     const title = 'Modelos Relacionados';
+    const [role, setRole] = useState<string | null>(null)
+    const [userId, setUserId] = useState<string | null>(null)
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        const getRole = async () => {
+            try {
+                const { data } = await axios.get("/api/getUserData")
+                const user = JSON.parse(data)
+                console.log(user)
+                if (user) {
+                    setRole(user.role)
+                    setUserId(user.id)
+                } else{
+                  console.log('No se encuentra el usuario')
+                }
+            } catch (error) {
+                // console.error("Se ha producido un error: ", error)
+            }
+        }
+    
+        getRole()
+      });
 
     return (
         <div className="bg-white">
@@ -37,15 +62,15 @@ function CarDetail() {
                 <div className="border-b mx-auto max-w-2xl px-4 pb-5 pt-5 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:px-8 lg:pb-5 lg:pt-5">
                     <div className="lg:col-span-2 lg:border-gray-200 lg:pr-8">
                         <div className="img">
-                        <div className="relative w-full h-96"> {/* Ajuste del contenedor */}
-    <Image
-        src={car?.image || "/placeholder-image.jpg"}
-        alt={car?.model || "Imagen del coche"}
-        layout="fill"
-        objectFit="contain" // Cambiado de "cover" a "contain"
-        className="object-center"
-    />
-</div>
+                            <div className="relative w-full h-96"> {/* Ajuste del contenedor */}
+                                <Image
+                                    src={car?.image || "/placeholder-image.jpg"}
+                                    alt={car?.model || "Imagen del coche"}
+                                    layout="fill"
+                                    objectFit="contain" // Cambiado de "cover" a "contain"
+                                    className="object-center"
+                                />
+                            </div>
                         </div>
                         <div className="mt-8 mb-8 p-3 border">
                             <div className="border-b pb-3 mb-3">
@@ -63,32 +88,32 @@ function CarDetail() {
                                 </div>
                                 <div className="bg-white border rounded-lg p-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-2.25-1.313M21 7.5v2.25m0-2.25-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3 2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75 2.25-1.313M12 21.75V19.5m0 2.25-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
                                     </svg>
                                     <p className="ml-2">Kilometer: </p>
                                     <p>{car?.kilometer}</p>
                                 </div>
                                 <div className="bg-white border rounded-lg p-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
                                     </svg>
                                     <p className="ml-2">Brakes: </p>
                                     <p>{car?.brakes}</p>
                                 </div>
                                 <div className="bg-white border rounded-lg p-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                                     </svg>
                                     <p className="ml-2">FuelType: </p>
                                     <p>{car?.fuelType}</p>
                                 </div>
-                                <div className="bg-white border rounded-lg p-4 flex items-center">
+                                {/* <div className="bg-white border rounded-lg p-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
                                     </svg>
                                     <p className="ml-2">Status: </p>
                                     <p>{car?.status}</p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         {/* <div className="mt-8 mb-8 p-3 border">
@@ -125,15 +150,64 @@ function CarDetail() {
                                 <p className="text-xl tracking-tight text-emerald-900">Precio por Día: $ {car?.pricePerDay}</p>
                             </div>
                             <div className="mt-3">
-                                <Link href={`/Reserva/${car?.id}`}>
+                                {car?.status === "inactive" ? (
+                                    <p className="text-xl tracking-tight text-emerald-900">Estado: <b className="text-red-600">Ya esta reservado</b></p>
+                                ):(
+                                    <p className="text-xl tracking-tight text-emerald-900">Estado: <b className="text-green-600">Activo</b></p>
+                                )}
+                            </div>
+                            <div className="mt-3">
+                                {car?.status === "inactive" ? (
+                                    <button
+                                    disabled={isDisabled}
+                                    type="button"
+                                    className={`mt-5 flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white ${
+                                        isDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-emerald-900"
+                                    } focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                    >
+                                    Reservar ahora
+                                    </button>
+                                ) : role ? (
+                                    <Link href={`/Reserva/${car?.id}`}>
                                     <button
                                         type="button"
                                         className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-amber-400 px-8 py-3 text-base font-medium text-white hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
                                         Reservar ahora
                                     </button>
-                                </Link>
-                            </div>
+                                    </Link>
+                                ) : (
+                                    <div className="mt-3">
+                                    <Link href={`/login`}>
+                                        <h3 className="text-xl tracking-tight text-emerald-900">Necesitar Iniciar sesión para Reservar</h3>
+                                        <button
+                                        type="button"
+                                        className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-amber-400 px-8 py-3 text-base font-medium text-white hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        >
+                                        Login
+                                        </button>
+                                    </Link>
+                                    <h3 className="text-xl tracking-tight text-emerald-900 mt-3">Si no tienes una cuenta Registrate</h3>
+                                    <Link href={`/register`}>
+                                        <button
+                                        type="button"
+                                        className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-amber-400 px-8 py-3 text-base font-medium text-white hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        >
+                                        Registrarse
+                                        </button>
+                                    </Link>
+                                    <button
+                                        disabled={isDisabled}
+                                        type="button"
+                                        className={`mt-5 flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white ${
+                                        isDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-emerald-900"
+                                        } focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                    >
+                                        Reservar ahora
+                                    </button>
+                                    </div>
+                                )}
+                                </div>
                             {/* <form className="mt-5">
 
                                 <div className="flex items-center">
