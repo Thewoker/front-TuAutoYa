@@ -20,7 +20,6 @@ function CarDetail() {
     const carid = car?.id || '';
     const title = 'Modelos Relacionados';
     const [role, setRole] = useState<string | null>(null)
-    const [userId, setUserId] = useState<string | null>(null)
     const [isDisabled, setIsDisabled] = useState(true);
 
     useEffect(() => {
@@ -31,12 +30,12 @@ function CarDetail() {
                 console.log(user)
                 if (user) {
                     setRole(user.role)
-                    setUserId(user.id)
+                    setIsDisabled(true)
                 } else{
                   console.log('No se encuentra el usuario')
                 }
             } catch (error) {
-                // console.error("Se ha producido un error: ", error)
+                console.error("Se ha producido un error: ", error)
             }
         }
     

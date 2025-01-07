@@ -15,7 +15,6 @@ function ConditionalLayout({ children }: Readonly<{
     const isInDashboard = pathname.startsWith('/dashboard')
     const pathnameFiltered = pathname.split('/dashboard').join('')
     const [role, setRole] = useState('')
-    const [activeTab, setActiveTab] = useState('reservations-pend')
     console.log("pathnameFiltered: ", pathnameFiltered, typeof(pathnameFiltered));
 
 

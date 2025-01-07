@@ -2,13 +2,10 @@
 import { useGetCars } from "@/api/getCars";
 import { ResponseType } from "@/types/response";
 import axios from "axios";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function Reserva() {
-  const router = useRouter()
   const [role, setRole] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
   const [userName, setUserName] = useState<string | null>(null)
@@ -39,11 +36,12 @@ function Reserva() {
                 setRole(user.role)
                 setUserId(user.id)
                 setUserName(user.name)
+                setRentalsDay("")
             } else{
               console.log('No se encuentra el rol')
             }
         } catch (error) {
-            // console.error("Se ha producido un error: ", error)
+            console.error("Se ha producido un error: ", error)
         }
     }
 
