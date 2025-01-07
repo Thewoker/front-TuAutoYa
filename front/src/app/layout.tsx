@@ -5,6 +5,7 @@ import { Bebas_Neue } from 'next/font/google';
 import './globals.css'; // Archivo donde Tailwind está configurado
 import { ConditionalHeader } from "@/components/Layout/ConditionalHeader";
 import { Toaster } from "@/components/ui/toaster"
+import ConditionalLayout from "@/components/Layout/ConditionalLayout";
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
@@ -24,14 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={bebasNeue.variable}
-    data-lt-installed="true"
+      data-lt-installed="true"
     >
       <body
       >
         <ConditionalHeader />
-        {children}
+        <ConditionalLayout>
+          {children}
+        </ConditionalLayout>
         <Toaster />
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
