@@ -152,7 +152,7 @@ export function UserProfile() {
                     />
                 </div>
                 <div className="md:col-span-2 flex justify-end mt-6">
-                    <Button type="submit" disabled={updating}>
+                    <Button type="submit" disabled={updating} className='bg-[#f59e0b]'>
                         {updating ? 'Actualizando...' : 'Actualizar Perfil'}
                     </Button>
                 </div>
