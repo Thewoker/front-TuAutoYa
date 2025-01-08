@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
   const router = useRouter();
   const isCustomer = role === "customer"
   console.log("isCustomer", activeTab);
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn } = useAuth();
   
 
   const handleLogout = () => {

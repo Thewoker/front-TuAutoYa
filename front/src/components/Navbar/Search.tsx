@@ -10,8 +10,6 @@ export default function Search() {
     // Estados locales para los filtros
     const [selectedBrand, setSelectedBrand] = useState('');
     const [selectedModel, setSelectedModel] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
 
     // Obtener marcas únicas de los datos
     const brands = Array.from(new Set(cars.map((car) => car.brand)));
