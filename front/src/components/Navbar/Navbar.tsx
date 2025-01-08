@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useAuth } from "@/helpers/AuthContext";
+import Search from "./Search";
 
 const NavBar: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,7 +70,7 @@ const NavBar: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/rentaAutos"
+                href="/catalogo"
                 className="text-white text-lg font-medium hover:text-amber-400 transition duration-300"
               >
                 Renta de autos
@@ -167,48 +168,7 @@ const NavBar: React.FC = () => {
 
         {/* Segunda fila: Barra de búsqueda */}
         <div className="mt-4">
-          <form className="flex items-center max-w-3xl mx-auto bg-white rounded-lg shadow p-3">
-            <input
-              type="text"
-              defaultValue="Bogotá, Distrito Capital, Colombia"
-              placeholder="Ciudad"
-              className="p-2 flex-1 text-emerald-900 text-sm border-none outline-none rounded-l-lg"
-            />
-            <input
-              type="date"
-              defaultValue="2024-12-24"
-              className="p-2 text-sm border-none text-emerald-900"
-            />
-            <select
-              defaultValue="12:00"
-              className="p-2 text-sm border-none text-emerald-900"
-            >
-              <option value="12:00">Mediodía</option>
-              <option value="06:00">Mañana</option>
-              <option value="18:00">Tarde</option>
-            </select>
-            <input
-              type="date"
-              defaultValue="2024-12-31"
-              className="p-2 text-sm border-none text-emerald-900"
-            />
-            <select
-              defaultValue="12:00"
-              className="p-2 text-sm border-none text-emerald-900"
-            >
-              <option value="12:00">Mediodía</option>
-              <option value="06:00">Mañana</option>
-              <option value="18:00">Tarde</option>
-            </select>
-            <Link href="/Reserva\id">
-              <button
-                type="submit"
-                className="bg-amber-400 text-white text-sm px-4 py-2 rounded-r-lg hover:bg-sky-500 transition"
-              >
-                Buscar
-              </button>
-            </Link>
-          </form>
+          <Search />
         </div>
       </div>
     </nav>

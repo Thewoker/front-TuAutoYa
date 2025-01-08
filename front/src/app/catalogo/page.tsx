@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Disclosure,
   DisclosureButton,
@@ -15,6 +15,8 @@ import { CarList } from '@/components/Catalogo/CarList'
 import Car from '@/Interfaces/ICar'
 import { useGetCars } from '@/api/getCars'
 import { ResponseType } from '@/types/response'
+import CatalogSkeleton from '@/components/Catalogo/CatalogoSkeleton'
+import { useRouter } from 'next/navigation'
 
 const sortOptions = [
     { name: 'Most Popular', value: 'popular', current: true },
@@ -30,7 +32,7 @@ function classNames(...classes: (string | undefined | null)[]): string {
 
 export default function CatalogPage() {
     const {loading, cars} : ResponseType = useGetCars();
-    
+    const router = useRouter();
     // Estado para filtros seleccionados
     const [selectedFilters, setSelectedFilters] = useState({
         brand: new Set<string>(),
@@ -41,6 +43,49 @@ export default function CatalogPage() {
 
     // Estado para el orden seleccionado
     const [selectedSort, setSelectedSort] = useState<string>('popular');
+
+    // Estado para la página actual
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    // Cargar filtros desde la URL
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const brand = params.get('brand');
+        const model = params.get('model');
+        const page = parseInt(params.get('page') || '1');
+        setCurrentPage(page);
+
+        setSelectedFilters((prev) => ({
+            ...prev,
+            brand: brand ? new Set([brand]) : prev.brand,
+            model: model ? new Set([model]) : prev.model,
+        }));
+
+        const sort = params.get('sort') || 'popular';
+        setSelectedSort(sort);
+    }, []);
+
+    // Sincronizar filtros y orden con la URL
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        // Agregar filtros a la URL
+        Array.from(selectedFilters.brand).forEach((value) => params.append('brand', value));
+        Array.from(selectedFilters.model).forEach((value) => params.append('model', value));
+        Array.from(selectedFilters.year).forEach((value) => params.append('year', value));
+        Array.from(selectedFilters.transmission).forEach((value) => params.append('transmission', value));
+
+        // Agregar el orden a la URL
+        params.set('sort', selectedSort);
+
+        // Agregar la página actual a la URL
+        params.set('page', currentPage.toString());
+
+        // Actualizar la URL sin recargar la página
+        router.replace(`/catalogo?${params.toString()}`);
+    }, [selectedFilters, selectedSort, currentPage, router]);
+
     const filters = [
         {
             id: 'brand',
@@ -105,8 +150,8 @@ export default function CatalogPage() {
 
     const sortedCars = sortCars(filteredCars);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const itemsPerPage = 10;
     const paginatedCars = sortedCars.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
@@ -120,7 +165,7 @@ export default function CatalogPage() {
     };
 
     if (loading) {
-        return <div className="flex items-center justify-center min-h-screen">Cargando...</div>;
+        return <CatalogSkeleton />;
     }
 
     return (

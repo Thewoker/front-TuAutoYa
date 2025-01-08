@@ -9,9 +9,10 @@ import { useCallback } from 'react'
 import Link from 'next/link'
 import { ResponseType } from '@/types/response'
 import { useGetCars } from '@/api/getCars'
+import { CarouselSkeleton } from './SkeletonHome/CarCarrouselSkeleton'
 
 export function CarCarousel() {
-    const {cars} : ResponseType = useGetCars()
+    const {loading, cars} : ResponseType = useGetCars()
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,
@@ -26,6 +27,10 @@ export function CarCarousel() {
     const scrollNext = useCallback(() => {
         if (emblaApi) emblaApi.scrollNext()
     }, [emblaApi])
+
+    if (loading) {
+        return <CarouselSkeleton />
+    }
 
     return (
         <div className="relative w-full">

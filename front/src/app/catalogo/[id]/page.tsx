@@ -9,11 +9,12 @@ import { useGetCars } from "@/api/getCars";
 import { ResponseType } from "@/types/response";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CarDetailSkeleton from "@/components/Catalogo/carDetalle/CarDetalleSkeleton";
 
 
 function CarDetail() {
 
-    const{cars}: ResponseType = useGetCars()
+    const{loading, cars}: ResponseType = useGetCars()
     const { id } = useParams();
     const car = cars.find((car) => car.id === id);
     const filtro = car?.model || '';
@@ -44,6 +45,9 @@ function CarDetail() {
         getRole()
       });
 
+      if (loading) {
+        return <CarDetailSkeleton />;
+      }
     return (
         <div className="bg-white">
             <div className="pt-6">

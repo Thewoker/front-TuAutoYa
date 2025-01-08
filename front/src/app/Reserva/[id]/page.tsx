@@ -1,5 +1,6 @@
 "use client"
 import { useGetCars } from "@/api/getCars";
+import ReservaSkeleton from "@/components/Reserva/FormReservaSkeleton";
 import { ResponseType } from "@/types/response";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -98,7 +99,7 @@ function Reserva() {
   };
 
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <ReservaSkeleton />;
 
   return (
     <div className="bg-gray-100 p-6 min-h-screen">
