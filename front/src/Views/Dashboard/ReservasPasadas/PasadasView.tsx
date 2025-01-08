@@ -1,107 +1,46 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Rental } from '@/Interfaces/IClientDashboard'
+import axios from 'axios'
+import { Order, ApiResponse } from '@/Interfaces/IClientDashboard'
 import PastReservations from '@/components/dashboard/Cliente/PastReservations'
+import { useToast } from "@/hooks/use-toast"
 
 function PasadasView() {
-    const [rentals, setRentals] = useState<Rental[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
 
     useEffect(() => {
-        const fetchRentals = async () => {
-            // En una aplicación real, esto sería una llamada a la API
-            const mockRentals: Rental[] = [
-                {
-                    "id": "order-uuid-1",
-                    "orderDate": "2025-01-04T15:30:00.000Z",
-                    "status": "active",
-                    "users": {
-                        "id": "user-uuid-1",
-                        "name": "John Doe",
-                        "email": "john.doe@example.com",
-                        "identity": 123456,
-                        "phone": "123-456-7890",
-                        "city": "Resistencia",
-                        "role": "CUSTOMER",
-                        "cars": [
-                            {
-                                "id": "car-uuid-1",
-                                "brand": "Toyota",
-                                "model": "Corolla",
-                                "year": "2020",
-                                "pricePerDay": 50,
-                                "image": "car1.png",
-                                "description": "A reliable car",
-                                "transmission": "AUTOMATIC",
-                                "fuelType": "PETROL",
-                                "kilometer": "15000",
-                                "brakes": "ABS",
-                                "rating": 4.5,
-                                "status": "Active",
-                                "users": {
-                                    "id": "user-uuid-1",
-                                    "name": "John Doe",
-                                    "email": "john.doe@example.com",
-                                    "identity": 123456,
-                                    "phone": "123-456-7890",
-                                    "city": "Resistencia",
-                                    "role": "CUSTOMER",
-                                    "cars": null
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "id": "order-uuid-1",
-                    "orderDate": "2025-01-04T15:30:00.000Z",
-                    "status": "completed",
-                    "users": {
-                        "id": "user-uuid-1",
-                        "name": "John Doe",
-                        "email": "john.doe@example.com",
-                        "identity": 123456,
-                        "phone": "123-456-7890",
-                        "city": "Resistencia",
-                        "role": "CUSTOMER",
-                        "cars": [
-                            {
-                                "id": "car-uuid-1",
-                                "brand": "Toyota",
-                                "model": "Corolla",
-                                "year": "2020",
-                                "pricePerDay": 50,
-                                "image": "car1.png",
-                                "description": "A reliable car",
-                                "transmission": "AUTOMATIC",
-                                "fuelType": "PETROL",
-                                "kilometer": "15000",
-                                "brakes": "ABS",
-                                "rating": 4.5,
-                                "status": "Active",
-                                "users": {
-                                    "id": "user-uuid-1",
-                                    "name": "John Doe",
-                                    "email": "john.doe@example.com",
-                                    "identity": 123456,
-                                    "phone": "123-456-7890",
-                                    "city": "Resistencia",
-                                    "role": "CUSTOMER",
-                                    "cars": null
-                                }
-                            }
-                        ]
-                    }
-                }
-            ];
-            setRentals(mockRentals);
+        const fetchOrders = async () => {
+            try {
+                const { data } = await axios.get("/api/getUserData")
+                const user = await JSON.parse(data)
+                const response = await axios.get<ApiResponse>(`${process.env.NEXT_PUBLIC_API_URL}/orders/user/${user.id}`);
+                console.log(response.data.orders)
+                setOrders(response.data.orders);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                toast({
+                    title: "Error",
+                    description: "No se pudieron cargar las reservas. Por favor, intente de nuevo.",
+                    variant: "destructive",
+                });
+            } finally {
+                setLoading(false);
+            }
         };
 
-        fetchRentals();
-    }, []);
+        fetchOrders();
+    }, [toast]);
 
-    const pastRentals = rentals.filter((rental) => rental.status !== "active");
+    const pastOrders = orders.filter((order) => order.status !== "active");
     
-    return <PastReservations rentals={pastRentals} />
+    if (loading) {
+        return <div>Cargando reservas pasadas...</div>;
+    }
+
+    return <PastReservations rentals={pastOrders} />
 }
 
 export default PasadasView
+

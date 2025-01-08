@@ -1,9 +1,9 @@
 import React from "react";
-import { Rental } from "@/Interfaces/IClientDashboard";
+import { Order } from "@/Interfaces/IClientDashboard";
 import RentalCard from "@/components/dashboard/Cliente/ClientCarCard";
 
 interface PastReservationsProps {
-  rentals: Rental[];
+  rentals: Order[];
 }
 
 const PastReservations: React.FC<PastReservationsProps> = ({ rentals }) => {
