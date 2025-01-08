@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/helpers/AuthContext";
 
 interface SidebarProps {
   activeTab: string;
@@ -11,10 +12,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
   const router = useRouter();
   const isCustomer = role === "customer"
   console.log("isCustomer", activeTab);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  
 
   const handleLogout = () => {
     Cookies.remove("user");
     Cookies.remove("authToken");
+    setIsLoggedIn(false);
     router.push("/");
   };
   return (

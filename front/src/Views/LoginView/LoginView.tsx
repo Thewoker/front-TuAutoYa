@@ -6,6 +6,7 @@ import { FirebaseError } from "firebase/app"; // Importar FirebaseError
 import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
+import { useAuth } from "@/helpers/AuthContext";
 
 const LoginView = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const LoginView = () => {
   });
   const [error, setError] = useState('');
   const router = useRouter();
+  const { setIsLoggedIn } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,6 +51,7 @@ const LoginView = () => {
     setError('');
     try {
       await login(formData.email, formData.password);
+      setIsLoggedIn(true);
       router.push('/dashboard');
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -87,7 +90,7 @@ const LoginView = () => {
       if (!response.ok) {
         throw new Error('Error al verificar el token');
       }
-
+      
       const data = await response.json();
       console.log('Token verificado en el backend:', data);
 

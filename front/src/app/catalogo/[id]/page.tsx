@@ -26,14 +26,16 @@ function CarDetail() {
         const getRole = async () => {
             try {
                 const { data } = await axios.get("/api/getUserData")
-                const user = JSON.parse(data)
-                console.log(user)
-                if (user) {
-                    setRole(user.role)
-                    setIsDisabled(true)
-                } else{
-                  console.log('No se encuentra el usuario')
-                }
+                if (data?.message != "Not logged in") {
+                    const user = JSON.parse(data)
+      
+                    if (user) {
+                        setRole(user.role)
+                        setIsDisabled(true)
+                    } else{
+                      console.log('No se encuentra el usuario')
+                    }
+                  } 
             } catch (error) {
                 console.error("Se ha producido un error: ", error)
             }

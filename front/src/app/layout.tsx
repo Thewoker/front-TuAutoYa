@@ -6,6 +6,7 @@ import './globals.css'; // Archivo donde Tailwind está configurado
 import { ConditionalHeader } from "@/components/Layout/ConditionalHeader";
 import { Toaster } from "@/components/ui/toaster"
 import ConditionalLayout from "@/components/Layout/ConditionalLayout";
+import { AuthProvider } from "@/helpers/AuthContext";
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
@@ -29,12 +30,15 @@ export default function RootLayout({
     >
       <body
       >
+        <AuthProvider>
         <ConditionalHeader />
         <ConditionalLayout>
           {children}
         </ConditionalLayout>
         <Toaster />
         <Footer />
+        </AuthProvider>
+
       </body>
     </html>
   );

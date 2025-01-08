@@ -12,7 +12,6 @@ function Reserva() {
   const {loading, cars} : ResponseType = useGetCars();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [rentaDays, setRentalsDay] = useState("");
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -30,16 +29,17 @@ function Reserva() {
     const getRole = async () => {
         try {
             const { data } = await axios.get("/api/getUserData")
-            const user = JSON.parse(data)
-            console.log(user)
-            if (user) {
-                setRole(user.role)
-                setUserId(user.id)
-                setUserName(user.name)
-                setRentalsDay("")
-            } else{
-              console.log('No se encuentra el rol')
-            }
+            if (data?.message != "Not logged in") {
+              const user = JSON.parse(data)
+
+              if (user) {
+                  setRole(user.role)
+                  setUserId(user.id)
+                  setUserName(user.name)
+              } else{
+                console.log('No se encuentra el rol')
+              }
+            } 
         } catch (error) {
             console.error("Se ha producido un error: ", error)
         }
@@ -66,11 +66,11 @@ function Reserva() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log(userId)
-    console.log(car)
-    console.log(startDate)
-    console.log(endDate)
-    console.log(startDate)
+    // console.log(userId)
+    // console.log(car)
+    // console.log(startDate)
+    // console.log(endDate)
+    // console.log(startDate)
 
     if (!userId || !car || !startDate || !endDate) {
       setError('Por favor, completa todos los campos.');
@@ -80,7 +80,7 @@ function Reserva() {
     try {
       const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
         userId,
-        cars: [{id: car?.id, rentalDays: rentaDays}],
+        cars: [{id: car?.id}],
         endDate,
         startDate,
       });
@@ -148,18 +148,6 @@ function Reserva() {
                 type="date"
                 name="endDate"
                 value={endDate}
-                onChange={handleDateChange}
-                className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-          </div>
-          <div className="flex items-center">
-            <label className="block text-md font-medium text-emerald-900 w-1/3">Número de días:</label>
-            <div className="ml-4 w-2/3">
-              <input
-                type="number"
-                name="rentaDays"
-                value={rentaDays}
                 onChange={handleDateChange}
                 className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />

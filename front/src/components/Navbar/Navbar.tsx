@@ -5,15 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { useAuth } from "@/helpers/AuthContext";
 
 const NavBar: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    setIsLoggedIn(userCookie != undefined || userCookie != null ? true : false);
-  }, []);
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   setIsLoggedIn(userCookie != undefined || userCookie != null ? true : false);
+  // }, []);
 
   const handleLogout = () => {
     Cookies.remove("user");
