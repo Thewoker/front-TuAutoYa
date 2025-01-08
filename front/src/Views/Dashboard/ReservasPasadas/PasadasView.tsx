@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Order, ApiResponse } from '@/Interfaces/IClientDashboard'
 import PastReservations from '@/components/dashboard/Cliente/PastReservations'
 import { useToast } from "@/hooks/use-toast"
+import { isBefore } from 'date-fns'
 
 function PasadasView() {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -33,7 +34,7 @@ function PasadasView() {
         fetchOrders();
     }, [toast]);
 
-    const pastOrders = orders.filter((order) => order.status !== "active");
+    const pastOrders = orders.filter((order) => isBefore(new Date(order.startDate), new Date()));
     
     if (loading) {
         return <div>Cargando reservas pasadas...</div>;

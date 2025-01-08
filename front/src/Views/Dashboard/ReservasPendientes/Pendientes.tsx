@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Order, ApiResponse } from '@/Interfaces/IClientDashboard'
 import UpcomingReservations from '@/components/dashboard/Cliente/UpcomingReservations'
 import { useToast } from "@/hooks/use-toast"
+import { isAfter } from 'date-fns'
 
 function Pendientes() {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -32,13 +33,13 @@ function Pendientes() {
         fetchOrders();
     }, [toast]);
 
-    const activeOrders = orders.filter((order) => order.status === "active");
+    const pendingOrders = orders.filter((order) => isAfter(new Date(order.startDate), new Date()));
     
     if (loading) {
         return <div>Cargando reservas pendientes...</div>;
     }
 
-    return <UpcomingReservations rentals={activeOrders} />
+    return <UpcomingReservations rentals={pendingOrders} />
 }
 
 export default Pendientes
