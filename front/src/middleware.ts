@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies()
-  const user = cookieStore.get('user') 
+  const user = cookieStore.get('user') // await auth()
   const path = request.nextUrl.pathname
 
   if (path.startsWith('/admin')) {
