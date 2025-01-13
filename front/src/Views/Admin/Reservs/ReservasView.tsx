@@ -67,21 +67,21 @@ function ReservasView() {
   };
 
   const filteredOrders = orders.filter(order => {
-    const customerName = order.users.name.toLowerCase();
-    const ownerName = order.orderDetails.cars.users.name.toLowerCase();
-    const searchName = filters.userName.toLowerCase();
-    const customerEmail = order.users.email.toLowerCase();
-    const ownerEmail = order.orderDetails.cars.users.email.toLowerCase();
-    const searchEmail = filters.userEmail.toLowerCase();
+    const customerName = order?.users?.name?.toLowerCase() ?? '';
+    const ownerName = order?.cars?.users?.name?.toLowerCase() ?? '';
+    const searchName = filters?.userName?.toLowerCase();
+    const customerEmail = order?.users?.email?.toLowerCase();
+    const ownerEmail = order?.cars?.users?.email?.toLowerCase();
+    const searchEmail = filters?.userEmail?.toLowerCase();
 
     return (
-      (filters.orderId === '' || order.id.includes(filters.orderId)) &&
-      (filters.startDate === '' || order.orderDetails.startDate >= filters.startDate) &&
-      (filters.endDate === '' || order.orderDetails.endDate <= filters.endDate) &&
-      (filters.carBrand === '' || order.orderDetails.cars.brand.toLowerCase().includes(filters.carBrand.toLowerCase())) &&
-      (filters.carModel === '' || order.orderDetails.cars.model.toLowerCase().includes(filters.carModel.toLowerCase())) &&
-      (filters.userName === '' || customerName.includes(searchName) || ownerName.includes(searchName)) &&
-      (filters.userEmail === '' || customerEmail.includes(searchEmail) || ownerEmail.includes(searchEmail))
+      (filters?.orderId === '' || order?.id.includes(filters.orderId)) &&
+      (filters?.startDate === '' || order?.startDate >= filters.startDate) &&
+      (filters?.endDate === '' || order?.endDate <= filters.endDate) &&
+      (filters?.carBrand === '' || order?.cars?.brand.toLowerCase().includes(filters.carBrand.toLowerCase())) &&
+      (filters?.carModel === '' || order?.cars?.model.toLowerCase().includes(filters.carModel.toLowerCase())) &&
+      (filters?.userName === '' || customerName.includes(searchName) || ownerName.includes(searchName)) &&
+      (filters?.userEmail === '' || customerEmail.includes(searchEmail) || ownerEmail.includes(searchEmail))
     );
   });
 
