@@ -11,9 +11,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
   const router = useRouter();
   const isCustomer = role === "customer"
-  console.log("isCustomer", activeTab);
   const { setIsLoggedIn } = useAuth();
-  
+
 
   const handleLogout = () => {
     Cookies.remove("user");
@@ -59,6 +58,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
                   }`}
               >
                 <span className="font-semibold">Proveedor</span>
+              </Link>
+            </li>)}
+          {!isCustomer &&
+            (<li>
+              <Link href='/dashboard/ganancias'
+                className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/ganancias' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                  }`}
+              >
+                <span className="font-semibold">Ganancias</span>
               </Link>
             </li>)}
           {isCustomer &&

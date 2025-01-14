@@ -34,7 +34,7 @@ function PasadasView() {
         fetchOrders();
     }, [toast]);
 
-    const pastOrders = orders.filter((order) => isBefore(new Date(order.startDate), new Date()));
+    const pastOrders = orders?.filter((order) => isBefore(new Date(order.startDate), new Date()));
     
     if (loading) {
         return <div>Cargando reservas pasadas...</div>;

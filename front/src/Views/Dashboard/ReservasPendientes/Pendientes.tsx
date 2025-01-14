@@ -33,7 +33,7 @@ function Pendientes() {
         fetchOrders();
     }, [toast]);
 
-    const pendingOrders = orders.filter((order) => isAfter(new Date(order.startDate), new Date()));
+    const pendingOrders = orders?.filter((order) => isAfter(new Date(order.startDate), new Date()));
     
     if (loading) {
         return <div>Cargando reservas pendientes...</div>;

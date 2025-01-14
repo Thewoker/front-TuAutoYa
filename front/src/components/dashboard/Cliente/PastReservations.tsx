@@ -13,7 +13,7 @@ const PastReservations: React.FC<PastReservationsProps> = ({ rentals }) => {
         Reservas Pasadas
       </h2>
       <div className="space-y-6 mb-8">
-        {rentals.map((rental) => (
+        {rentals?.map((rental) => (
           <RentalCard key={rental.id} rental={rental} />
         ))}
       </div>
