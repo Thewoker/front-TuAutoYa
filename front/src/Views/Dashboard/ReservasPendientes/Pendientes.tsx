@@ -14,8 +14,8 @@ function Pendientes() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const { data } = await axios.get("/api/getUserData")
-                const user = await JSON.parse(data)
+                const { data: userData } = await axios.get("/api/getUserData")
+                const user = JSON.parse(userData)
                 const response = await axios.get<ApiResponse>(`${process.env.NEXT_PUBLIC_API_URL}/orders/user/${user.id}`);
                 setOrders(response.data.orders);
             } catch (error) {

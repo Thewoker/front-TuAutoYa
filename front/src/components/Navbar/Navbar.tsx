@@ -42,7 +42,7 @@ const NavBar: React.FC = () => {
           {/* Logo */}
           <Link href="/">
             <Image
-              src="/images/logo (2).png"
+              src="/Images/logo.png"
               alt="Logo"
               width={200}
               height={200}

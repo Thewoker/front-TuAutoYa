@@ -18,7 +18,7 @@ export function AdminNavbar() {
                     {/* Logo */}
                     <Link href="/">
                         <img
-                            src="/images/logo (2).png"
+                            src="/Images/logo.png"
                             alt="Logo"
                             className="h-12"
                             style={{ height: "200px" }}
