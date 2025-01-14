@@ -6,6 +6,19 @@ import { Order } from "@/Interfaces/IClientDashboard";
 const RentalCard: React.FC<{ rental: Order }> = ({ rental }) => {
     const car = rental.cars;
 
+    if (!car) {
+        return (
+            <div className="shadow-lg rounded-lg overflow-hidden flex flex-col max-w-md mx-auto p-4">
+                <h3 className="font-bold text-xl md:text-2xl text-emerald-900">Reserva sin vehículo asignado</h3>
+                <p>ID de la reserva: {rental.id}</p>
+                <p>Estado: {rental.status}</p>
+                <p>Fecha de inicio: {format(new Date(rental.startDate), 'dd/MM/yyyy')}</p>
+                <p>Fecha de fin: {format(new Date(rental.endDate), 'dd/MM/yyyy')}</p>
+                <p>Precio total: ${rental.price}</p>
+            </div>
+        );
+    }
+
     const rentalDuration = differenceInDays(new Date(rental.endDate), new Date(rental.startDate));
 
     return (
@@ -13,7 +26,7 @@ const RentalCard: React.FC<{ rental: Order }> = ({ rental }) => {
             {/* Imagen del vehículo */}
             <div className="w-full h-48 md:h-64">
                 <img
-                    src={car.image}
+                    src={car.image || "/placeholder.svg"}
                     alt={`${car.brand} ${car.model}`}
                     className="w-full h-full object-cover"
                 />
@@ -30,7 +43,7 @@ const RentalCard: React.FC<{ rental: Order }> = ({ rental }) => {
                                 : 'bg-sky-500 text-white'
                         }`}
                     >
-                        {rental.status === 'active' ? 'Activo' : 'Pasado'}
+                        {rental.status === 'active' ? 'Activo' : rental.status === 'completed' ? 'Completado' : 'Cancelado'}
                     </span>
                 </div>
 

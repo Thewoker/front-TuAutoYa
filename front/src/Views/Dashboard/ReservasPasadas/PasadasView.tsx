@@ -14,10 +14,9 @@ function PasadasView() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const { data } = await axios.get("/api/getUserData")
-                const user = await JSON.parse(data)
+                const { data: userData } = await axios.get("/api/getUserData")
+                const user = JSON.parse(userData)
                 const response = await axios.get<ApiResponse>(`${process.env.NEXT_PUBLIC_API_URL}/orders/user/${user.id}`);
-                console.log(response.data.orders)
                 setOrders(response.data.orders);
             } catch (error) {
                 console.error('Error fetching orders:', error);
@@ -34,7 +33,7 @@ function PasadasView() {
         fetchOrders();
     }, [toast]);
 
-    const pastOrders = orders?.filter((order) => isBefore(new Date(order.startDate), new Date()));
+    const pastOrders = orders?.filter((order) => isBefore(new Date(order.endDate), new Date()));
     
     if (loading) {
         return <div>Cargando reservas pasadas...</div>;
