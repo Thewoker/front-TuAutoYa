@@ -12,17 +12,26 @@ export function UserEarningsView() {
   const [loading, setLoading] = useState(true)
   const fechaActual = new Date();
   const [year, setYear] = useState(fechaActual.getFullYear())
-  const [month, setMonth] = useState(fechaActual.getMonth())
+  const [month, setMonth] = useState(fechaActual.getMonth() + 1)
   const { toast } = useToast()
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const {data} = await axios.get('/api/getUserData')
-        if (data?.message!= "Not logged in") {
-          const user = JSON.parse(data)
+        const { data } = await axios.get('/api/getUserData')
+        console.log("User data response:", data)
+        if (data && data.message !== "Not logged in") {
+          const user = typeof data === 'string' ? JSON.parse(data) : data
+          console.log("Parsed user data:", user)
           setUser(user)
-          await fetchEarnings(user.id, fechaActual.getFullYear(), fechaActual.getMonth())
+          await fetchEarnings(user.id, year, month)
+        } else {
+          console.error("User not logged in or invalid data received")
+          toast({
+            title: "Error",
+            description: "User not logged in or invalid data received.",
+            variant: "destructive",
+          })
         }
       } catch (error) {
         console.error('Error fetching user data:', error)
@@ -37,18 +46,28 @@ export function UserEarningsView() {
     }
 
     fetchUserData()
-  }, [toast])
+  }, [toast, year, month])
 
   const fetchEarnings = async (userId: string, selectedYear: number, selectedMonth: number) => {
     setLoading(true)
     try {
-      let url = `${process.env.NEXT_PUBLIC_API_URL}/orders/user/${userId}/earnings`
-      url += `?year=${selectedYear}&month=${selectedMonth == 0 ? 1 : selectedMonth}`
-      console.log("url: ",url)
-      const response = await axios.get<UserEarnings>(url)
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/orders/user/${userId}/earnings`
+      console.log("Fetching earnings with params:", { userId, year: selectedYear, month: selectedMonth })
+      console.log("Full URL:", url)
+
+      const response = await axios.get<UserEarnings>(url, {
+        params: {
+          year: selectedYear,
+          month: selectedMonth
+        }
+      })
+      console.log("Earnings response:", response.data)
       setEarnings(response.data)
     } catch (error) {
       console.error('Error fetching user earnings:', error)
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error details:', error.response?.data)
+      }
       toast({
         title: "Error",
         description: "Failed to fetch earnings data. Please try again.",
@@ -70,7 +89,7 @@ export function UserEarningsView() {
   }
 
   if (!user || !earnings) {
-    return <div>No data available.</div>
+    return <div>No data available. Please ensure you're logged in and try again.</div>
   }
 
   return (
@@ -79,8 +98,14 @@ export function UserEarningsView() {
       earnings={earnings}
       year={year}
       month={month}
-      onYearChange={setYear}
-      onMonthChange={setMonth}
+      onYearChange={(newYear) => {
+        setYear(newYear)
+        if (user) fetchEarnings(user.id, newYear, month)
+      }}
+      onMonthChange={(newMonth) => {
+        setMonth(newMonth)
+        if (user) fetchEarnings(user.id, year, newMonth)
+      }}
       onFilterChange={handleFilterChange}
     />
   )
