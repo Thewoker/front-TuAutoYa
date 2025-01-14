@@ -89,7 +89,7 @@ export function UserEarningsView() {
   }
 
   if (!user || !earnings) {
-    return <div>No data available. Please ensure you're logged in and try again.</div>
+    return <div>No data available. Please ensure youre logged in and try again.</div>
   }
 
   return (
