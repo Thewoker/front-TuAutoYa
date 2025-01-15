@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { FirebaseError } from "firebase/app"; // Importar FirebaseError
+import { FirebaseError } from "firebase/app"; 
 import { auth, googleProvider } from "@/firebase.config";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
@@ -70,6 +70,14 @@ const LoginView = () => {
       await sendTokenToBackend(token);
       router.push('/dashboard');
     } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        // Aquí capturamos específicamente el error de popup cancelado
+        if (error.code === "auth/cancelled-popup-request") {
+          console.error("El inicio de sesión fue cancelado por el usuario.");
+          setError("El inicio de sesión fue cancelado. Por favor intenta nuevamente.");
+        }
+      }
+
       if (error instanceof Error) {
         console.error("Error al iniciar sesión con Google:", error.message);
         setError("Error al iniciar sesión con Google. Intenta nuevamente.");

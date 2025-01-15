@@ -15,30 +15,28 @@ export const useChat = (
 
     const { isConnected } = useSocket();
 
-    const getMessages = async ({pageParam = undefined}: {pageParam?: number}) => {
+    const getMessages = async ({ pageParam = undefined }: { pageParam?: number }) => {
         try {
-    
-          const rq = await fetch(`${apiUrl}/messages?conversationId=${conversationId}`, {
-            credentials: 'include',
-            cache: 'no-store',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-          })
-    
-          if (!rq.ok) {
-            throw new Error(rq.statusText)
-          }
-          
-          const data = await rq.json();
+            const rq = await fetch(`${apiUrl}/messages?conversationId=${conversationId}`, {
+                credentials: 'include',
+                cache: 'no-store',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
 
-          return data;
-    
-        }catch (e) {
-          console.error(e);
-          throw e;
+            if (!rq.ok) {
+                throw new Error(rq.statusText);
+            }
+
+            const data = await rq.json();
+            return data;
+
+        } catch (e) {
+            console.error(e);
+            throw e;
         }
-    }
+    };
 
     const {
         data,
@@ -51,13 +49,12 @@ export const useChat = (
         queryFn: getMessages,
         getNextPageParam: (lastPage) => lastPage?.nextCursor,
         refetchInterval: isConnected ? false : 1000
-    })
+    });
 
     return {
         data,
         isError,
         isPending,
         error
-    }
-
-}
+    };
+};

@@ -38,7 +38,7 @@ export default function ChatMessages(
         <div className="p-4 flex flex-col gap-4 grow overflow-y-auto">
             {data?.pages.map((page) => (
                 page.messages.map((msg: any) => (
-                    <div key={msg.id} className={`flex flex-col gap-2 w-fit max-w-1/2 ${msg.sender.id === userId ? 'self-end bg-blue-500' : 'bg-blue-900'} py-2 px-4 rounded-bl-xl text-white rounded-r-lg`}>
+                    <div key={msg.id} className={`flex flex-col gap-2 w-fit max-w-1/2 ${msg.sender.id === userId ? 'self-end bg-sky-500' : 'bg-emerald-950'} py-2 px-4 rounded-bl-xl text-white rounded-r-lg`}>
                         {/* Use React Timeago for timestamps */}
                         <div>
                             <p>{msg.content}</p>

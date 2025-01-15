@@ -33,10 +33,12 @@ export default async function ConversationPage(
         <div className="flex flex-col min-h-screen max-h-screen p-8">
             <div className="p-4 flex flex-col gap-2">
                 <p className="text-neutral-500">{otherMember.email}</p>
-                <h2 className="text-3xl font-bold">{otherMember.name || 'Sin nombre'}</h2>
+                <h2 className="text-3xl font-bold text-amber-500">{otherMember.name || 'Sin nombre'}</h2>
             </div>
             <hr />
-            <ChatMessages conversationId={conversation.id} token={cookiesStore.get('access_token')?.value || ''} userId={userId} />
+            <ChatMessages conversationId={conversation.id} token={cookiesStore.get('access_token')?.value || ''} userId={userId}
+             />
+             
             <ChatForm conversationId={conversation.id} userId={userId} />
         </div>
     )
