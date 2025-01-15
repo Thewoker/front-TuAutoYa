@@ -35,6 +35,18 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, role }) => {
               <span className="font-semibold">Home</span>
             </Link>
           </li>
+
+          {/* ---------------------------------------------------------------- */}
+          <li>
+            <Link href='/dashboard/messages'
+              className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/dashboard/messages' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
+                }`}
+            >
+              <span className="font-semibold">Mensajes</span>
+            </Link>
+          </li>
+          {/* ---------------------------------------------------------------- */}
+
           <li>
             <Link href='/dashboard/reservas-pasadas'
               className={`flex space-x-2 mt-10 cursor-pointer ${activeTab === '/reservas-pasadas' ? 'text-sky-500' : 'text-emerald-950 hover:text-sky-500'
