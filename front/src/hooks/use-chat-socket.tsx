@@ -14,10 +14,10 @@ export default function useChatSocket(
     const queryClient = useQueryClient();
 
     useEffect(() => {
-
         if (!socket) return;
-
+    
         socket?.on(addMessageKey, (message) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             queryClient.setQueryData([queryKey], (oldData: any) => {
                 if (!oldData || !oldData.pages || oldData.pages.length === 0) {
                     return {
@@ -29,28 +29,18 @@ export default function useChatSocket(
                         ]
                     };
                 }
-
-                let newData = [...oldData.pages];
-
-                newData[0] = {
-                    ...newData[0],
-                    messages: [
-                        ...newData[0].messages,
-                        message,
-                    ]
-                }
-
-                return {
-                    ...oldData,
-                    pages: newData
-                }
-            })
-        })
-
+    
+                // Si hay datos anteriores, agrega el nuevo mensaje
+                const lastPageIndex = oldData.pages.length - 1;
+                oldData.pages[lastPageIndex].messages.push(message);
+                return { ...oldData };
+            });
+        });
+    
+        // Limpia el evento cuando el componente se desmonte
         return () => {
-            socket.removeAllListeners(addMessageKey)
-        }
-
-    }, [socket, queryClient, addMessageKey])
+            socket?.off(addMessageKey);
+        };
+    }, [socket, queryClient,  addMessageKey,queryKey]); // Agrega queryKey a las dependencias
     
 }

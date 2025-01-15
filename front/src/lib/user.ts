@@ -43,7 +43,7 @@ export const findUsers = async (userId: string) => {
         const data = await rq.json();
 
         // const users = (await rq.json()).filter((user: any) => user.id !== userId)
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
         const users = data.filter((user: any) => user.id !== userId)
 
         return users;

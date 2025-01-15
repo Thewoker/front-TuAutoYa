@@ -1,6 +1,7 @@
 import { auth, findUsers } from "@/lib/user";
 import Link from "next/link";
 import { InboxIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+export const dynamic = 'force-dynamic';
 
 function formatDate(isoDate: string) {
     const date = new Date(isoDate);
