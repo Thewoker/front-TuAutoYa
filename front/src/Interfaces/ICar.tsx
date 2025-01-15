@@ -13,6 +13,8 @@ interface Car {
     insurance: string;
     rating: number;
     status: string;
+    discount: number;
+    isDiscount: boolean;
     users: {
         id: string;
         firebaseUid: string;

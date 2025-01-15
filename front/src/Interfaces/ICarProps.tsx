@@ -9,6 +9,8 @@ interface CarProps {
     brakes: string;
     fuelType: string;
     rating: number;
+    discount: number;
+    isDiscount: boolean;
 }
 
 export default CarProps;

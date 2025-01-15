@@ -19,7 +19,7 @@ interface CarCarouselProps {
 
 export function CarCarousel2({ carid, filtro, title }: CarCarouselProps) {
     const{cars}: ResponseType = useGetCars()
-    const fils = cars.filter(car => car.model === filtro && car.id !== carid) 
+    const fils = cars.filter(car => car.brand === filtro && car.id !== carid) 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         loop: true,

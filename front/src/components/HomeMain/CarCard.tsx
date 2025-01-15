@@ -16,26 +16,56 @@ export function CarCard({
     brakes,
     fuelType,
     rating,
+    discount
 }: CarProps) {
     return (
-        <Card className="w-[300px] overflow-hidden bg-amber-500">
+        <Card className="w-[300px] overflow-hidden bg-amber-500 relative">
+            {discount > 0 && 
+                <div className="z-10 absolute top-2 right-2 bg-emerald-950 text-white text-xs font-bold px-2 py-1 rounded shadow">
+                    ¡Oferta {discount}%!
+                </div>
+            }
             <div className="relative h-[200px] w-full">
-                <Image
-                    src={image || `/placeholder.svg?height=200&width=300`}
-                    alt={model}
-                    fill
-                    className="object-cover"
-                />
+                <Link href={`/catalogo/${id}`}>
+                    <Image
+                        src={image || `/placeholder.svg?height=200&width=300`}
+                        alt={model}
+                        fill
+                        className="object-cover"
+                    />
+                </Link>
             </div>
             <div className="p-4">
                 <div className="mb-2  text-zinc-200">
                     <span className="text-sm  text-emerald-900 ">{brand}</span>
                 </div>
                 <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-semibold text-lg text-emerald-900 ">{model}</h3>
+                    <h3 className="flex-auto font-semibold text-lg text-emerald-900 ">{model}</h3>
                     <div className="text-right">
-                        <span className="text-xl font-bold text-amber-600">${pricePerDay}</span>
-                        <span className="text-sm text-muted-foreground">/día</span>
+                        {discount > 0 ? (
+                            <div className="flex gap-1 items-center">
+                                <span className="flex-auto text-sm line-through text-zinc-600">
+                                    ${pricePerDay}
+                                </span>
+                                <br />
+                                <div>
+                                    <span className="flex-auto text-xl font-bold text-amber-600">
+                                        ${Math.round(parseFloat(pricePerDay) * (1 - discount / 100))}
+                                    </span>
+                                    <span className="text-sm text-muted-foreground">/día</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <span className="text-xl font-bold text-amber-600">
+                                    ${pricePerDay}
+                                </span>
+                                <span className="text-sm text-muted-foreground">/día</span>
+                            </>
+
+                        )}
+                        {/* <span className="text-xl font-bold text-amber-600">${pricePerDay}</span> */}
+                        {/* <span className="text-sm text-muted-foreground">/día</span> */}
                     </div>
                 </div>
 
@@ -67,7 +97,7 @@ export function CarCard({
                         href={`/catalogo/${id}`}
                         className="text-sm font-medium text-emerald-900 hover:underline"
                     >
-                        View Details
+                        Ver Detalles
                     </Link>
                 </div>
             </div>

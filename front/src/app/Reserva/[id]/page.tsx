@@ -3,6 +3,7 @@ import { useGetCars } from "@/api/getCars";
 import ReservaSkeleton from "@/components/Reserva/FormReservaSkeleton";
 import { ResponseType } from "@/types/response";
 import axios from "axios";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -49,6 +50,27 @@ function Reserva() {
     getRole()
   });
 
+  const calculateTotalPrice = (
+    startDate: string, 
+    endDate: string, 
+    pricePerDay: number,
+    discount: number
+  ) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDifference = end.getTime() - start.getTime();
+    const days = timeDifference / (1000 * 3600 * 24);
+
+    let totalPrice = days * pricePerDay;
+
+    // Aplica el descuento, si existe
+    if (discount > 0) {
+      totalPrice -= totalPrice * (discount / 100);
+    }
+
+    return totalPrice.toFixed(2); // Retorna el precio con 2 decimales
+  };
+
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,11 +89,11 @@ function Reserva() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // console.log(userId)
-    // console.log(car)
-    // console.log(startDate)
-    // console.log(endDate)
-    // console.log(startDate)
+    console.log(userId)
+    console.log(car)
+    console.log(startDate)
+    console.log(endDate)
+    console.log(startDate)
 
     if (!userId || !car || !startDate || !endDate) {
       setError('Por favor, completa todos los campos.');
@@ -111,19 +133,41 @@ function Reserva() {
 
         {car && (
           <div className="flex items-center mb-6">
-            <img
+            {/* <img
               src={car.image} // Imagen del coche
               alt="Auto seleccionado"
               className="w-1/3 h-auto rounded-lg shadow-lg"
+            /> */}
+            <Image
+                src={car.image}
+                alt="Auto seleccionado"
+                width={300}
+                height={200}
+                className="rounded-lg shadow-lg"
             />
             <div className="ml-6">
               <h3 className="text-2xl font-semibold text-emerald-900">
                 {car.year} {car.brand} {car.model}
               </h3>
-              <p className="text-gray-600">
-                {car.transmission} | {car.brakes} | {car.kilometer} | ${car.pricePerDay}
+              <p className="text-gray-600 mt-2">
+                <b>Reseñas:</b> {car.rating}
               </p>
-              <p className="text-gray-600 mt-2">Reseñas: {car.rating}</p>
+              <p className="text-gray-600">
+                <b>Caracteristicas:</b> {car.transmission} | {car.brakes} | {car.kilometer}
+              </p>
+              <p className="text-gray-600">
+              <b>Precio por Día: </b> 
+              {car.discount > 0 ? (
+                <>
+                  <span className="line-through text-red-500">${car.pricePerDay} </span> 
+                  <span className="text-emerald-600 font-semibold ml-1">
+                    ${Math.round(parseFloat(car.pricePerDay) * (1 - car.discount / 100))}
+                  </span>
+                </>
+              ) : (
+                <span className="text-emerald-600 font-semibold">${car.pricePerDay}</span>
+              )}
+              </p>
             </div>
           </div>
         )}
@@ -137,6 +181,7 @@ function Reserva() {
                 name="startDate"
                 value={startDate}
                 onChange={handleDateChange}
+                min={new Date().toISOString().split("T")[0]}
                 className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
@@ -150,99 +195,33 @@ function Reserva() {
                 name="endDate"
                 value={endDate}
                 onChange={handleDateChange}
+                min={startDate}
                 className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           </div>
-          {role ? (
+          <div className="flex items-center">
+            <label className="block text-md font-medium text-emerald-900 w-1/3">Precio Total:</label>
+            <div className="ml-4 w-2/3">
+              <p>{startDate && endDate && parseFloat(car?.pricePerDay || '0') > 0 ? (
+                  <span className="font-semibold text-amber-600">
+                    ${calculateTotalPrice(
+                      startDate, 
+                      endDate, 
+                      parseFloat(car?.pricePerDay || '0'),
+                      car?.discount || 0
+                      )}
+                  </span>
+                ) : (
+                  <span className="font-semibold text-amber-600">0</span>
+                )}</p>
+            </div>
+          </div>
+          {role && (
             <div className="space-y-4 pb-4">
               <label className="block text-md font-medium text-emerald-900">Hola {userName}, ya estas logeado usaremos tus datos para realizar la reserva </label>
             </div>
-          ): (
-            <div className="space-y-4 pb-4">
-              <div className="flex space-x-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Carnet de Identidad</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={userDetails.name}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Tu nombre"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Carnet de Identidad</label>
-                  <input
-                    type="text"
-                    name="identity"
-                    value={userDetails.identity}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Tu carnet de identidad"
-                  />
-                </div>
-              </div>
-              <div className="flex space-x-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Número de Teléfono</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={userDetails.phone}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Tu número de teléfono"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Ciudad</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={userDetails.city}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Ingresa tu ciudad"
-                  />
-                </div>
-              </div>
-
-              <div className="flex space-x-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Correo Electrónico</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={userDetails.email}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Tu correo electrónico"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-emerald-900">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={userDetails.password}
-                    onChange={handleUserChange}
-                    className="w-full border border-amber-400 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Contraseña con una mayuscula,un signo y un numero"
-                  />
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <input type="checkbox" id="saveDetails" className="h-5 w-5" />
-                <label htmlFor="saveDetails" className="text-sm text-emerald-900">
-                  Guardar mis detalles para futuras reservas
-                </label>
-              </div>
-            </div>
-            
           )}
-          
           
             <button
               type="submit"

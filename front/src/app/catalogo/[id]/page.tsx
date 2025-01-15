@@ -17,7 +17,7 @@ function CarDetail() {
     const{loading, cars}: ResponseType = useGetCars()
     const { id } = useParams();
     const car = cars.find((car) => car.id === id);
-    const filtro = car?.model || '';
+    const filtro = car?.brand || '';
     const carid = car?.id || '';
     const title = 'Modelos Relacionados';
     const [role, setRole] = useState<string | null>(null)
@@ -53,7 +53,18 @@ function CarDetail() {
             <div className="pt-6">
                 <div className="border-b flex flex-wrap items-baseline mx-auto max-w-2xl px-4 pb-5 pt-10 sm:px-6 lg:max-w-7xl">
                     <div className="flex-auto">
-                        <h1 className="text-2xl font-bold tracking-tight text-emerald-900  sm:text-3xl">{car?.brand} {car?.model} del {car?.year}</h1>
+                        {car?.discount !== undefined && car.discount > 0 ?(
+                            <h1 className="text-2xl font-bold tracking-tight text-emerald-900 sm:text-3xl">
+                                {car?.brand} {car?.model} del {car?.year} - {" "}
+                                <span className="inline-block bg-amber-400 text-white px-2 py-1 rounded text-sm sm:text-base font-semibold shadow-md">
+                                    ¡{car?.discount}% de descuento!
+                                </span>
+                            </h1>
+                        ):(
+                            <h1 className="text-2xl font-bold tracking-tight text-emerald-900 sm:text-3xl">
+                                {car?.brand} {car?.model} del {car?.year} 
+                            </h1>
+                        )}
                     </div>
                     <div>
                         <button className="flex items-center h-10 px-6 font-semibold border rounded-md bg-white" type="submit">
@@ -152,7 +163,23 @@ function CarDetail() {
                                 <h2 className="text-2xl text-amber-400">Realizar Reserva</h2>
                             </div>
                             <div className="mt-3">
-                                <p className="text-xl tracking-tight text-emerald-900">Precio por Día: $ {car?.pricePerDay}</p>
+                                <p className="flex gap-1 text-xl tracking-tight text-emerald-900">
+                                    Precio por Día:{" "}
+                                    {car?.discount !== undefined && car.discount > 0 ? (
+                                        <span className="flex items-center gap-2">
+                                            <span className="line-through text-zinc-600">
+                                                ${car.pricePerDay}
+                                            </span>
+                                            <span className="text-amber-600 font-bold">
+                                                ${Math.round(parseFloat(car.pricePerDay) * (1 - car.discount / 100))}
+                                            </span>
+                                        </span>
+                                    ) : (
+                                        <span className="text-emerald-900 font-bold">
+                                            ${car?.pricePerDay}
+                                        </span>
+                                    )}
+                                </p>
                             </div>
                             <div className="mt-3">
                                 {car?.status === "inactive" ? (
