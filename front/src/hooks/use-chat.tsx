@@ -15,7 +15,7 @@ export const useChat = (
 
     const { isConnected } = useSocket();
 
-    const getMessages = async ({ pageParam = undefined }: { pageParam?: number }) => {
+    const getMessages = async ({ }: { pageParam?: number }) => {
         try {
             const rq = await fetch(`${apiUrl}/messages?conversationId=${conversationId}`, {
                 credentials: 'include',

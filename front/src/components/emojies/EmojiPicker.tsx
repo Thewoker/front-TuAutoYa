@@ -9,7 +9,7 @@ interface EmojiPickerProps {
 
 const EmojiPicker = ({ onEmojiSelect }: EmojiPickerProps) => {
     const [showPicker, setShowPicker] = useState(false);
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleEmojiClick = (emoji: any) => {
         onEmojiSelect(emoji.emoji); // Llamar a la función con el emoji seleccionado
         setShowPicker(false); // Cerrar el picker al seleccionar un emoji
