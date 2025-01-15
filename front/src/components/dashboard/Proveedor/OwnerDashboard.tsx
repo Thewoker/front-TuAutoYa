@@ -18,14 +18,17 @@ export default function OwnerDashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const cars = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cars`)
-
-        setCars(cars.data)
         const { data } = await axios.get('/api/getUserData')
-        if (!data) {
-          throw new Error('Failed to fetch user data')
+        const userData = typeof data === 'string' ? JSON.parse(data) : data
+
+        setUserData(userData)
+
+        if (userData && userData.id) {
+          const carsResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cars/provider/${userData.id}`)
+          setCars(carsResponse.data)
+        } else {
+          throw new Error('User data is invalid or missing ID')
         }
-        setUserData(JSON.parse(data))
       } catch (error) {
         console.error('Error fetching user data:', error)
       }

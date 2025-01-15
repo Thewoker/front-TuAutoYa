@@ -51,20 +51,22 @@ export interface CarCardProps {
 
 // AddCarForm
 export interface CarFormData {
-    brand: string
-    model: string
-    year: string
-    pricePerDay: number
-    image: string
-    description: string
-    transmission: string
-    fuelType: string
-    kilometer: string
-    brakes: string
-    rating: number
-    status: string
-    approvalStatus: string
-}
+    brand: string;
+    model: string;
+    year: string;
+    pricePerDay: number;
+    image: string;
+    description: string;
+    transmission: string;
+    fuelType: string;
+    kilometer: string;
+    brakes: string;
+    approvalStatus: string;
+    rating: number;
+    status: string;
+    isDiscount?: boolean;
+    discount?: number;
+  }
 
 export interface CloudinaryResult {
     info: {

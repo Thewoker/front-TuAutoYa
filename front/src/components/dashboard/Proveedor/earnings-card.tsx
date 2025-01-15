@@ -52,8 +52,8 @@ export function EarningsCard({
 
       <div>
         <h3 className="text-lg font-semibold">Resumen de ganancias</h3>
-        <p>Year: {earnings.year}</p>
-        <p>Month: {earnings.month}</p>
+        <p>Año: {earnings.year}</p>
+        <p>Mes: {earnings.month}</p>
         <p className="text-xl font-bold">Ganancia total: ${earnings.totalEarnings.toFixed(2)}</p>
       </div>
 

@@ -14,14 +14,6 @@ function Reserva() {
   const {loading, cars} : ResponseType = useGetCars();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [userDetails, setUserDetails] = useState({
-    name: "",
-    email: "",
-    password: "",
-    identity: "",
-    phone: "",
-    city: ""
-  });
   const [error, setError] = useState('');
 
   const { id } = useParams();
@@ -79,11 +71,6 @@ function Reserva() {
     } else if (name === "endDate") {
       setEndDate(value);
     }
-  };
-
-  const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserDetails((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

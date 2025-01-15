@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { AddCarFormProps, CloudinaryResult, CarFormData} from "@/Interfaces/ICreateCar"
 
 export function AddCarForm({ onSubmit }: AddCarFormProps) {
@@ -22,18 +23,24 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
     approvalStatus: 'pending',
     rating: 0,
     status: 'active',
+    isDiscount: false,
+    discount: 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ 
       ...prev, 
-      [name]: ['pricePerDay', 'rating'].includes(name) ? Number(value) : value 
+      [name]: ['pricePerDay', 'rating', 'discount'].includes(name) ? Number(value) : value 
     }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSwitchChange = (checked: boolean) => {
+    setFormData(prev => ({ ...prev, isDiscount: checked }));
   };
 
   const handleImageUpload = (result: CloudinaryResult) => {
@@ -59,6 +66,8 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
       rating: 0,
       status: 'active',
       approvalStatus: 'pending',
+      isDiscount: false,
+      discount: 0,
     });
   };
 
@@ -119,22 +128,31 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
         <Label htmlFor="brakes">Frenos</Label>
         <Input id="brakes" name="brakes" value={formData.brakes} onChange={handleChange} required />
       </div>
-      {/* <div className="space-y-2">
-        <Label htmlFor="rating">Calificación</Label>
-        <Input id="rating" name="rating" type="number" min="0" max="5" step="0.1" value={formData.rating} onChange={handleChange} required />
-      </div>
       <div className="space-y-2">
-        <Label htmlFor="status">Estado</Label>
-        <Select name="status" value={formData.status} onValueChange={(value) => handleSelectChange('status', value)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Seleccione el estado" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">Activo</SelectItem>
-            <SelectItem value="inactive">Inactivo</SelectItem>
-          </SelectContent>
-        </Select>
-      </div> */}
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="isDiscount"
+            checked={formData.isDiscount}
+            onCheckedChange={handleSwitchChange}
+          />
+          <Label htmlFor="isDiscount">Aplicar descuento</Label>
+        </div>
+      </div>
+      {formData.isDiscount && (
+        <div className="space-y-2">
+          <Label htmlFor="discount">Porcentaje de descuento</Label>
+          <Input
+            id="discount"
+            name="discount"
+            type="number"
+            min="0"
+            max="100"
+            value={formData.discount}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      )}
       <div className="space-y-2">
         <Label htmlFor="image">Imagen del coche</Label>
         <CldUploadWidget
@@ -150,7 +168,7 @@ export function AddCarForm({ onSubmit }: AddCarFormProps) {
           )}
         </CldUploadWidget>
         {formData.image && (
-          <img src={formData.image} alt="Uploaded car" className="mt-2 max-w-xs rounded-md" />
+          <img src={formData.image || "/placeholder.svg"} alt="Uploaded car" className="mt-2 max-w-xs rounded-md" />
         )}
       </div>
       <Button type="submit">Agregar Auto</Button>

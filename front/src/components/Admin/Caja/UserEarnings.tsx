@@ -142,9 +142,9 @@ export default function UserEarnings() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Earnings Summary</h3>
-                <p>Year: {earnings.year}</p>
-                <p>Month: {earnings.month}</p>
-                <p>Total Earnings: ${earnings.totalEarnings.toFixed(2)}</p>
+                <p>Año: {earnings.year}</p>
+                <p>Mes: {earnings.month}</p>
+                <p>Total Ganado: ${earnings.totalEarnings.toFixed(2)}</p>
               </div>
               <Table>
                 <TableHeader>
