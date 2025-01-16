@@ -42,8 +42,8 @@ export default function Search() {
              className="flex items-center max-w-3xl mx-auto bg-white rounded-lg shadow p-3">
                 <input
                     type="text"
-                    defaultValue="Bogotá, Distrito Capital, Colombia"
-                    placeholder="Ciudad"
+                    // defaultValue="Bogotá, Distrito Capital, Colombia"
+                    placeholder="Bogotá, Distrito Capital, Colombia"
                     className="p-2 flex-1 text-emerald-900 text-sm border-none outline-none rounded-l-lg"
                 />
                 <select
