@@ -2,12 +2,10 @@ import React from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 interface MarkerProps {
-  id: number;
+  id: string;
   position: { lat: number; lng: number };
   nombre: string;
   direccion: string;
-  telefono: string;
-  logo: string;
 }
 
 interface MapProps {
@@ -39,7 +37,7 @@ const MapaDeAgencias: React.FC<MapProps> = ({ markers }) => {
           position={marker.position}
           title={marker.nombre}
           icon={{
-            url: marker.logo,
+            url: marker.nombre,
             scaledSize:
               window.google && window.google.maps
                 ? new window.google.maps.Size(40, 40)
