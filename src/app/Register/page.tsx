@@ -3,7 +3,7 @@ import RegisterView from "@/Views/RegisterView/RegisterView";
 
 
 function Register() {
-  // Register
+  // Register view
   return (
     <div>
       <RegisterView/>
