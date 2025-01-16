@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { UserCard } from '@/components/Admin/Users/UserCard'
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
@@ -63,6 +64,42 @@ export function PermissionsUsersView() {
         }
     }
 
+    const handleRoleChange = async (userId: string, newRole: string) => {
+        try {
+            const userToUpdate = users.find(user => user.id === userId)
+            if (!userToUpdate) throw new Error('User not found')
+
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+                ...userToUpdate,
+                role: newRole
+            })
+
+            setUsers(users.map(user =>
+                user.id === userId
+                    ? { ...user, role: newRole }
+                    : user
+            ))
+
+            toast({
+                title: "Success",
+                description: `User role updated to ${newRole} successfully`,
+                action: (
+                    <ToastAction altText="Dismiss">Dismiss</ToastAction>
+                ),
+            })
+        } catch (err) {
+            console.error(err)
+            toast({
+                title: "Error",
+                description: "Failed to update user role",
+                variant: "destructive",
+                action: (
+                    <ToastAction altText="Try again">Try again</ToastAction>
+                ),
+            })
+        }
+    }
+
     if (loading) return <div>Loading users...</div>
     if (error) return <div>Error: {error}</div>
 
@@ -74,6 +111,7 @@ export function PermissionsUsersView() {
                     user={user}
                     onBlock={(userId) => handleUserAction(userId, 'block')}
                     onEnable={(userId) => handleUserAction(userId, 'enable')}
+                    onRoleChange={handleRoleChange}
                 />
             ))}
         </div>

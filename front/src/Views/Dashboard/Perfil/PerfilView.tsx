@@ -15,7 +15,6 @@ interface UserData {
     identity: number | null
     phone: string | null
     city: string | null
-    address: string | null
     role?: string
     isEnabled?: boolean
 }
@@ -63,9 +62,9 @@ export function UserProfile() {
 
         setUpdating(true)
         try {
-            const { name, email, password, identity, phone, city, address } = userData
-            console.log("update", name, email, password, identity, phone, city, address)
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users`, { name, email, password, identity, phone, city, address })
+            const { name, email, password, identity, phone, city } = userData
+            console.log("update", name, email, password, identity, phone, city)
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users`, { name, email, password, identity, phone, city })
             toast({
                 title: "Éxito",
                 description: "Perfil de usuario actualizado con éxito.",
@@ -149,15 +148,6 @@ export function UserProfile() {
                         id="city"
                         name="city"
                         value={userData.city ?? ''}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="address">Dirección</Label>
-                    <Input
-                        id="address"
-                        name="address"
-                        value={userData.address ?? ''}
                         onChange={handleInputChange}
                     />
                 </div>

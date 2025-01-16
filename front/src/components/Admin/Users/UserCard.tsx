@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface User {
   id: string
@@ -18,9 +19,10 @@ interface UserCardProps {
   user: User
   onBlock: (userId: string) => void
   onEnable: (userId: string) => void
+  onRoleChange: (userId: string, newRole: string) => void
 }
 
-export function UserCard({ user, onBlock, onEnable }: UserCardProps) {
+export function UserCard({ user, onBlock, onEnable, onRoleChange }: UserCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -34,12 +36,26 @@ export function UserCard({ user, onBlock, onEnable }: UserCardProps) {
       </CardHeader>
       <CardContent className="overflow-clip">
         <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Role:</strong> {user.role}</p>
         <p><strong>City:</strong> {user.city || 'N/A'}</p>
         <p><strong>Phone:</strong> {user.phone || 'N/A'}</p>
         <Badge variant={user.isEnabled ? 'default' : 'destructive'}>
           {user.isEnabled ? 'Enabled' : 'Disabled'}
         </Badge>
+        <div className="mt-4">
+          <Select
+            value={user.role}
+            onValueChange={(newRole) => onRoleChange(user.id, newRole)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="owner">Owner</SelectItem>
+              <SelectItem value="customer">Customer</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button 
