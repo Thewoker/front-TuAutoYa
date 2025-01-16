@@ -32,8 +32,8 @@ export function UserProfile() {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get<UserData>('/api/getUserData')
-            setUserData(response.data)
+            const {data} = await axios.get('/api/getUserData')
+            setUserData(JSON.parse(data))
         } catch (error) {
             console.error('Error fetching user data:', error)
             toast({
